@@ -260,6 +260,8 @@
     <div class="nav-item" onclick="showTab('basis-methoden')" data-tab="basis-methoden"><span class="icon">⚙️</span>Methoden</div>
     <div class="nav-item" onclick="showTab('basis-enum')" data-tab="basis-enum"><span class="icon">📌</span>Enumeratie (enum)</div>
     <div class="nav-item" onclick="showTab('basis-arrays')" data-tab="basis-arrays"><span class="icon">📋</span>Arrays</div>
+    <div class="nav-item" onclick="showTab('basis-arraylist')" data-tab="basis-arraylist"><span class="icon">📦</span>ArrayList</div>
+    <div class="nav-item" onclick="showTab('basis-matrix')" data-tab="basis-matrix"><span class="icon">🔢</span>Matrix (2D-array)</div>
 
     <div class="nav-section">OOP & Klassen</div>
     <div class="nav-item" onclick="showTab('oop')" data-tab="oop"><span class="icon">🧩</span>OOP & Klassen</div>
@@ -268,17 +270,21 @@
     <div class="nav-item" onclick="showTab('klaslokaal')" data-tab="klaslokaal"><span class="icon">🏫</span>Klaslokaal & Tafel</div>
 
     <div class="nav-section">JavaFX</div>
+    <div class="nav-item" onclick="showTab('fx-basis')" data-tab="fx-basis"><span class="icon">🚀</span>JavaFX Basis</div>
+    <div class="nav-item" onclick="showTab('fx-panes')" data-tab="fx-panes"><span class="icon">🗂️</span>Panes & Layouts</div>
+    <div class="nav-item" onclick="showTab('fx-controls')" data-tab="fx-controls"><span class="icon">🎛️</span>Controls & Events</div>
+    <div class="nav-item" onclick="showTab('fx-styling')" data-tab="fx-styling"><span class="icon">🎨</span>Styling & CSS</div>
     <div class="nav-item" onclick="showTab('meerdere')" data-tab="meerdere"><span class="icon">🖥️</span>Meerdere Schermen</div>
     <div class="nav-item" onclick="showTab('arrays')" data-tab="arrays"><span class="icon">📊</span>Arrays in JavaFX</div>
-    <div class="nav-item" onclick="showTab('tableview')" data-tab="tableview"><span class="icon">📊</span>TableView Basis</div>
+    <div class="nav-item" onclick="showTab('tableview')" data-tab="tableview"><span class="icon">📊</span>TableView</div>
     <div class="nav-item" onclick="showTab('simpleprop')" data-tab="simpleprop"><span class="icon">🔧</span>SimpleObjectProperty</div>
     <div class="nav-item" onclick="showTab('knoppen')" data-tab="knoppen"><span class="icon">🖱️</span>TableView met Knoppen</div>
     <div class="nav-item" onclick="showTab('relaties')" data-tab="relaties"><span class="icon">🏛️</span>TableViews met Relatie</div>
 
     <div class="nav-section">Data & Types</div>
-    <div class="nav-item" onclick="showTab('datums')" data-tab="datums"><span class="icon">📅</span>Werken met Datums</div>
-    <div class="nav-item" onclick="showTab('tijdstippen')" data-tab="tijdstippen"><span class="icon">🕐</span>Werken met Tijdstippen</div>
-    <div class="nav-item" onclick="showTab('bedragen')" data-tab="bedragen"><span class="icon">💶</span>Werken met Bedragen</div>
+    <div class="nav-item" onclick="showTab('datums')" data-tab="datums"><span class="icon">📅</span>LocalDate</div>
+    <div class="nav-item" onclick="showTab('tijdstippen')" data-tab="tijdstippen"><span class="icon">🕐</span>LocalTime</div>
+    <div class="nav-item" onclick="showTab('bedragen')" data-tab="bedragen"><span class="icon">💶</span>BigDecimal</div>
 
     <div class="nav-section">JDBC & Databank</div>
     <div class="nav-item" onclick="showTab('jdbc')" data-tab="jdbc"><span class="icon">🗄️</span>SQL vanuit Java</div>
@@ -1001,7 +1007,7 @@ namenLijst[i].<span class="mt">length</span>()
 
     <!-- ===================== DATUMS ===================== -->
     <div class="tab-content" id="tab-datums">
-      <h1>Werken met Datums</h1>
+      <h1>LocalDate</h1>
       <div class="chapter-meta"> &nbsp;·&nbsp; java.time.LocalDate</div>
 
       <h2>1. Datum aanmaken</h2>
@@ -1059,7 +1065,7 @@ datum.<span class="mt">with</span>(<span class="cl">TemporalAdjusters</span>.<sp
 
     <!-- ===================== TIJDSTIPPEN ===================== -->
     <div class="tab-content" id="tab-tijdstippen">
-      <h1>Werken met Tijdstippen</h1>
+      <h1>LocalTime</h1>
       <div class="chapter-meta"> &nbsp;·&nbsp; java.time.LocalTime</div>
 
       <h2>1. Tijdstip aanmaken</h2>
@@ -1103,7 +1109,7 @@ tijdstip1.<span class="mt">isAfter</span>(tijdstip2)
 
     <!-- ===================== BEDRAGEN ===================== -->
     <div class="tab-content" id="tab-bedragen">
-      <h1>Werken met Bedragen (BigDecimal)</h1>
+      <h1>BigDecimal</h1>
       <div class="chapter-meta"> &nbsp;·&nbsp; java.math.BigDecimal</div>
 
       <h2>Waarom BigDecimal?</h2>
@@ -1497,6 +1503,537 @@ ps.<span class="mt">executeUpdate</span>();</code></pre>
         <tr><td>Methode</td><td><code>setBinaryStream()</code></td><td><code>setCharacterStream()</code></td></tr>
         <tr><td>Java klasse</td><td><code>FileInputStream</code></td><td><code>FileReader</code></td></tr>
       </table>
+    </div>
+
+    <!-- ===================== BASIS: ARRAYLIST ===================== -->
+    <div class="tab-content" id="tab-basis-arraylist">
+      <h1>ArrayList</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; java.util.ArrayList — dynamische lijst</div>
+
+      <h2>Array vs ArrayList</h2>
+      <table>
+        <tr><th></th><th>Array</th><th>ArrayList</th></tr>
+        <tr><td>Lengte</td><td>Vast bij aanmaken</td><td>Dynamisch (groeit/krimpt)</td></tr>
+        <tr><td>Syntax</td><td><code>int[] getallen</code></td><td><code>ArrayList&lt;Integer&gt;</code></td></tr>
+        <tr><td>Elementen tellen</td><td><code>.length</code></td><td><code>.size()</code></td></tr>
+        <tr><td>Element opvragen</td><td><code>lijst[i]</code></td><td><code>lijst.get(i)</code></td></tr>
+        <tr><td>Primitieve types</td><td>✅ int, double, ...</td><td>❌ gebruik Integer, Double, ...</td></tr>
+      </table>
+
+      <h2>ArrayList aanmaken</h2>
+      <pre data-lang="java"><code><span class="kw">import</span> java.util.ArrayList;
+
+<span class="cm">// Lege lijst</span>
+<span class="cl">ArrayList</span>&lt;<span class="cl">String</span>&gt; namen = <span class="kw">new</span> <span class="cl">ArrayList</span>&lt;<span class="cl">String</span>&gt;();
+
+<span class="cm">// Met getallen — gebruik Integer, niet int!</span>
+<span class="cl">ArrayList</span>&lt;<span class="cl">Integer</span>&gt; scores = <span class="kw">new</span> <span class="cl">ArrayList</span>&lt;<span class="cl">Integer</span>&gt;();</code></pre>
+
+      <h2>Elementen toevoegen en verwijderen</h2>
+      <pre data-lang="java"><code>namen.<span class="mt">add</span>(<span class="st">"Jan"</span>);          <span class="cm">// toevoegen achteraan</span>
+namen.<span class="mt">add</span>(0, <span class="st">"Piet"</span>);     <span class="cm">// invoegen op index 0</span>
+
+namen.<span class="mt">remove</span>(0);           <span class="cm">// verwijderen op index</span>
+namen.<span class="mt">remove</span>(<span class="st">"Jan"</span>);      <span class="cm">// verwijderen op waarde</span>
+
+namen.<span class="mt">set</span>(1, <span class="st">"An"</span>);       <span class="cm">// element op index 1 vervangen</span>
+
+namen.<span class="mt">clear</span>();             <span class="cm">// alles verwijderen</span></code></pre>
+
+      <h2>Informatie opvragen</h2>
+      <pre data-lang="java"><code>namen.<span class="mt">get</span>(0)              <span class="cm">// eerste element</span>
+namen.<span class="mt">size</span>()             <span class="cm">// aantal elementen</span>
+namen.<span class="mt">isEmpty</span>()          <span class="cm">// true als leeg</span>
+namen.<span class="mt">contains</span>(<span class="st">"Jan"</span>)   <span class="cm">// true als "Jan" erin zit</span>
+namen.<span class="mt">indexOf</span>(<span class="st">"Jan"</span>)    <span class="cm">// index van "Jan" (-1 als niet gevonden)</span></code></pre>
+
+      <h2>ArrayList doorlopen</h2>
+      <pre data-lang="java"><code><span class="cl">ArrayList</span>&lt;<span class="cl">String</span>&gt; namen = <span class="kw">new</span> <span class="cl">ArrayList</span>&lt;<span class="cl">String</span>&gt;();
+namen.<span class="mt">add</span>(<span class="st">"Jan"</span>); namen.<span class="mt">add</span>(<span class="st">"Piet"</span>); namen.<span class="mt">add</span>(<span class="st">"An"</span>);
+
+<span class="cm">// For-each (aanbevolen)</span>
+<span class="kw">for</span> (<span class="cl">String</span> naam : namen) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(naam);
+}
+
+<span class="cm">// Klassieke for met index</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = 0; i &lt; namen.<span class="mt">size</span>(); i++) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(namen.<span class="mt">get</span>(i));
+}</code></pre>
+
+      <h2>ArrayList sorteren</h2>
+      <pre data-lang="java"><code><span class="kw">import</span> java.util.Collections;
+
+<span class="cl">Collections</span>.<span class="mt">sort</span>(namen);        <span class="cm">// alfabetisch / oplopend</span>
+<span class="cl">Collections</span>.<span class="mt">reverse</span>(namen);     <span class="cm">// omgekeerde volgorde</span>
+<span class="cl">Collections</span>.<span class="mt">shuffle</span>(namen);     <span class="cm">// willekeurige volgorde</span></code></pre>
+
+      <h2>ArrayList van objecten</h2>
+      <pre data-lang="java"><code><span class="cl">ArrayList</span>&lt;<span class="cl">Persoon</span>&gt; personen = <span class="kw">new</span> <span class="cl">ArrayList</span>&lt;<span class="cl">Persoon</span>&gt;();
+personen.<span class="mt">add</span>(<span class="kw">new</span> <span class="cl">Persoon</span>(<span class="st">"Jan"</span>, 25));
+personen.<span class="mt">add</span>(<span class="kw">new</span> <span class="cl">Persoon</span>(<span class="st">"An"</span>, 30));
+
+<span class="kw">for</span> (<span class="cl">Persoon</span> p : personen) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(p.<span class="mt">getNaam</span>());
+}</code></pre>
+
+      <div class="info-box tip"><span class="icon">✅</span>Gebruik <code>ArrayList</code> als je van tevoren niet weet hoeveel elementen je nodig hebt. Gebruik een gewone array als de grootte vaststaat en je met primitieve types werkt.</div>
+    </div>
+
+    <!-- ===================== BASIS: MATRIX ===================== -->
+    <div class="tab-content" id="tab-basis-matrix">
+      <h1>Matrix (2D-array)</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Tabel van rijen en kolommen</div>
+
+      <h2>Wat is een matrix?</h2>
+      <p>Een 2D-array is een array van arrays — een tabel met rijen en kolommen. Denk aan een rooster, schaakbord of rekentabel.</p>
+
+      <h2>Matrix aanmaken</h2>
+      <pre data-lang="java"><code><span class="cm">// 3 rijen, 4 kolommen</span>
+<span class="kw">int</span>[][] rooster = <span class="kw">new int</span>[3][4];
+
+<span class="cm">// Direct initialiseren</span>
+<span class="kw">int</span>[][] matrix = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+<span class="cm">// String-matrix</span>
+<span class="cl">String</span>[][] namen = <span class="kw">new</span> <span class="cl">String</span>[2][3];</code></pre>
+
+      <h2>Elementen lezen en schrijven</h2>
+      <pre data-lang="java"><code><span class="kw">int</span>[][] m = {{1,2,3},{4,5,6},{7,8,9}};
+
+<span class="cl">System</span>.out.<span class="mt">println</span>(m[0][0]); <span class="cm">// 1  — rij 0, kolom 0</span>
+<span class="cl">System</span>.out.<span class="mt">println</span>(m[1][2]); <span class="cm">// 6  — rij 1, kolom 2</span>
+<span class="cl">System</span>.out.<span class="mt">println</span>(m[2][1]); <span class="cm">// 8  — rij 2, kolom 1</span>
+
+m[0][1] = 99; <span class="cm">// waarde aanpassen</span></code></pre>
+
+      <h2>Matrix doorlopen (geneste for)</h2>
+      <pre data-lang="java"><code><span class="kw">int</span>[][] matrix = {{1,2,3},{4,5,6},{7,8,9}};
+
+<span class="kw">for</span> (<span class="kw">int</span> rij = 0; rij &lt; matrix.length; rij++) {
+    <span class="kw">for</span> (<span class="kw">int</span> kol = 0; kol &lt; matrix[rij].length; kol++) {
+        <span class="cl">System</span>.out.<span class="mt">print</span>(matrix[rij][kol] + <span class="st">"\t"</span>);
+    }
+    <span class="cl">System</span>.out.<span class="mt">println</span>(); <span class="cm">// nieuwe rij</span>
+}
+<span class="cm">// 1  2  3
+// 4  5  6
+// 7  8  9</span></code></pre>
+
+      <h2>Afmetingen opvragen</h2>
+      <pre data-lang="java"><code><span class="kw">int</span>[][] m = <span class="kw">new int</span>[3][4];
+
+<span class="kw">int</span> aantalRijen = m.length;       <span class="cm">// 3</span>
+<span class="kw">int</span> aantalKolommen = m[0].length; <span class="cm">// 4</span></code></pre>
+
+      <h2>Praktijkvoorbeeld: som per rij</h2>
+      <pre data-lang="java"><code><span class="kw">int</span>[][] punten = {
+    {8, 7, 9},   <span class="cm">// leerling 1</span>
+    {6, 5, 7},   <span class="cm">// leerling 2</span>
+    {9, 10, 8}   <span class="cm">// leerling 3</span>
+};
+
+<span class="kw">for</span> (<span class="kw">int</span> rij = 0; rij &lt; punten.length; rij++) {
+    <span class="kw">int</span> som = 0;
+    <span class="kw">for</span> (<span class="kw">int</span> kol = 0; kol &lt; punten[rij].length; kol++) {
+        som += punten[rij][kol];
+    }
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Leerling "</span> + (rij+1) + <span class="st">": "</span> + som);
+}</code></pre>
+
+      <div class="info-box note"><span class="icon">📌</span>Eerste index = rij, tweede index = kolom. <code>matrix[rij][kolom]</code> — denk aan coördinaten in een tabel.</div>
+    </div>
+
+    <!-- ===================== JAVAFX BASIS ===================== -->
+    <div class="tab-content" id="tab-fx-basis">
+      <h1>JavaFX Basis</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Structuur van een JavaFX-applicatie</div>
+
+      <h2>De drie kernbegrippen</h2>
+      <table>
+        <tr><th>Begrip</th><th>Uitleg</th><th>Analogie</th></tr>
+        <tr><td><span class="pill">Stage</span></td><td>Het venster (het "raam")</td><td>Het theaterpodium</td></tr>
+        <tr><td><span class="pill">Scene</span></td><td>De inhoud van het venster</td><td>Het decor op het podium</td></tr>
+        <tr><td><span class="pill">Node</span></td><td>Elk element in de UI (knop, label, veld...)</td><td>Acteurs/rekwisieten</td></tr>
+      </table>
+
+      <h2>Minimale JavaFX-applicatie</h2>
+      <pre data-lang="java"><code><span class="kw">import</span> javafx.application.Application;
+<span class="kw">import</span> javafx.scene.Scene;
+<span class="kw">import</span> javafx.scene.control.Label;
+<span class="kw">import</span> javafx.scene.layout.VBox;
+<span class="kw">import</span> javafx.stage.Stage;
+
+<span class="kw">public class</span> <span class="cl">MijnApp</span> <span class="kw">extends</span> <span class="cl">Application</span> {
+
+    <span class="kw">@Override</span>
+    <span class="kw">public void</span> <span class="mt">start</span>(<span class="cl">Stage</span> stage) {
+        <span class="cm">// 1. UI-elementen aanmaken</span>
+        <span class="cl">Label</span> label = <span class="kw">new</span> <span class="cl">Label</span>(<span class="st">"Hallo wereld!"</span>);
+
+        <span class="cm">// 2. Layout (pane) aanmaken en elementen toevoegen</span>
+        <span class="cl">VBox</span> root = <span class="kw">new</span> <span class="cl">VBox</span>(10); <span class="cm">// 10px ruimte tussen elementen</span>
+        root.<span class="mt">getChildren</span>().<span class="mt">add</span>(label);
+
+        <span class="cm">// 3. Scene aanmaken (breedte x hoogte)</span>
+        <span class="cl">Scene</span> scene = <span class="kw">new</span> <span class="cl">Scene</span>(root, 400, 300);
+
+        <span class="cm">// 4. Scene op stage plaatsen en tonen</span>
+        stage.<span class="mt">setScene</span>(scene);
+        stage.<span class="mt">setTitle</span>(<span class="st">"Mijn App"</span>);
+        stage.<span class="mt">show</span>();
+    }
+
+    <span class="kw">public static void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="mt">launch</span>(args);
+    }
+}</code></pre>
+
+      <h2>Veelgebruikte controls</h2>
+      <table>
+        <tr><th>Control</th><th>Gebruik</th><th>Aanmaken</th></tr>
+        <tr><td><span class="pill">Label</span></td><td>Tekst tonen</td><td><code>new Label("tekst")</code></td></tr>
+        <tr><td><span class="pill">Button</span></td><td>Klikbare knop</td><td><code>new Button("Klik")</code></td></tr>
+        <tr><td><span class="pill">TextField</span></td><td>Tekst invoeren (1 lijn)</td><td><code>new TextField()</code></td></tr>
+        <tr><td><span class="pill">TextArea</span></td><td>Tekst invoeren (meerdere lijnen)</td><td><code>new TextArea()</code></td></tr>
+        <tr><td><span class="pill">CheckBox</span></td><td>Aan/uit vinkje</td><td><code>new CheckBox("optie")</code></td></tr>
+        <tr><td><span class="pill">ComboBox</span></td><td>Dropdown lijst</td><td><code>new ComboBox&lt;&gt;()</code></td></tr>
+        <tr><td><span class="pill">DatePicker</span></td><td>Datum kiezen</td><td><code>new DatePicker()</code></td></tr>
+      </table>
+
+      <h2>Tekst lezen en schrijven</h2>
+      <pre data-lang="java"><code><span class="cl">TextField</span> veld = <span class="kw">new</span> <span class="cl">TextField</span>();
+
+<span class="cm">// Waarde uitlezen</span>
+<span class="cl">String</span> invoer = veld.<span class="mt">getText</span>();
+
+<span class="cm">// Waarde instellen</span>
+veld.<span class="mt">setText</span>(<span class="st">"standaardwaarde"</span>);
+
+<span class="cm">// Veld leegmaken</span>
+veld.<span class="mt">clear</span>();
+
+<span class="cm">// Label aanpassen</span>
+<span class="cl">Label</span> resultaat = <span class="kw">new</span> <span class="cl">Label</span>(<span class="st">""</span>);
+resultaat.<span class="mt">setText</span>(<span class="st">"Hallo "</span> + invoer);</code></pre>
+
+      <div class="info-box tip"><span class="icon">✅</span>De volgorde is altijd: maak controls → voeg toe aan pane → stop pane in Scene → stop Scene op Stage → <code>show()</code>.</div>
+    </div>
+
+    <!-- ===================== JAVAFX PANES ===================== -->
+    <div class="tab-content" id="tab-fx-panes">
+      <h1>Panes & Layouts</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Hoe positioneer je elementen?</div>
+
+      <h2>Overzicht van panes</h2>
+      <table>
+        <tr><th>Pane</th><th>Werking</th><th>Wanneer gebruiken</th></tr>
+        <tr><td><span class="pill">VBox</span></td><td>Elementen verticaal onder elkaar</td><td>Formulieren, menu's</td></tr>
+        <tr><td><span class="pill">HBox</span></td><td>Elementen horizontaal naast elkaar</td><td>Knoppen rij, toolbar</td></tr>
+        <tr><td><span class="pill">GridPane</span></td><td>Tabel van rijen &amp; kolommen</td><td>Formulieren met labels + velden</td></tr>
+        <tr><td><span class="pill">BorderPane</span></td><td>5 zones: top/bottom/left/right/center</td><td>Hoofdlayout van een app</td></tr>
+        <tr><td><span class="pill">StackPane</span></td><td>Elementen op elkaar gestapeld</td><td>Overlay, gecentreerde inhoud</td></tr>
+        <tr><td><span class="pill">FlowPane</span></td><td>Elementen vloeien automatisch door</td><td>Tags, badges, flexibele rijen</td></tr>
+        <tr><td><span class="pill">AnchorPane</span></td><td>Elementen aan ankerpunten vastzetten</td><td>Absolute positionering</td></tr>
+      </table>
+
+      <h2>VBox</h2>
+      <pre data-lang="java"><code><span class="cl">VBox</span> vbox = <span class="kw">new</span> <span class="cl">VBox</span>(10); <span class="cm">// 10px ruimte tussen elementen</span>
+vbox.<span class="mt">getChildren</span>().<span class="mt">addAll</span>(label1, label2, knop);
+
+<span class="cm">// Uitlijning instellen</span>
+vbox.<span class="mt">setAlignment</span>(<span class="cl">Pos</span>.CENTER);        <span class="cm">// gecentreerd</span>
+vbox.<span class="mt">setAlignment</span>(<span class="cl">Pos</span>.TOP_LEFT);      <span class="cm">// linksboven (standaard)</span>
+
+<span class="cm">// Padding (ruimte aan de binnenkant)</span>
+vbox.<span class="mt">setPadding</span>(<span class="kw">new</span> <span class="cl">Insets</span>(20));      <span class="cm">// 20px rondom</span>
+vbox.<span class="mt">setPadding</span>(<span class="kw">new</span> <span class="cl">Insets</span>(10,20,10,20)); <span class="cm">// top,rechts,onder,links</span></code></pre>
+
+      <h2>HBox</h2>
+      <pre data-lang="java"><code><span class="cl">HBox</span> hbox = <span class="kw">new</span> <span class="cl">HBox</span>(8); <span class="cm">// 8px ruimte tussen elementen</span>
+hbox.<span class="mt">getChildren</span>().<span class="mt">addAll</span>(knop1, knop2, knop3);
+hbox.<span class="mt">setAlignment</span>(<span class="cl">Pos</span>.CENTER_RIGHT); <span class="cm">// rechts uitlijnen</span></code></pre>
+
+      <h2>GridPane</h2>
+      <pre data-lang="java"><code><span class="cl">GridPane</span> grid = <span class="kw">new</span> <span class="cl">GridPane</span>();
+grid.<span class="mt">setHgap</span>(10);  <span class="cm">// horizontale ruimte tussen kolommen</span>
+grid.<span class="mt">setVgap</span>(8);   <span class="cm">// verticale ruimte tussen rijen</span>
+grid.<span class="mt">setPadding</span>(<span class="kw">new</span> <span class="cl">Insets</span>(20));
+
+<span class="cm">// add(node, kolom, rij)</span>
+grid.<span class="mt">add</span>(<span class="kw">new</span> <span class="cl">Label</span>(<span class="st">"Naam:"</span>), 0, 0);
+grid.<span class="mt">add</span>(naamVeld, 1, 0);
+grid.<span class="mt">add</span>(<span class="kw">new</span> <span class="cl">Label</span>(<span class="st">"Email:"</span>), 0, 1);
+grid.<span class="mt">add</span>(emailVeld, 1, 1);
+
+<span class="cm">// Element over meerdere kolommen laten spannen</span>
+<span class="cl">GridPane</span>.<span class="mt">setColumnSpan</span>(knop, 2);</code></pre>
+
+      <h2>BorderPane</h2>
+      <pre data-lang="java"><code><span class="cl">BorderPane</span> border = <span class="kw">new</span> <span class="cl">BorderPane</span>();
+border.<span class="mt">setTop</span>(<span class="kw">new</span> <span class="cl">Label</span>(<span class="st">"Titel"</span>));      <span class="cm">// bovenaan</span>
+border.<span class="mt">setCenter</span>(tabelView);            <span class="cm">// midden (neemt rest op)</span>
+border.<span class="mt">setBottom</span>(knoppen);             <span class="cm">// onderaan</span>
+border.<span class="mt">setLeft</span>(navigatie);             <span class="cm">// links</span>
+border.<span class="mt">setRight</span>(zijpaneel);            <span class="cm">// rechts</span></code></pre>
+
+      <h2>Panes nesten</h2>
+      <pre data-lang="java"><code><span class="cm">// HBox met knoppen onderaan een VBox</span>
+<span class="cl">HBox</span> knoppen = <span class="kw">new</span> <span class="cl">HBox</span>(8);
+knoppen.<span class="mt">getChildren</span>().<span class="mt">addAll</span>(opslaanKnop, annuleerKnop);
+
+<span class="cl">VBox</span> root = <span class="kw">new</span> <span class="cl">VBox</span>(12);
+root.<span class="mt">getChildren</span>().<span class="mt">addAll</span>(naamVeld, emailVeld, knoppen);</code></pre>
+
+      <div class="info-box note"><span class="icon">📌</span>Panes mogen genest worden. Een <code>BorderPane</code> als hoofdlayout met een <code>VBox</code> in het center en een <code>HBox</code> onderaan is een veelgebruikt patroon.</div>
+    </div>
+
+    <!-- ===================== JAVAFX CONTROLS & EVENTS ===================== -->
+    <div class="tab-content" id="tab-fx-controls">
+      <h1>Controls & Events</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Knoppen, invoervelden en event handlers</div>
+
+      <h2>Button event handler</h2>
+      <pre data-lang="java"><code><span class="cl">Button</span> knop = <span class="kw">new</span> <span class="cl">Button</span>(<span class="st">"Bereken"</span>);
+
+<span class="cm">// Lambda (modern, korter)</span>
+knop.<span class="mt">setOnAction</span>(e -> {
+    <span class="cl">String</span> invoer = veld.<span class="mt">getText</span>();
+    resultaat.<span class="mt">setText</span>(<span class="st">"Hallo "</span> + invoer);
+});
+
+<span class="cm">// Muisklik event</span>
+knop.<span class="mt">setOnMouseClicked</span>(e -> {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Geklikt!"</span>);
+});</code></pre>
+
+      <h2>CheckBox</h2>
+      <pre data-lang="java"><code><span class="cl">CheckBox</span> vinkje = <span class="kw">new</span> <span class="cl">CheckBox</span>(<span class="st">"Nieuwsbrief ontvangen"</span>);
+
+<span class="cm">// Waarde uitlezen</span>
+<span class="kw">boolean</span> aangevinkt = vinkje.<span class="mt">isSelected</span>();
+
+<span class="cm">// Event bij wijziging</span>
+vinkje.<span class="mt">setOnAction</span>(e -> {
+    <span class="kw">if</span> (vinkje.<span class="mt">isSelected</span>()) {
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Ingeschreven"</span>);
+    }
+});</code></pre>
+
+      <h2>ComboBox (dropdown)</h2>
+      <pre data-lang="java"><code><span class="cl">ComboBox</span>&lt;<span class="cl">String</span>&gt; dropdown = <span class="kw">new</span> <span class="cl">ComboBox</span>&lt;&gt;();
+dropdown.<span class="mt">getItems</span>().<span class="mt">addAll</span>(<span class="st">"Optie 1"</span>, <span class="st">"Optie 2"</span>, <span class="st">"Optie 3"</span>);
+dropdown.<span class="mt">setValue</span>(<span class="st">"Optie 1"</span>); <span class="cm">// standaardwaarde</span>
+
+<span class="cm">// Geselecteerde waarde uitlezen</span>
+<span class="cl">String</span> keuze = dropdown.<span class="mt">getValue</span>();</code></pre>
+
+      <h2>DatePicker</h2>
+      <pre data-lang="java"><code><span class="cl">DatePicker</span> picker = <span class="kw">new</span> <span class="cl">DatePicker</span>();
+picker.<span class="mt">setValue</span>(<span class="cl">LocalDate</span>.<span class="mt">now</span>()); <span class="cm">// standaard vandaag</span>
+
+<span class="cm">// Geselecteerde datum uitlezen</span>
+<span class="cl">LocalDate</span> datum = picker.<span class="mt">getValue</span>();</code></pre>
+
+      <h2>Invoer valideren</h2>
+      <pre data-lang="java"><code>knop.<span class="mt">setOnAction</span>(e -> {
+    <span class="cl">String</span> tekst = veld.<span class="mt">getText</span>();
+
+    <span class="kw">if</span> (tekst.<span class="mt">isEmpty</span>()) {
+        foutLabel.<span class="mt">setText</span>(<span class="st">"Veld mag niet leeg zijn!"</span>);
+        <span class="kw">return</span>; <span class="cm">// stop verdere uitvoering</span>
+    }
+
+    <span class="kw">try</span> {
+        <span class="kw">int</span> getal = <span class="cl">Integer</span>.<span class="mt">parseInt</span>(tekst);
+        resultaat.<span class="mt">setText</span>(<span class="st">"Dubbel: "</span> + (getal * 2));
+    } <span class="kw">catch</span> (<span class="cl">NumberFormatException</span> ex) {
+        foutLabel.<span class="mt">setText</span>(<span class="st">"Voer een geldig getal in!"</span>);
+    }
+});</code></pre>
+
+      <div class="info-box warn"><span class="icon">⚠️</span><code>getText()</code> geeft altijd een <code>String</code> terug. Wil je een getal, converteer dan met <code>Integer.parseInt()</code> of <code>Double.parseDouble()</code> — en vang altijd de <code>NumberFormatException</code> op!</div>
+    </div>
+
+    <!-- ===================== JAVAFX STYLING ===================== -->
+    <div class="tab-content" id="tab-fx-styling">
+      <h1>Styling & CSS</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Uiterlijk van UI-elementen aanpassen</div>
+
+      <h2>Inline stijl via setStyle()</h2>
+      <pre data-lang="java"><code><span class="cm">// Tekst en achtergrond</span>
+label.<span class="mt">setStyle</span>(<span class="st">"-fx-font-size: 18px; -fx-text-fill: red;"</span>);
+
+<span class="cm">// Achtergrond en rand</span>
+vbox.<span class="mt">setStyle</span>(<span class="st">"-fx-background-color: #f0f0f0; -fx-border-color: gray; -fx-border-width: 1px;"</span>);
+
+<span class="cm">// Knop opmaken</span>
+knop.<span class="mt">setStyle</span>(<span class="st">"-fx-background-color: #4fc3f7; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 6px;"</span>);</code></pre>
+
+      <h2>Veelgebruikte CSS-eigenschappen</h2>
+      <table>
+        <tr><th>Eigenschap</th><th>Uitleg</th><th>Voorbeeld</th></tr>
+        <tr><td><code>-fx-font-size</code></td><td>Lettergrootte</td><td><code>14px</code></td></tr>
+        <tr><td><code>-fx-font-weight</code></td><td>Dikte</td><td><code>bold</code></td></tr>
+        <tr><td><code>-fx-font-family</code></td><td>Lettertype</td><td><code>"Arial"</code></td></tr>
+        <tr><td><code>-fx-text-fill</code></td><td>Tekstkleur</td><td><code>red</code> / <code>#ff0000</code></td></tr>
+        <tr><td><code>-fx-background-color</code></td><td>Achtergrondkleur</td><td><code>#ffffff</code></td></tr>
+        <tr><td><code>-fx-border-color</code></td><td>Randkleur</td><td><code>black</code></td></tr>
+        <tr><td><code>-fx-border-width</code></td><td>Randbreedte</td><td><code>2px</code></td></tr>
+        <tr><td><code>-fx-border-radius</code></td><td>Afgeronde hoeken</td><td><code>8px</code></td></tr>
+        <tr><td><code>-fx-padding</code></td><td>Binnenruimte</td><td><code>10px</code></td></tr>
+        <tr><td><code>-fx-opacity</code></td><td>Doorzichtigheid (0.0–1.0)</td><td><code>0.5</code></td></tr>
+      </table>
+
+      <h2>Stijlklassen toevoegen</h2>
+      <pre data-lang="java"><code><span class="cm">// CSS-klasse toevoegen / verwijderen</span>
+knop.<span class="mt">getStyleClass</span>().<span class="mt">add</span>(<span class="st">"primaire-knop"</span>);
+knop.<span class="mt">getStyleClass</span>().<span class="mt">remove</span>(<span class="st">"primaire-knop"</span>);
+
+<span class="cm">// Meerdere klassen</span>
+label.<span class="mt">getStyleClass</span>().<span class="mt">addAll</span>(<span class="st">"fout-tekst"</span>, <span class="st">"groot"</span>);</code></pre>
+
+      <h2>Extern CSS-bestand koppelen</h2>
+      <pre data-lang="java"><code><span class="cm">// In start()-methode, na aanmaken scene:</span>
+scene.<span class="mt">getStylesheets</span>().<span class="mt">add</span>(<span class="mt">getClass</span>().<span class="mt">getResource</span>(<span class="st">"stijl.css"</span>).<span class="mt">toExternalForm</span>());</code></pre>
+
+      <pre data-lang="css"><code><span class="cm">/* stijl.css */</span>
+.primaire-knop {
+    -fx-background-color: #7c6dfa;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 6px;
+    -fx-padding: 8px 16px;
+}
+
+.fout-tekst {
+    -fx-text-fill: #f06292;
+    -fx-font-weight: bold;
+}</code></pre>
+
+      <h2>Grootte en positie instellen</h2>
+      <pre data-lang="java"><code><span class="cm">// Vaste breedte/hoogte</span>
+knop.<span class="mt">setPrefWidth</span>(150);
+knop.<span class="mt">setPrefHeight</span>(40);
+
+<span class="cm">// Maximale breedte (uitrekken)</span>
+knop.<span class="mt">setMaxWidth</span>(<span class="cl">Double</span>.MAX_VALUE); <span class="cm">// vult volledige breedte</span>
+
+<span class="cm">// Zichtbaarheid</span>
+label.<span class="mt">setVisible</span>(<span class="kw">false</span>);  <span class="cm">// onzichtbaar, neemt wel ruimte in</span>
+label.<span class="mt">setManaged</span>(<span class="kw">false</span>);  <span class="cm">// ook geen ruimte meer</span></code></pre>
+
+      <div class="info-box tip"><span class="icon">✅</span>Gebruik voor kleine aanpassingen <code>setStyle()</code>. Voor een consistente stijl door de hele app: werk met een extern CSS-bestand en stijlklassen.</div>
+
+      <h2>Java API-stijl (zonder CSS)</h2>
+      <p>Je kan elementen ook rechtstreeks stylen via Java-methodes, zonder één regel CSS. Dit vereist de juiste imports.</p>
+
+      <h3>setFont() — lettertype instellen</h3>
+      <pre data-lang="java"><code><span class="kw">import</span> javafx.scene.text.Font;
+<span class="kw">import</span> javafx.scene.text.FontWeight;
+<span class="kw">import</span> javafx.scene.text.FontPosture;
+
+<span class="cm">// Eenvoudig: enkel grootte</span>
+label.<span class="mt">setFont</span>(<span class="cl">Font</span>.<span class="mt">font</span>(18));
+
+<span class="cm">// Met lettertype</span>
+label.<span class="mt">setFont</span>(<span class="cl">Font</span>.<span class="mt">font</span>(<span class="st">"Arial"</span>, 16));
+
+<span class="cm">// Met dikte (bold)</span>
+label.<span class="mt">setFont</span>(<span class="cl">Font</span>.<span class="mt">font</span>(<span class="st">"Arial"</span>, <span class="cl">FontWeight</span>.BOLD, 16));
+
+<span class="cm">// Cursief</span>
+label.<span class="mt">setFont</span>(<span class="cl">Font</span>.<span class="mt">font</span>(<span class="st">"Arial"</span>, <span class="cl">FontWeight</span>.NORMAL, <span class="cl">FontPosture</span>.ITALIC, 14));
+
+<span class="cm">// Werkt ook op Button, TextField, enz.</span>
+knop.<span class="mt">setFont</span>(<span class="cl">Font</span>.<span class="mt">font</span>(<span class="st">"Arial"</span>, <span class="cl">FontWeight</span>.BOLD, 13));</code></pre>
+
+      <h3>setTextFill() — tekstkleur (Label, Button)</h3>
+      <pre data-lang="java"><code><span class="kw">import</span> javafx.scene.paint.Color;
+
+label.<span class="mt">setTextFill</span>(<span class="cl">Color</span>.RED);
+label.<span class="mt">setTextFill</span>(<span class="cl">Color</span>.DARKBLUE);
+label.<span class="mt">setTextFill</span>(<span class="cl">Color</span>.<span class="mt">rgb</span>(100, 200, 100));        <span class="cm">// RGB-waarden</span>
+label.<span class="mt">setTextFill</span>(<span class="cl">Color</span>.<span class="mt">web</span>(<span class="st">"#7c6dfa"</span>));            <span class="cm">// hex-code</span>
+label.<span class="mt">setTextFill</span>(<span class="cl">Color</span>.<span class="mt">rgb</span>(255, 0, 0, 0.5));      <span class="cm">// met transparantie (0.0–1.0)</span></code></pre>
+
+      <h3>setBackground() — achtergrondkleur van een pane</h3>
+      <pre data-lang="java"><code><span class="kw">import</span> javafx.scene.layout.Background;
+<span class="kw">import</span> javafx.scene.layout.BackgroundFill;
+<span class="kw">import</span> javafx.scene.layout.CornerRadii;
+<span class="kw">import</span> javafx.geometry.Insets;
+
+<span class="cm">// Effen kleur</span>
+vbox.<span class="mt">setBackground</span>(<span class="kw">new</span> <span class="cl">Background</span>(
+    <span class="kw">new</span> <span class="cl">BackgroundFill</span>(<span class="cl">Color</span>.LIGHTBLUE, <span class="cl">CornerRadii</span>.EMPTY, <span class="cl">Insets</span>.EMPTY)
+));
+
+<span class="cm">// Met afgeronde hoeken (10px)</span>
+vbox.<span class="mt">setBackground</span>(<span class="kw">new</span> <span class="cl">Background</span>(
+    <span class="kw">new</span> <span class="cl">BackgroundFill</span>(<span class="cl">Color</span>.<span class="mt">web</span>(<span class="st">"#f0f0f0"</span>), <span class="kw">new</span> <span class="cl">CornerRadii</span>(10), <span class="cl">Insets</span>.EMPTY)
+));
+
+<span class="cm">// Achtergrond verwijderen (transparant)</span>
+vbox.<span class="mt">setBackground</span>(<span class="cl">Background</span>.EMPTY);</code></pre>
+
+      <h3>setBorder() — rand rondom een pane</h3>
+      <pre data-lang="java"><code><span class="kw">import</span> javafx.scene.layout.Border;
+<span class="kw">import</span> javafx.scene.layout.BorderStroke;
+<span class="kw">import</span> javafx.scene.layout.BorderStrokeStyle;
+<span class="kw">import</span> javafx.scene.layout.BorderWidths;
+
+vbox.<span class="mt">setBorder</span>(<span class="kw">new</span> <span class="cl">Border</span>(
+    <span class="kw">new</span> <span class="cl">BorderStroke</span>(
+        <span class="cl">Color</span>.GRAY,                  <span class="cm">// kleur</span>
+        <span class="cl">BorderStrokeStyle</span>.SOLID,     <span class="cm">// stijl: SOLID, DASHED, DOTTED</span>
+        <span class="kw">new</span> <span class="cl">CornerRadii</span>(8),          <span class="cm">// afgeronde hoeken</span>
+        <span class="kw">new</span> <span class="cl">BorderWidths</span>(2)          <span class="cm">// breedte in px</span>
+    )
+));</code></pre>
+
+      <h3>setPadding() en setSpacing() — ruimte</h3>
+      <pre data-lang="java"><code><span class="kw">import</span> javafx.geometry.Insets;
+
+<span class="cm">// Ruimte aan de binnenkant van een pane</span>
+vbox.<span class="mt">setPadding</span>(<span class="kw">new</span> <span class="cl">Insets</span>(20));            <span class="cm">// 20px rondom</span>
+vbox.<span class="mt">setPadding</span>(<span class="kw">new</span> <span class="cl">Insets</span>(10, 20, 10, 20)); <span class="cm">// top, rechts, onder, links</span>
+
+<span class="cm">// Ruimte tussen kinderen in VBox / HBox</span>
+vbox.<span class="mt">setSpacing</span>(12);
+hbox.<span class="mt">setSpacing</span>(8);</code></pre>
+
+      <h3>setAlignment() — uitlijning in een pane</h3>
+      <pre data-lang="java"><code><span class="kw">import</span> javafx.geometry.Pos;
+
+vbox.<span class="mt">setAlignment</span>(<span class="cl">Pos</span>.CENTER);          <span class="cm">// horizontaal + verticaal gecentreerd</span>
+vbox.<span class="mt">setAlignment</span>(<span class="cl">Pos</span>.TOP_CENTER);      <span class="cm">// bovenaan, gecentreerd</span>
+vbox.<span class="mt">setAlignment</span>(<span class="cl">Pos</span>.BOTTOM_RIGHT);    <span class="cm">// rechtsonder</span>
+hbox.<span class="mt">setAlignment</span>(<span class="cl">Pos</span>.CENTER_LEFT);    <span class="cm">// links, verticaal gecentreerd</span></code></pre>
+
+      <h3>setTextAlignment() — uitlijning van tekst in een Label</h3>
+      <pre data-lang="java"><code><span class="kw">import</span> javafx.scene.text.TextAlignment;
+
+label.<span class="mt">setTextAlignment</span>(<span class="cl">TextAlignment</span>.CENTER);
+label.<span class="mt">setTextAlignment</span>(<span class="cl">TextAlignment</span>.RIGHT);
+label.<span class="mt">setWrapText</span>(<span class="kw">true</span>);  <span class="cm">// tekst afbreken als hij te lang is</span></code></pre>
+
+      <h3>Overzichtstabel: CSS vs Java API</h3>
+      <table>
+        <tr><th>Wat</th><th>Via CSS (setStyle)</th><th>Via Java API</th></tr>
+        <tr><td>Lettergrootte</td><td><code>-fx-font-size: 16px</code></td><td><code>setFont(Font.font(16))</code></td></tr>
+        <tr><td>Vet</td><td><code>-fx-font-weight: bold</code></td><td><code>Font.font("Arial", FontWeight.BOLD, 14)</code></td></tr>
+        <tr><td>Tekstkleur</td><td><code>-fx-text-fill: red</code></td><td><code>setTextFill(Color.RED)</code></td></tr>
+        <tr><td>Achtergrond</td><td><code>-fx-background-color: #fff</code></td><td><code>setBackground(new Background(...))</code></td></tr>
+        <tr><td>Rand</td><td><code>-fx-border-color: gray</code></td><td><code>setBorder(new Border(...))</code></td></tr>
+        <tr><td>Padding</td><td><code>-fx-padding: 10px</code></td><td><code>setPadding(new Insets(10))</code></td></tr>
+        <tr><td>Uitlijning</td><td><code>-fx-alignment: center</code></td><td><code>setAlignment(Pos.CENTER)</code></td></tr>
+      </table>
+
+      <div class="info-box note"><span class="icon">📌</span><code>setBackground()</code> en <code>setBorder()</code> werken op <strong>Panes</strong> (VBox, HBox, GridPane…). Voor tekstkleur op een Label of Button gebruik je <code>setTextFill()</code>. Voor een TextField heb je geen <code>setTextFill()</code> — gebruik daar <code>setStyle("-fx-text-fill: ...")</code>.</div>
     </div>
 
   </main>
