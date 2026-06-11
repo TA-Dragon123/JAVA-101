@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Java Cursus – 6A&D</title>
+<title>Java 101</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -251,24 +251,34 @@
 
 <div class="container">
   <nav id="sidebar">
-    <div class="nav-section">OOP & JavaFX</div>
-    <div class="nav-item active" onclick="showTab('oop')" data-tab="oop"><span class="icon">🧩</span>OOP & Klassen</div>
+    <div class="nav-section">Basis Java</div>
+    <div class="nav-item active" onclick="showTab('basis-types')" data-tab="basis-types"><span class="icon">🔢</span>Types & Variabelen</div>
+    <div class="nav-item" onclick="showTab('basis-if')" data-tab="basis-if"><span class="icon">❓</span>If / Else</div>
+    <div class="nav-item" onclick="showTab('basis-switch')" data-tab="basis-switch"><span class="icon">🔀</span>Switch</div>
+    <div class="nav-item" onclick="showTab('basis-while')" data-tab="basis-while"><span class="icon">🔁</span>While-lus</div>
+    <div class="nav-item" onclick="showTab('basis-for')" data-tab="basis-for"><span class="icon">🔄</span>For-lus</div>
+    <div class="nav-item" onclick="showTab('basis-methoden')" data-tab="basis-methoden"><span class="icon">⚙️</span>Methoden</div>
+    <div class="nav-item" onclick="showTab('basis-enum')" data-tab="basis-enum"><span class="icon">📌</span>Enumeratie (enum)</div>
+    <div class="nav-item" onclick="showTab('basis-arrays')" data-tab="basis-arrays"><span class="icon">📋</span>Arrays</div>
+
+    <div class="nav-section">OOP & Klassen</div>
+    <div class="nav-item" onclick="showTab('oop')" data-tab="oop"><span class="icon">🧩</span>OOP & Klassen</div>
     <div class="nav-item" onclick="showTab('abstract')" data-tab="abstract"><span class="icon">🔷</span>Abstracte Klassen</div>
     <div class="nav-item" onclick="showTab('relatie')" data-tab="relatie"><span class="icon">🔗</span>Heeft-een Relatie</div>
     <div class="nav-item" onclick="showTab('klaslokaal')" data-tab="klaslokaal"><span class="icon">🏫</span>Klaslokaal & Tafel</div>
+
+    <div class="nav-section">JavaFX</div>
     <div class="nav-item" onclick="showTab('meerdere')" data-tab="meerdere"><span class="icon">🖥️</span>Meerdere Schermen</div>
-    <div class="nav-item" onclick="showTab('arrays')" data-tab="arrays"><span class="icon">📋</span>Arrays in JavaFX</div>
+    <div class="nav-item" onclick="showTab('arrays')" data-tab="arrays"><span class="icon">📊</span>Arrays in JavaFX</div>
+    <div class="nav-item" onclick="showTab('tableview')" data-tab="tableview"><span class="icon">📊</span>TableView Basis</div>
+    <div class="nav-item" onclick="showTab('simpleprop')" data-tab="simpleprop"><span class="icon">🔧</span>SimpleObjectProperty</div>
+    <div class="nav-item" onclick="showTab('knoppen')" data-tab="knoppen"><span class="icon">🖱️</span>TableView met Knoppen</div>
+    <div class="nav-item" onclick="showTab('relaties')" data-tab="relaties"><span class="icon">🏛️</span>TableViews met Relatie</div>
 
     <div class="nav-section">Data & Types</div>
     <div class="nav-item" onclick="showTab('datums')" data-tab="datums"><span class="icon">📅</span>Werken met Datums</div>
     <div class="nav-item" onclick="showTab('tijdstippen')" data-tab="tijdstippen"><span class="icon">🕐</span>Werken met Tijdstippen</div>
     <div class="nav-item" onclick="showTab('bedragen')" data-tab="bedragen"><span class="icon">💶</span>Werken met Bedragen</div>
-
-    <div class="nav-section">TableView</div>
-    <div class="nav-item" onclick="showTab('tableview')" data-tab="tableview"><span class="icon">📊</span>TableView Basis</div>
-    <div class="nav-item" onclick="showTab('simpleprop')" data-tab="simpleprop"><span class="icon">🔧</span>SimpleObjectProperty</div>
-    <div class="nav-item" onclick="showTab('knoppen')" data-tab="knoppen"><span class="icon">🖱️</span>TableView met Knoppen</div>
-    <div class="nav-item" onclick="showTab('relaties')" data-tab="relaties"><span class="icon">🏛️</span>TableViews met Relatie</div>
 
     <div class="nav-section">JDBC & Databank</div>
     <div class="nav-item" onclick="showTab('jdbc')" data-tab="jdbc"><span class="icon">🗄️</span>SQL vanuit Java</div>
@@ -282,8 +292,431 @@
 
   <main id="main-content">
 
+    <!-- ===================== BASIS: TYPES & VARIABELEN ===================== -->
+    <div class="tab-content active" id="tab-basis-types">
+      <h1>Types & Variabelen</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; De bouwstenen van Java</div>
+
+      <h2>Primitieve types</h2>
+      <table>
+        <tr><th>Type</th><th>Waarde</th><th>Voorbeeld</th></tr>
+        <tr><td><code>int</code></td><td>Geheel getal</td><td><code>int leeftijd = 18;</code></td></tr>
+        <tr><td><code>double</code></td><td>Decimaal getal</td><td><code>double prijs = 9.99;</code></td></tr>
+        <tr><td><code>boolean</code></td><td>true / false</td><td><code>boolean actief = true;</code></td></tr>
+        <tr><td><code>char</code></td><td>Één karakter</td><td><code>char letter = 'A';</code></td></tr>
+        <tr><td><code>long</code></td><td>Groot geheel getal</td><td><code>long bevolking = 8000000000L;</code></td></tr>
+      </table>
+
+      <h2>String</h2>
+      <pre data-lang="java"><code><span class="cl">String</span> naam = <span class="st">"Niels"</span>;
+<span class="cl">String</span> groet = <span class="st">"Hallo "</span> + naam;     <span class="cm">// samenvoegen met +</span>
+<span class="kw">int</span> lengte = naam.<span class="mt">length</span>();         <span class="cm">// 5</span>
+<span class="cl">String</span> hoofd = naam.<span class="mt">toUpperCase</span>(); <span class="cm">// "NIELS"</span>
+<span class="kw">boolean</span> gelijk = naam.<span class="mt">equals</span>(<span class="st">"Niels"</span>); <span class="cm">// true — gebruik .equals(), nooit ==!</span></code></pre>
+
+      <h2>Variabelen declareren en toewijzen</h2>
+      <pre data-lang="java"><code><span class="kw">int</span> x = 10;
+<span class="kw">int</span> y = 3;
+
+<span class="kw">int</span> som = x + y;        <span class="cm">// 13</span>
+<span class="kw">int</span> verschil = x - y;   <span class="cm">// 7</span>
+<span class="kw">int</span> product = x * y;    <span class="cm">// 30</span>
+<span class="kw">int</span> quotient = x / y;   <span class="cm">// 3  (gehele deling!)</span>
+<span class="kw">int</span> rest = x % y;       <span class="cm">// 1  (rest na deling)</span></code></pre>
+
+      <h2>Casten (type omzetten)</h2>
+      <pre data-lang="java"><code><span class="kw">int</span> getal = 7;
+<span class="kw">double</span> komma = (<span class="kw">double</span>) getal;  <span class="cm">// 7.0</span>
+
+<span class="kw">double</span> pi = 3.14;
+<span class="kw">int</span> afgerond = (<span class="kw">int</span>) pi;         <span class="cm">// 3  (decimalen worden afgekapt!)</span>
+
+<span class="cm">// String naar int:</span>
+<span class="kw">int</span> nummer = <span class="cl">Integer</span>.<span class="mt">parseInt</span>(<span class="st">"42"</span>);
+
+<span class="cm">// int naar String:</span>
+<span class="cl">String</span> tekst = <span class="cl">Integer</span>.<span class="mt">toString</span>(42);</code></pre>
+
+      <div class="info-box tip"><span class="icon">✅</span>Gebruik <code>.equals()</code> om Strings te vergelijken, nooit <code>==</code>. Met <code>==</code> vergelijk je de geheugenreferentie, niet de inhoud!</div>
+    </div>
+
+    <!-- ===================== BASIS: IF / ELSE ===================== -->
+    <div class="tab-content" id="tab-basis-if">
+      <h1>If / Else</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Beslissingen in Java</div>
+
+      <h2>Vergelijkingsoperatoren</h2>
+      <table>
+        <tr><th>Operator</th><th>Betekenis</th></tr>
+        <tr><td><code>==</code></td><td>Gelijk aan</td></tr>
+        <tr><td><code>!=</code></td><td>Niet gelijk aan</td></tr>
+        <tr><td><code>&gt;</code></td><td>Groter dan</td></tr>
+        <tr><td><code>&lt;</code></td><td>Kleiner dan</td></tr>
+        <tr><td><code>&gt;=</code></td><td>Groter of gelijk aan</td></tr>
+        <tr><td><code>&lt;=</code></td><td>Kleiner of gelijk aan</td></tr>
+        <tr><td><code>&amp;&amp;</code></td><td>EN (beide moeten waar zijn)</td></tr>
+        <tr><td><code>||</code></td><td>OF (minstens één moet waar zijn)</td></tr>
+        <tr><td><code>!</code></td><td>NIET (omgekeerde waarde)</td></tr>
+      </table>
+
+      <h2>Eenvoudige if</h2>
+      <pre data-lang="java"><code><span class="kw">int</span> leeftijd = 20;
+
+<span class="kw">if</span> (leeftijd >= 18) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Volwassen"</span>);
+}</code></pre>
+
+      <h2>If / else</h2>
+      <pre data-lang="java"><code><span class="kw">if</span> (leeftijd >= 18) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Volwassen"</span>);
+} <span class="kw">else</span> {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Minderjarig"</span>);
+}</code></pre>
+
+      <h2>If / else if / else</h2>
+      <pre data-lang="java"><code><span class="kw">int</span> punten = 75;
+
+<span class="kw">if</span> (punten >= 90) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Uitstekend"</span>);
+} <span class="kw">else if</span> (punten >= 70) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Goed"</span>);
+} <span class="kw">else if</span> (punten >= 50) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Voldoende"</span>);
+} <span class="kw">else</span> {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Onvoldoende"</span>);
+}</code></pre>
+
+      <h2>Gecombineerde voorwaarden</h2>
+      <pre data-lang="java"><code><span class="kw">int</span> temp = 22;
+<span class="kw">boolean</span> zonaig = <span class="kw">true</span>;
+
+<span class="kw">if</span> (temp > 20 &amp;&amp; zonaig) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Lekker buiten!"</span>);
+}
+
+<span class="kw">if</span> (temp &lt; 5 || !zonaig) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Beter binnen blijven"</span>);
+}</code></pre>
+
+      <div class="info-box warn"><span class="icon">⚠️</span>Voor Strings: gebruik <strong>nooit</strong> <code>==</code> in een if-statement. Gebruik <code>naam.equals("Jan")</code> of <code>naam.equalsIgnoreCase("jan")</code>.</div>
+    </div>
+
+    <!-- ===================== BASIS: SWITCH ===================== -->
+    <div class="tab-content" id="tab-basis-switch">
+      <h1>Switch</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Meerdere keuzes overzichtelijk</div>
+
+      <h2>Wanneer gebruiken?</h2>
+      <p>Een <code>switch</code> is handig als je één variabele vergelijkt met meerdere vaste waarden. Overzichtelijker dan een lange if/else-if keten.</p>
+
+      <h2>Klassieke switch</h2>
+      <pre data-lang="java"><code><span class="kw">int</span> dag = 3;
+
+<span class="kw">switch</span> (dag) {
+    <span class="kw">case</span> 1:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Maandag"</span>);
+        <span class="kw">break</span>;
+    <span class="kw">case</span> 2:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Dinsdag"</span>);
+        <span class="kw">break</span>;
+    <span class="kw">case</span> 3:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Woensdag"</span>);
+        <span class="kw">break</span>;
+    <span class="kw">default</span>:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Onbekende dag"</span>);
+        <span class="kw">break</span>;
+}</code></pre>
+
+      <h2>Switch met String</h2>
+      <pre data-lang="java"><code><span class="cl">String</span> kleur = <span class="st">"rood"</span>;
+
+<span class="kw">switch</span> (kleur) {
+    <span class="kw">case</span> <span class="st">"rood"</span>:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Stop!"</span>);
+        <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="st">"oranje"</span>:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Opgelet!"</span>);
+        <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="st">"groen"</span>:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Rijd!"</span>);
+        <span class="kw">break</span>;
+    <span class="kw">default</span>:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Onbekende kleur"</span>);
+}</code></pre>
+
+      <h2>Meerdere cases tegelijk</h2>
+      <pre data-lang="java"><code><span class="kw">int</span> maand = 4;
+
+<span class="kw">switch</span> (maand) {
+    <span class="kw">case</span> 12:
+    <span class="kw">case</span> 1:
+    <span class="kw">case</span> 2:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Winter"</span>);
+        <span class="kw">break</span>;
+    <span class="kw">case</span> 3:
+    <span class="kw">case</span> 4:
+    <span class="kw">case</span> 5:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Lente"</span>);
+        <span class="kw">break</span>;
+    <span class="kw">default</span>:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Zomer of herfst"</span>);
+}</code></pre>
+
+      <div class="info-box warn"><span class="icon">⚠️</span>Vergeet <code>break;</code> niet! Zonder <code>break</code> valt Java door naar de volgende case (<strong>fall-through</strong>).</div>
+    </div>
+
+    <!-- ===================== BASIS: WHILE-LUS ===================== -->
+    <div class="tab-content" id="tab-basis-while">
+      <h1>While-lus</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Herhalen zolang een voorwaarde geldt</div>
+
+      <h2>While</h2>
+      <p>De lus wordt uitgevoerd <strong>zolang</strong> de voorwaarde <code>true</code> is. Als de voorwaarde al meteen <code>false</code> is, wordt de lus nooit uitgevoerd.</p>
+      <pre data-lang="java"><code><span class="kw">int</span> teller = 0;
+
+<span class="kw">while</span> (teller &lt; 5) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"teller = "</span> + teller);
+    teller++;   <span class="cm">// NIET vergeten, anders oneindige lus!</span>
+}
+<span class="cm">// Uitvoer: teller = 0, 1, 2, 3, 4</span></code></pre>
+
+      <h2>Do-while</h2>
+      <p>De lus wordt <strong>minstens één keer</strong> uitgevoerd, daarna pas gecontroleerd.</p>
+      <pre data-lang="java"><code><span class="kw">int</span> getal = 10;
+
+<span class="kw">do</span> {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"getal = "</span> + getal);
+    getal--;
+} <span class="kw">while</span> (getal > 0);</code></pre>
+
+      <h2>Break en continue</h2>
+      <pre data-lang="java"><code><span class="kw">int</span> i = 0;
+<span class="kw">while</span> (i &lt; 10) {
+    i++;
+    <span class="kw">if</span> (i == 3) <span class="kw">continue</span>; <span class="cm">// sla 3 over, ga naar volgende iteratie</span>
+    <span class="kw">if</span> (i == 7) <span class="kw">break</span>;    <span class="cm">// stop de lus volledig bij 7</span>
+    <span class="cl">System</span>.out.<span class="mt">println</span>(i);  <span class="cm">// print 1, 2, 4, 5, 6</span>
+}</code></pre>
+
+      <div class="info-box warn"><span class="icon">⚠️</span>Vergeet de teller nooit te verhogen in een while-lus, anders krijg je een <strong>oneindige lus</strong> en bevriest je programma!</div>
+    </div>
+
+    <!-- ===================== BASIS: FOR-LUS ===================== -->
+    <div class="tab-content" id="tab-basis-for">
+      <h1>For-lus</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Herhalen met een teller</div>
+
+      <h2>Standaard for-lus</h2>
+      <p>Bestaat uit drie delen: <strong>start</strong>, <strong>voorwaarde</strong> en <strong>stap</strong>.</p>
+      <pre data-lang="java"><code><span class="cm">// for (start; voorwaarde; stap)</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = 0; i &lt; 5; i++) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"i = "</span> + i);
+}
+<span class="cm">// Uitvoer: i = 0, 1, 2, 3, 4</span></code></pre>
+
+      <h2>Achterwaarts tellen</h2>
+      <pre data-lang="java"><code><span class="kw">for</span> (<span class="kw">int</span> i = 10; i >= 0; i--) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(i);
+}
+<span class="cm">// 10, 9, 8 ... 1, 0</span></code></pre>
+
+      <h2>For-each lus (enhanced for)</h2>
+      <p>Voor het doorlopen van arrays of lijsten, zonder index nodig:</p>
+      <pre data-lang="java"><code><span class="cl">String</span>[] namen = {<span class="st">"Jan"</span>, <span class="st">"Piet"</span>, <span class="st">"An"</span>};
+
+<span class="kw">for</span> (<span class="cl">String</span> naam : namen) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(naam);
+}</code></pre>
+
+      <h2>Geneste for-lussen</h2>
+      <pre data-lang="java"><code><span class="cm">// Tafel van vermenigvuldiging</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt;= 3; i++) {
+    <span class="kw">for</span> (<span class="kw">int</span> j = 1; j &lt;= 3; j++) {
+        <span class="cl">System</span>.out.<span class="mt">print</span>(i * j + <span class="st">"\t"</span>);
+    }
+    <span class="cl">System</span>.out.<span class="mt">println</span>();
+}
+<span class="cm">// 1  2  3
+// 2  4  6
+// 3  6  9</span></code></pre>
+
+      <div class="info-box tip"><span class="icon">✅</span>Gebruik een <code>for</code>-lus als je op voorhand weet hoeveel keer je wilt herhalen. Gebruik een <code>while</code>-lus als dat pas tijdens de uitvoering bekend is.</div>
+    </div>
+
+    <!-- ===================== BASIS: METHODEN ===================== -->
+    <div class="tab-content" id="tab-basis-methoden">
+      <h1>Methoden</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Herbruikbare blokken code</div>
+
+      <h2>Opbouw van een methode</h2>
+      <pre data-lang="java"><code><span class="cm">// toegang  returntype  naam       (parameters)</span>
+<span class="kw">public static int</span>     <span class="mt">somVan</span>      (<span class="kw">int</span> a, <span class="kw">int</span> b) {
+    <span class="kw">return</span> a + b;
+}</code></pre>
+
+      <h2>Methode zonder returnwaarde (void)</h2>
+      <pre data-lang="java"><code><span class="kw">public static void</span> <span class="mt">drukAf</span>(<span class="cl">String</span> tekst) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(tekst);
+}
+
+<span class="cm">// Oproepen:</span>
+<span class="mt">drukAf</span>(<span class="st">"Hallo!"</span>);</code></pre>
+
+      <h2>Methode met returnwaarde</h2>
+      <pre data-lang="java"><code><span class="kw">public static double</span> <span class="mt">berekenOppervlakte</span>(<span class="kw">double</span> breedte, <span class="kw">double</span> hoogte) {
+    <span class="kw">return</span> breedte * hoogte;
+}
+
+<span class="cm">// Oproepen en opslaan:</span>
+<span class="kw">double</span> opp = <span class="mt">berekenOppervlakte</span>(5.0, 3.0); <span class="cm">// opp = 15.0</span></code></pre>
+
+      <h2>Methode met boolean return</h2>
+      <pre data-lang="java"><code><span class="kw">public static boolean</span> <span class="mt">isEven</span>(<span class="kw">int</span> getal) {
+    <span class="kw">return</span> getal % 2 == 0;
+}
+
+<span class="kw">if</span> (<span class="mt">isEven</span>(4)) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"4 is even"</span>);
+}</code></pre>
+
+      <h2>Overloading</h2>
+      <p>Meerdere methodes met dezelfde naam, maar verschillende parameters:</p>
+      <pre data-lang="java"><code><span class="kw">public static int</span> <span class="mt">som</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) {
+    <span class="kw">return</span> a + b;
+}
+<span class="kw">public static int</span> <span class="mt">som</span>(<span class="kw">int</span> a, <span class="kw">int</span> b, <span class="kw">int</span> c) {
+    <span class="kw">return</span> a + b + c;
+}
+<span class="kw">public static double</span> <span class="mt">som</span>(<span class="kw">double</span> a, <span class="kw">double</span> b) {
+    <span class="kw">return</span> a + b;
+}</code></pre>
+
+      <div class="info-box note"><span class="icon">📌</span>Een methode met <code>static</code> kan je oproepen zonder eerst een object te maken. In een klasse (OOP) laat je <code>static</code> weg.</div>
+    </div>
+
+    <!-- ===================== BASIS: ENUM ===================== -->
+    <div class="tab-content" id="tab-basis-enum">
+      <h1>Enumeratie (enum)</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Vaste lijst van waarden</div>
+
+      <h2>Wat is een enum?</h2>
+      <p>Een <code>enum</code> is een speciaal type dat een <strong>vaste reeks benoemde waarden</strong> bevat. Ideaal voor categorieën zoals kleuren, seizoenen, statussen, enz.</p>
+
+      <h2>Enum definiëren</h2>
+      <pre data-lang="java"><code><span class="kw">public enum</span> <span class="cl">Seizoen</span> {
+    LENTE, ZOMER, HERFST, WINTER
+}</code></pre>
+
+      <h2>Enum gebruiken</h2>
+      <pre data-lang="java"><code><span class="cl">Seizoen</span> huidig = <span class="cl">Seizoen</span>.ZOMER;
+
+<span class="kw">if</span> (huidig == <span class="cl">Seizoen</span>.ZOMER) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Het is zomer!"</span>);
+}</code></pre>
+
+      <h2>Enum in een switch</h2>
+      <pre data-lang="java"><code><span class="kw">switch</span> (huidig) {
+    <span class="kw">case</span> LENTE:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Bloemen bloeien"</span>);
+        <span class="kw">break</span>;
+    <span class="kw">case</span> ZOMER:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Warm en zonnig"</span>);
+        <span class="kw">break</span>;
+    <span class="kw">case</span> HERFST:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Bladeren vallen"</span>);
+        <span class="kw">break</span>;
+    <span class="kw">case</span> WINTER:
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Koud en donker"</span>);
+        <span class="kw">break</span>;
+}</code></pre>
+
+      <h2>Enum met extra info</h2>
+      <pre data-lang="java"><code><span class="kw">public enum</span> <span class="cl">Dag</span> {
+    MAANDAG(<span class="kw">true</span>), DINSDAG(<span class="kw">true</span>), WOENSDAG(<span class="kw">true</span>),
+    DONDERDAG(<span class="kw">true</span>), VRIJDAG(<span class="kw">true</span>),
+    ZATERDAG(<span class="kw">false</span>), ZONDAG(<span class="kw">false</span>);
+
+    <span class="kw">private boolean</span> werkdag;
+
+    <span class="cl">Dag</span>(<span class="kw">boolean</span> werkdag) {
+        <span class="kw">this</span>.werkdag = werkdag;
+    }
+
+    <span class="kw">public boolean</span> <span class="mt">isWerkdag</span>() { <span class="kw">return</span> werkdag; }
+}
+
+<span class="cm">// Gebruik:</span>
+<span class="cl">Dag</span> vandaag = <span class="cl">Dag</span>.VRIJDAG;
+<span class="cl">System</span>.out.<span class="mt">println</span>(vandaag.<span class="mt">isWerkdag</span>()); <span class="cm">// true</span></code></pre>
+
+      <h2>Alle waarden doorlopen</h2>
+      <pre data-lang="java"><code><span class="kw">for</span> (<span class="cl">Seizoen</span> s : <span class="cl">Seizoen</span>.<span class="mt">values</span>()) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(s);
+}
+<span class="cm">// LENTE, ZOMER, HERFST, WINTER</span></code></pre>
+
+      <div class="info-box tip"><span class="icon">✅</span>Enum-waarden vergelijk je met <code>==</code> (niet <code>.equals()</code>). Dat is één van de weinige uitzonderingen in Java.</div>
+    </div>
+
+    <!-- ===================== BASIS: ARRAYS ===================== -->
+    <div class="tab-content" id="tab-basis-arrays">
+      <h1>Arrays</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Geordende reeks van waarden</div>
+
+      <h2>Array aanmaken</h2>
+      <pre data-lang="java"><code><span class="cm">// Methode 1: direct initialiseren</span>
+<span class="kw">int</span>[] scores = {85, 92, 78, 95, 61};
+
+<span class="cm">// Methode 2: lengte opgeven, later waarden toewijzen</span>
+<span class="kw">int</span>[] scores = <span class="kw">new int</span>[5];
+scores[0] = 85;
+scores[1] = 92;
+
+<span class="cm">// String-array</span>
+<span class="cl">String</span>[] namen = <span class="kw">new</span> <span class="cl">String</span>[3];
+namen[0] = <span class="st">"Jan"</span>;</code></pre>
+
+      <h2>Array uitlezen</h2>
+      <pre data-lang="java"><code><span class="kw">int</span>[] getallen = {10, 20, 30, 40, 50};
+
+<span class="cl">System</span>.out.<span class="mt">println</span>(getallen[0]);       <span class="cm">// 10 — index start bij 0!</span>
+<span class="cl">System</span>.out.<span class="mt">println</span>(getallen.length);   <span class="cm">// 5 — aantal elementen</span></code></pre>
+
+      <h2>Array doorlopen met for</h2>
+      <pre data-lang="java"><code><span class="kw">int</span>[] getallen = {10, 20, 30, 40, 50};
+
+<span class="cm">// Klassieke for-lus</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = 0; i &lt; getallen.length; i++) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(getallen[i]);
+}
+
+<span class="cm">// For-each (korter)</span>
+<span class="kw">for</span> (<span class="kw">int</span> g : getallen) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(g);
+}</code></pre>
+
+      <h2>Nuttige bewerkingen</h2>
+      <pre data-lang="java"><code><span class="kw">int</span>[] getallen = {10, 20, 30, 40, 50};
+
+<span class="cm">// Som berekenen</span>
+<span class="kw">int</span> som = 0;
+<span class="kw">for</span> (<span class="kw">int</span> g : getallen) { som += g; }  <span class="cm">// som = 150</span>
+
+<span class="cm">// Maximum zoeken</span>
+<span class="kw">int</span> max = getallen[0];
+<span class="kw">for</span> (<span class="kw">int</span> g : getallen) {
+    <span class="kw">if</span> (g > max) max = g;
+}
+<span class="cm">// max = 50</span>
+
+<span class="cm">// Array sorteren</span>
+<span class="cl">Arrays</span>.<span class="mt">sort</span>(getallen); <span class="cm">// {10, 20, 30, 40, 50} → gesorteerd</span></code></pre>
+
+      <div class="info-box warn"><span class="icon">⚠️</span>Een array heeft een <strong>vaste lengte</strong>. Als je dynamisch elementen wil toevoegen of verwijderen, gebruik dan een <code>ArrayList</code>!</div>
+    </div>
+
     <!-- ===================== OOP & KLASSEN ===================== -->
-    <div class="tab-content active" id="tab-oop">
+    <div class="tab-content" id="tab-oop">
       <h1>OOP & Klassen</h1>
       <div class="chapter-meta"> &nbsp;·&nbsp; Basis van objectgeoriënteerd programmeren</div>
 
