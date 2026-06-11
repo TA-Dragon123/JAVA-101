@@ -434,6 +434,12 @@
     <div class="nav-item" onclick="showTab('rsmeta')" data-tab="rsmeta"><span class="icon">📑</span>ResultSet-metadata</div>
     <div class="nav-item" onclick="showTab('blob')" data-tab="blob"><span class="icon">🖼️</span>BLOB's</div>
     <div class="nav-item" onclick="showTab('clob')" data-tab="clob"><span class="icon">📝</span>CLOB's</div>
+    <div class="nav-section">Algemeen Java</div>
+    <div class="nav-item" onclick="showTab('exceptions')" data-tab="exceptions"><span class="icon">🛡️</span>Exceptions (try/catch)</div>
+    <div class="nav-item" onclick="showTab('scanner')" data-tab="scanner"><span class="icon">⌨️</span>Invoer met Scanner</div>
+    <div class="nav-item" onclick="showTab('strings')" data-tab="strings"><span class="icon">🔤</span>String-methodes</div>
+    <div class="nav-item" onclick="showTab('parsen')" data-tab="parsen"><span class="icon">🔁</span>Parsen &amp; casten</div>
+    <div class="nav-item" onclick="showTab('math')" data-tab="math"><span class="icon">🧮</span>Math &amp; getallen</div>
   </nav>
 
   <main id="main-content">
@@ -1534,85 +1540,237 @@ tableView.<span class="mt">getSelectionModel</span>().<span class="mt">select</s
     <!-- ===================== JDBC BASIS ===================== -->
     <div class="tab-content" id="tab-jdbc">
       <h1>JDBC: SQL-instructies vanuit Java</h1>
-      <div class="chapter-meta"></div>
+      <div class="chapter-meta">&nbsp;·&nbsp; Connection · Statement · ResultSet</div>
 
-      <h2>Stap 1: Connectie maken</h2>
-      <pre data-lang="java"><code><span class="cl">Connection</span> connectie = <span class="cl">DriverManager</span>.<span class="mt">getConnection</span>(
-    <span class="st">"jdbc:mysql://localhost/demo"</span>, <span class="cm">// URL van de databank</span>
-    <span class="st">"root"</span>,                          <span class="cm">// gebruikersnaam</span>
-    <span class="st">""</span>                               <span class="cm">// wachtwoord</span>
-);</code></pre>
+      <p>JDBC laat je vanuit een Java-programma connectie maken met een MySQL-databank en tabellen aanmaken, wijzigen of verwijderen, zowel qua structuur als qua inhoud.</p>
 
-      <h2>Stap 2: Statement aanmaken</h2>
-      <pre data-lang="java"><code><span class="cl">Statement</span> statement = connectie.<span class="mt">createStatement</span>();</code></pre>
+      <h2>1. Basispatroon: connectie + statement</h2>
+      <p>Je maakt een <code>Connection</code> via <code>DriverManager.getConnection</code> (drie argumenten: connectiestring, gebruiker, wachtwoord) en daarna een <code>Statement</code> via <code>createStatement</code>. Alles staat in een <code>try</code>, en je sluit af in een <code>finally</code>.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.sql.<span class="cl">Connection</span>;
+<span class="kw">import</span> java.sql.<span class="cl">DriverManager</span>;
+<span class="kw">import</span> java.sql.<span class="cl">Statement</span>;
 
-      <h2>Stap 3a: Query uitvoeren (SELECT)</h2>
-      <pre data-lang="java"><code><span class="cl">ResultSet</span> resultaat = statement.<span class="mt">executeQuery</span>(
-    <span class="st">"SELECT * FROM employees ORDER BY last_name"</span>
-);
-<span class="kw">while</span> (resultaat.<span class="mt">next</span>()) {
-    <span class="cl">System</span>.out.<span class="mt">println</span>(resultaat.<span class="mt">getString</span>(<span class="st">"last_name"</span>));
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="cl">Connection</span> connectie = <span class="kw">null</span>;
+        <span class="cl">Statement</span> statement = <span class="kw">null</span>;
+
+        <span class="kw">try</span> {
+            connectie = <span class="cl">DriverManager</span>.getConnection
+                    (<span class="st">"jdbc:mysql://localhost/demo"</span>,
+                            <span class="st">"root"</span>, <span class="st">""</span>);
+            statement = connectie.<span class="mt">createStatement</span>();
+        } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+            exceptie.<span class="mt">printStackTrace</span>();
+        } <span class="kw">finally</span> {
+            <span class="kw">try</span> {
+                statement.<span class="mt">close</span>();
+                connectie.<span class="mt">close</span>();
+            } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+                exceptie.<span class="mt">printStackTrace</span>();
+            }
+        }
+    }
 }</code></pre>
 
-      <h2>Stap 3b: Update uitvoeren (INSERT / UPDATE / DELETE)</h2>
-      <pre data-lang="java"><code><span class="kw">int</span> aantalRijen = statement.<span class="mt">executeUpdate</span>(
-    <span class="st">"INSERT INTO employees (last_name) VALUES ('Vermeulen')"</span>
-);
-<span class="cm">// executeUpdate geeft aantal gewijzigde rijen terug</span></code></pre>
+      <h2>2. SQL-query uitvoeren (SELECT)</h2>
+      <p><code>executeQuery</code> geeft een <code>ResultSet</code> terug. Met <code>resultaat.next()</code> loop je rij per rij; met <code>getString(...)</code> lees je een kolom uit.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.sql.<span class="cl">Connection</span>;
+<span class="kw">import</span> java.sql.<span class="cl">DriverManager</span>;
+<span class="kw">import</span> java.sql.<span class="cl">ResultSet</span>;
+<span class="kw">import</span> java.sql.<span class="cl">Statement</span>;
 
-      <h2>Stap 3c: Tabel aanmaken (CREATE TABLE)</h2>
-      <pre data-lang="java"><code><span class="cl">Statement</span> statement = connectie.<span class="mt">createStatement</span>();
-statement.<span class="mt">executeUpdate</span>(
-    <span class="st">"CREATE TABLE IF NOT EXISTS tbl_boek ("</span> +
-        <span class="st">"titel VARCHAR(64),"</span> +
-        <span class="st">"auteur VARCHAR(64),"</span> +
-        <span class="st">"isbn VARCHAR(17) PRIMARY KEY,"</span> +
-        <span class="st">"gereserveerd BOOL)"</span>);</code></pre>
-      <div class="info-box tip"><span class="icon">✅</span><code>IF NOT EXISTS</code> voorkomt een fout als de tabel al bestaat. Een <code>CREATE</code> voer je uit met <code>executeUpdate</code>.</div>
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="cl">Connection</span> connectie = <span class="kw">null</span>;
+        <span class="cl">Statement</span> statement = <span class="kw">null</span>;
+        <span class="cl">ResultSet</span> resultaat = <span class="kw">null</span>;
 
-      <h2>Altijd afsluiten in finally-blok!</h2>
-      <pre data-lang="java"><code><span class="kw">finally</span> {
-    <span class="kw">try</span> {
-        resultaat.<span class="mt">close</span>();
-        statement.<span class="mt">close</span>();
-        connectie.<span class="mt">close</span>();
-    } <span class="kw">catch</span> (<span class="cl">Exception</span> e) { e.<span class="mt">printStackTrace</span>(); }
+        <span class="kw">try</span> {
+            connectie = <span class="cl">DriverManager</span>.getConnection
+                    (<span class="st">"jdbc:mysql://localhost/demo"</span>,
+                            <span class="st">"root"</span>, <span class="st">""</span>);
+            statement = connectie.<span class="mt">createStatement</span>();
+            resultaat = statement.<span class="mt">executeQuery</span>(
+                    <span class="st">"SELECT * FROM EMPLOYEES "</span> +
+                            <span class="st">"ORDER BY last_name, first_name"</span>
+            );
+            <span class="kw">while</span> (resultaat.<span class="mt">next</span>()) {
+                <span class="cl">System</span>.out.<span class="mt">println</span>(resultaat.<span class="mt">getString</span>(<span class="st">"last_name"</span>)
+                        + <span class="st">" "</span> + resultaat.<span class="mt">getString</span>(<span class="st">"first_name"</span>));
+            }
+        } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+            exceptie.<span class="mt">printStackTrace</span>();
+        } <span class="kw">finally</span> {
+            <span class="kw">try</span> {
+                resultaat.<span class="mt">close</span>();
+                statement.<span class="mt">close</span>();
+                connectie.<span class="mt">close</span>();
+            } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+                exceptie.<span class="mt">printStackTrace</span>();
+            }
+        }
+    }
 }</code></pre>
+
+      <h2>3. Rij(en) toevoegen (INSERT)</h2>
+      <p><code>executeUpdate</code> gebruik je voor INSERT, DELETE, UPDATE en CREATE. Het geeft het aantal gewijzigde rijen terug.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.sql.<span class="cl">Connection</span>;
+<span class="kw">import</span> java.sql.<span class="cl">DriverManager</span>;
+<span class="kw">import</span> java.sql.<span class="cl">Statement</span>;
+
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="cl">Connection</span> connectie = <span class="kw">null</span>;
+        <span class="cl">Statement</span> statement = <span class="kw">null</span>;
+        <span class="kw">int</span> aantalGewijzigdeRijen = 0;
+
+        <span class="kw">try</span> {
+            connectie = <span class="cl">DriverManager</span>.getConnection
+                    (<span class="st">"jdbc:mysql://localhost/demo"</span>,
+                            <span class="st">"root"</span>, <span class="st">""</span>);
+            statement = connectie.<span class="mt">createStatement</span>();
+            aantalGewijzigdeRijen = statement.<span class="mt">executeUpdate</span>(
+                    <span class="st">"INSERT INTO EMPLOYEES "</span> +
+                            <span class="st">"(last_name, first_name, email, department, salary) "</span> +
+                            <span class="st">"VALUES "</span> +
+                            <span class="st">"('Vermeulen', 'Steven', 'steven@school.be', 'onderwijs', '100.00')"</span>
+            );
+            <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Aantal gewijzigde rijen: "</span> + aantalGewijzigdeRijen);
+        } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+            exceptie.<span class="mt">printStackTrace</span>();
+        } <span class="kw">finally</span> {
+            <span class="kw">try</span> {
+                statement.<span class="mt">close</span>();
+                connectie.<span class="mt">close</span>();
+            } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+                exceptie.<span class="mt">printStackTrace</span>();
+            }
+        }
+    }
+}</code></pre>
+
+      <h2>4. Rij(en) verwijderen (DELETE)</h2>
+      <p>Zelfde programma als hierboven, enkel de SQL verandert:</p>
+      <pre data-lang="java"><code>aantalGewijzigdeRijen = statement.<span class="mt">executeUpdate</span>(
+        <span class="st">"DELETE FROM EMPLOYEES "</span> +
+                <span class="st">"WHERE last_name='Vermeulen' AND first_name='Steven'"</span>);</code></pre>
+
+      <h2>5. Rij(en) wijzigen (UPDATE)</h2>
+      <pre data-lang="java"><code>aantalGewijzigdeRijen = statement.<span class="mt">executeUpdate</span>(
+        <span class="st">"UPDATE employees "</span> +
+                <span class="st">"SET salary=5000 "</span> +
+                <span class="st">"WHERE last_name='Williams' AND first_name='David'"</span>);</code></pre>
+
+      <h2>6. Tabel aanmaken (CREATE TABLE)</h2>
+      <pre data-lang="java"><code>aantalGewijzigdeRijen = statement.<span class="mt">executeUpdate</span>(
+        <span class="st">"CREATE TABLE kleuren ("</span> +
+                <span class="st">"kleur VARCHAR(25), "</span> +
+                <span class="st">"code INT "</span> +
+                <span class="st">")"</span>);</code></pre>
 
       <table>
         <tr><th>Methode</th><th>Gebruik</th><th>Geeft terug</th></tr>
         <tr><td><code>executeQuery()</code></td><td>SELECT</td><td><code>ResultSet</code></td></tr>
         <tr><td><code>executeUpdate()</code></td><td>INSERT, UPDATE, DELETE, CREATE</td><td><code>int</code> (aantal rijen)</td></tr>
       </table>
+
+      <h2>Waarden uit een ResultSet halen</h2>
+      <p>Binnen de <code>while (resultaat.next())</code>-lus lees je per kolom uit met de juiste getter:</p>
+      <pre data-lang="java"><code>resultaat.<span class="mt">getString</span>(<span class="st">"last_name"</span>)    <span class="cm">// tekst (VARCHAR, TEXT)</span>
+resultaat.<span class="mt">getInt</span>(<span class="st">"id"</span>)              <span class="cm">// geheel getal (INT)</span>
+resultaat.<span class="mt">getDouble</span>(<span class="st">"salary"</span>)       <span class="cm">// decimaal (DOUBLE, DECIMAL)</span>
+resultaat.<span class="mt">getBoolean</span>(<span class="st">"is_actief"</span>)   <span class="cm">// BOOL</span>
+resultaat.<span class="mt">getDate</span>(<span class="st">"geboortedatum"</span>)  <span class="cm">// java.sql.Date</span></code></pre>
+
+      <div class="info-box warn"><span class="icon">⚠️</span>Sluit altijd af in een <code>finally</code>-blok, in volgorde <code>resultaat</code> &rarr; <code>statement</code> &rarr; <code>connectie</code>. Zo blijven er geen open verbindingen hangen.</div>
     </div>
 
     <!-- ===================== PREPARED STATEMENTS ===================== -->
     <div class="tab-content" id="tab-prepared">
       <h1>JDBC: Prepared Statements</h1>
-      <div class="chapter-meta"></div>
+      <div class="chapter-meta">&nbsp;·&nbsp; geprecompileerde SQL met ? als placeholder</div>
 
-      <h2>Wat is een prepared statement?</h2>
-      <p>Een <strong>geprecompileerde SQL-instructie</strong> met <code>?</code> als placeholders voor parameters.</p>
-      <div class="info-box tip"><span class="icon">✅</span>Voordelen: makkelijk te parametriseren + sneller door precompilatie</div>
+      <p>Een prepared statement is een geprecompileerde SQL-instructie. Voordelen: makkelijk te parametriseren en sneller door de precompilatie. Je zet een <code>?</code> als placeholder voor elke parameter.</p>
 
-      <h2>Aanmaken</h2>
-      <pre data-lang="java"><code><span class="cl">PreparedStatement</span> ps = connectie.<span class="mt">prepareStatement</span>(
-    <span class="st">"SELECT * FROM employees WHERE salary > ? AND department = ?"</span>
-);
-<span class="cm">// ? zijn placeholders — nummering start bij 1!</span></code></pre>
+      <h2>Prepared statement voor een SQL-query (SELECT)</h2>
+      <p>Je maakt het aan met <code>connectie.prepareStatement(...)</code>, stelt de parameters in met <code>setDouble</code>, <code>setString</code>, ... en voert uit met <code>executeQuery()</code>.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.sql.<span class="cl">Connection</span>;
+<span class="kw">import</span> java.sql.<span class="cl">DriverManager</span>;
+<span class="kw">import</span> java.sql.<span class="cl">PreparedStatement</span>;
+<span class="kw">import</span> java.sql.<span class="cl">ResultSet</span>;
 
-      <h2>Parameters instellen</h2>
-      <pre data-lang="java"><code>ps.<span class="mt">setDouble</span>(1, 80000);         <span class="cm">// eerste ? = salary</span>
-ps.<span class="mt">setString</span>(2, <span class="st">"Legal"</span>);      <span class="cm">// tweede ? = department</span></code></pre>
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="cl">Connection</span> connectie = <span class="kw">null</span>;
+        <span class="cl">PreparedStatement</span> preparedStatement = <span class="kw">null</span>;
+        <span class="cl">ResultSet</span> resultaat = <span class="kw">null</span>;
 
-      <h2>Uitvoeren</h2>
-      <pre data-lang="java"><code><span class="cm">// Query (SELECT)</span>
-<span class="cl">ResultSet</span> resultaat = ps.<span class="mt">executeQuery</span>();
+        <span class="kw">try</span> {
+            connectie = <span class="cl">DriverManager</span>.getConnection
+                    (<span class="st">"jdbc:mysql://localhost/demo"</span>,
+                            <span class="st">"root"</span>, <span class="st">""</span>);
+            preparedStatement = connectie.prepareStatement
+                    (<span class="st">"SELECT * FROM EMPLOYEES "</span> +
+                            <span class="st">"WHERE salary &gt; ? AND department = ?"</span>);
+            preparedStatement.<span class="mt">setDouble</span>(1, 80000);
+            preparedStatement.<span class="mt">setString</span>(2, <span class="st">"Legal"</span>);
+            resultaat = preparedStatement.<span class="mt">executeQuery</span>();
+            <span class="kw">while</span> (resultaat.<span class="mt">next</span>()) {
+                <span class="cl">System</span>.out.<span class="mt">println</span>(resultaat.<span class="mt">getString</span>(<span class="st">"last_name"</span>)
+                        + <span class="st">" "</span> + resultaat.<span class="mt">getString</span>(<span class="st">"first_name"</span>));
+            }
+        } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+            exceptie.<span class="mt">printStackTrace</span>();
+        } <span class="kw">finally</span> {
+            <span class="kw">try</span> {
+                resultaat.<span class="mt">close</span>();
+                preparedStatement.<span class="mt">close</span>();
+                connectie.<span class="mt">close</span>();
+            } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+                exceptie.<span class="mt">printStackTrace</span>();
+            }
+        }
+    }
+}</code></pre>
 
-<span class="cm">// Update (INSERT / UPDATE / DELETE)</span>
-<span class="kw">int</span> aantalRijen = ps.<span class="mt">executeUpdate</span>();</code></pre>
+      <div class="info-box warn"><span class="icon">⚠️</span>De argumentnummering is <strong>one-based</strong>: begin te tellen vanaf 1, niet vanaf 0.</div>
 
-      <div class="info-box warn"><span class="icon">⚠️</span>Parameters zijn <strong>one-based</strong>! Begin te tellen vanaf 1, niet 0!</div>
+      <h2>Prepared statement voor INSERT / UPDATE / DELETE</h2>
+      <p>Zelfde aanpak, maar uitvoeren met <code>executeUpdate()</code>. Dat geeft het aantal gewijzigde rijen terug.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.sql.<span class="cl">Connection</span>;
+<span class="kw">import</span> java.sql.<span class="cl">DriverManager</span>;
+<span class="kw">import</span> java.sql.<span class="cl">PreparedStatement</span>;
+
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="cl">Connection</span> connectie = <span class="kw">null</span>;
+        <span class="cl">PreparedStatement</span> preparedStatement = <span class="kw">null</span>;
+        <span class="kw">int</span> aantalGewijzigdeRijen = 0;
+
+        <span class="kw">try</span> {
+            connectie = <span class="cl">DriverManager</span>.getConnection
+                    (<span class="st">"jdbc:mysql://localhost/demo"</span>,
+                            <span class="st">"root"</span>, <span class="st">""</span>);
+            preparedStatement = connectie.prepareStatement
+                    (<span class="st">"DELETE FROM employees "</span> +
+                            <span class="st">"WHERE last_name=? AND first_name=?"</span>);
+            preparedStatement.<span class="mt">setString</span>(1, <span class="st">"Ansoms"</span>);
+            preparedStatement.<span class="mt">setString</span>(2, <span class="st">"An"</span>);
+            aantalGewijzigdeRijen = preparedStatement.<span class="mt">executeUpdate</span>();
+            <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Aantal verwijderde rijen: "</span> + aantalGewijzigdeRijen);
+        } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+            exceptie.<span class="mt">printStackTrace</span>();
+        } <span class="kw">finally</span> {
+            <span class="kw">try</span> {
+                preparedStatement.<span class="mt">close</span>();
+                connectie.<span class="mt">close</span>();
+            } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+                exceptie.<span class="mt">printStackTrace</span>();
+            }
+        }
+    }
+}</code></pre>
 
       <h2>Parametermethodes</h2>
       <table>
@@ -1631,118 +1789,203 @@ ps.<span class="mt">setString</span>(2, <span class="st">"Legal"</span>);      <
 <span class="kw">import</span> java.time.<span class="cl">LocalDate</span>;
 
 <span class="cl">LocalDate</span> datum = <span class="cl">LocalDate</span>.<span class="mt">now</span>();
-ps.<span class="mt">setDate</span>(1, <span class="cl">Date</span>.<span class="mt">valueOf</span>(datum));   <span class="cm">// LocalDate -&gt; java.sql.Date</span></code></pre>
+preparedStatement.<span class="mt">setDate</span>(1, <span class="cl">Date</span>.<span class="mt">valueOf</span>(datum));   <span class="cm">// LocalDate -&gt; java.sql.Date</span></code></pre>
+
+      <div class="info-box tip"><span class="icon">✅</span>Gebruik prepared statements ook tegen <strong>SQL-injectie</strong>. Door waarden via <code>?</code> en <code>setString(...)</code> mee te geven (in plaats van ze in de SQL-string te plakken) kan ingevoerde tekst de query niet wijzigen.</div>
     </div>
 
     <!-- ===================== TRANSACTIES ===================== -->
     <div class="tab-content" id="tab-transacties">
       <h1>JDBC: Transacties</h1>
-      <div class="chapter-meta"></div>
+      <div class="chapter-meta">&nbsp;·&nbsp; commit · rollback · autocommit</div>
 
-      <h2>Wat is een transactie?</h2>
-      <p>Een reeks SQL-instructies die <strong>allemaal of geen van allen</strong> uitgevoerd worden.</p>
+      <p>Een transactie is een reeks SQL-instructies die in zijn geheel moet lukken. Mislukt er één, dan doe je een <strong>rollback</strong> en sta je terug in de begintoestand. Lukt alles, dan doe je een <strong>commit</strong> en wordt de wijziging zichtbaar voor alle gebruikers.</p>
       <table>
         <tr><th>Term</th><th>Uitleg</th></tr>
-        <tr><td><span class="pill green">commit</span></td><td>Transactie geslaagd → wijzigingen opslaan voor alle gebruikers</td></tr>
-        <tr><td><span class="pill orange">rollback</span></td><td>Fout opgetreden → alles ongedaan maken</td></tr>
-        <tr><td><span class="pill">autocommit</span></td><td>Standaard AAN: na elke SQL automatisch commit</td></tr>
+        <tr><td><span class="pill green">commit</span></td><td>Transactie geslaagd, wijzigingen definitief opslaan</td></tr>
+        <tr><td><span class="pill orange">rollback</span></td><td>Fout opgetreden, alles ongedaan maken</td></tr>
+        <tr><td><span class="pill">autocommit</span></td><td>Standaard AAN: na elke SQL automatisch een commit</td></tr>
       </table>
 
-      <h2>Autocommit uitschakelen</h2>
-      <pre data-lang="java"><code>connectie.<span class="mt">setAutoCommit</span>(<span class="kw">false</span>); <span class="cm">// verplicht bij transacties!</span></code></pre>
+      <h2>Autocommit uitschakelen en zelf committen</h2>
+      <p>Bij transacties zet je eerst <code>setAutoCommit(false)</code>, zodat jij beslist wanneer er een <code>commit()</code> of <code>rollback()</code> gebeurt.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.sql.<span class="cl">Connection</span>;
+<span class="kw">import</span> java.sql.<span class="cl">DriverManager</span>;
+<span class="kw">import</span> java.sql.<span class="cl">Statement</span>;
 
-      <h2>Commit of rollback</h2>
-      <pre data-lang="java"><code><span class="kw">try</span> {
-    connectie.<span class="mt">setAutoCommit</span>(<span class="kw">false</span>);
-    statement.<span class="mt">executeUpdate</span>(<span class="st">"DELETE FROM employees WHERE department='HR'"</span>);
-    statement.<span class="mt">executeUpdate</span>(<span class="st">"UPDATE employees SET salary=300000 WHERE..."</span>);
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="cl">Connection</span> connectie = <span class="kw">null</span>;
+        <span class="cl">Statement</span> statement = <span class="kw">null</span>;
 
-    <span class="kw">if</span> (goedgekeurd) {
-        connectie.<span class="mt">commit</span>();    <span class="cm">// alles opslaan</span>
-    } <span class="kw">else</span> {
-        connectie.<span class="mt">rollback</span>(); <span class="cm">// alles ongedaan maken</span>
+        <span class="kw">try</span> {
+            connectie = <span class="cl">DriverManager</span>.getConnection
+                    (<span class="st">"jdbc:mysql://localhost/demo"</span>,
+                            <span class="st">"root"</span>, <span class="st">""</span>);
+            statement = connectie.<span class="mt">createStatement</span>();
+            connectie.<span class="mt">setAutoCommit</span>(<span class="kw">false</span>);
+            statement.executeUpdate
+                    (<span class="st">"DELETE FROM employees WHERE department='HR'"</span>);
+            statement.executeUpdate
+                    (<span class="st">"UPDATE employees SET salary=300000 "</span> +
+                            <span class="st">"WHERE department='Engineering'"</span>);
+            <span class="kw">boolean</span> transactieGoedgekeurd = <span class="kw">true</span>;
+            <span class="kw">if</span> (transactieGoedgekeurd) {
+                connectie.<span class="mt">commit</span>();
+            } <span class="kw">else</span> {
+                connectie.<span class="mt">rollback</span>();
+            }
+        } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+            exceptie.<span class="mt">printStackTrace</span>();
+        } <span class="kw">finally</span> {
+            <span class="kw">try</span> {
+                statement.<span class="mt">close</span>();
+                connectie.<span class="mt">close</span>();
+            } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+                exceptie.<span class="mt">printStackTrace</span>();
+            }
+        }
     }
-} <span class="kw">catch</span> (<span class="cl">Exception</span> e) {
-    connectie.<span class="mt">rollback</span>(); <span class="cm">// bij fout: rollback!</span>
 }</code></pre>
 
-      <div class="info-box warn"><span class="icon">⚠️</span>Zolang geen <code>commit()</code> gedaan is, zijn de wijzigingen voor andere gebruikers <strong>niet zichtbaar</strong>!</div>
+      <div class="info-box warn"><span class="icon">⚠️</span>Zolang er geen <code>commit()</code> gedaan is, zijn de wijzigingen <strong>niet zichtbaar</strong> voor andere gebruikers van de databank.</div>
     </div>
 
     <!-- ===================== DATABANK METADATA ===================== -->
     <div class="tab-content" id="tab-dbmeta">
       <h1>JDBC: Databank-metadata</h1>
-      <div class="chapter-meta"></div>
+      <div class="chapter-meta">&nbsp;·&nbsp; DatabaseMetaData</div>
 
-      <h2>DatabaseMetaData ophalen</h2>
-      <pre data-lang="java"><code><span class="cl">DatabaseMetaData</span> meta = connectie.<span class="mt">getMetaData</span>();</code></pre>
+      <p>Via de klasse <code>DatabaseMetaData</code> krijg je informatie over het DBMS, de JDBC-driver, de tabellen en de kolommen. Je haalt het object op met <code>connectie.getMetaData()</code>.</p>
 
       <h2>Info over DBMS en driver</h2>
-      <pre data-lang="java"><code>meta.<span class="mt">getDatabaseProductName</span>()     <span class="cm">// bv. "MySQL"</span>
-meta.<span class="mt">getDatabaseProductVersion</span>()  <span class="cm">// bv. "8.0.33"</span>
-meta.<span class="mt">getDriverName</span>()              <span class="cm">// bv. "MySQL Connector/J"</span>
-meta.<span class="mt">getDriverVersion</span>()           <span class="cm">// versie van de driver</span></code></pre>
+      <pre data-lang="java"><code><span class="kw">import</span> java.sql.<span class="cl">Connection</span>;
+<span class="kw">import</span> java.sql.<span class="cl">DatabaseMetaData</span>;
+<span class="kw">import</span> java.sql.<span class="cl">DriverManager</span>;
 
-      <h2>Lijst van alle tabellen</h2>
-      <pre data-lang="java"><code><span class="cl">ResultSet</span> tabellen = meta.<span class="mt">getTables</span>(<span class="kw">null</span>, <span class="kw">null</span>, <span class="kw">null</span>, <span class="kw">null</span>);
-<span class="kw">while</span> (tabellen.<span class="mt">next</span>()) {
-    <span class="cl">System</span>.out.<span class="mt">println</span>(tabellen.<span class="mt">getString</span>(<span class="st">"TABLE_NAME"</span>));
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="cl">Connection</span> connectie = <span class="kw">null</span>;
+
+        <span class="kw">try</span> {
+            connectie = <span class="cl">DriverManager</span>.getConnection
+                    (<span class="st">"jdbc:mysql://localhost/demo"</span>,
+                            <span class="st">"root"</span>, <span class="st">""</span>);
+            <span class="cl">DatabaseMetaData</span> databaseMetaData = connectie.<span class="mt">getMetaData</span>();
+            <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"DatabaseProductName: "</span> +
+                    databaseMetaData.<span class="mt">getDatabaseProductName</span>());
+            <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"DatabaseProductVersion: "</span> +
+                    databaseMetaData.<span class="mt">getDatabaseProductVersion</span>());
+            <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"DriverName: "</span> +
+                    databaseMetaData.<span class="mt">getDriverName</span>());
+            <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"DriverVersion: "</span> +
+                    databaseMetaData.<span class="mt">getDriverVersion</span>());
+        } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+            exceptie.<span class="mt">printStackTrace</span>();
+        } <span class="kw">finally</span> {
+            <span class="kw">try</span> {
+                connectie.<span class="mt">close</span>();
+            } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+                exceptie.<span class="mt">printStackTrace</span>();
+            }
+        }
+    }
 }</code></pre>
 
-      <h2>Lijst van kolommen van een tabel</h2>
-      <pre data-lang="java"><code><span class="cl">ResultSet</span> kolommen = meta.<span class="mt">getColumns</span>(<span class="kw">null</span>, <span class="kw">null</span>, <span class="st">"employees"</span>, <span class="kw">null</span>);
-<span class="kw">while</span> (kolommen.<span class="mt">next</span>()) {
-    <span class="cl">System</span>.out.<span class="mt">println</span>(kolommen.<span class="mt">getString</span>(<span class="st">"COLUMN_NAME"</span>));
+      <h2>Lijst van alle tabellen</h2>
+      <p>(binnen het <code>try</code>-blok, met <code>ResultSet resultaat</code> bovenaan gedeclareerd):</p>
+      <pre data-lang="java"><code><span class="cl">DatabaseMetaData</span> databaseMetaData = connectie.<span class="mt">getMetaData</span>();
+resultaat = databaseMetaData.<span class="mt">getTables</span>(<span class="kw">null</span>, <span class="kw">null</span>, <span class="kw">null</span>, <span class="kw">null</span>);
+<span class="kw">while</span> (resultaat.<span class="mt">next</span>()) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(resultaat.<span class="mt">getString</span>(<span class="st">"TABLE_NAME"</span>));
+}</code></pre>
+
+      <h2>Lijst van alle kolommen van een tabel</h2>
+      <pre data-lang="java"><code><span class="cl">DatabaseMetaData</span> databaseMetaData = connectie.<span class="mt">getMetaData</span>();
+resultaat = databaseMetaData.<span class="mt">getColumns</span>(<span class="kw">null</span>, <span class="kw">null</span>, <span class="st">"employees"</span>, <span class="kw">null</span>);
+<span class="kw">while</span> (resultaat.<span class="mt">next</span>()) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(resultaat.<span class="mt">getString</span>(<span class="st">"COLUMN_NAME"</span>));
 }</code></pre>
 
       <h2>Bestaat een kolom al?</h2>
       <p>Handig voor je een kolom toevoegt: loop over de kolommen en vergelijk de naam met <code>equalsIgnoreCase</code>.</p>
-      <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">boolean</span> <span class="mt">bestaatKolom</span>(<span class="cl">Connection</span> connectie, <span class="cl">String</span> tabel, <span class="cl">String</span> kolom) {
-    <span class="cl">ResultSet</span> resultaat = connectie.<span class="mt">getMetaData</span>().<span class="mt">getColumns</span>(<span class="kw">null</span>, <span class="kw">null</span>, tabel, <span class="kw">null</span>);
-    <span class="kw">while</span> (resultaat.<span class="mt">next</span>()) {
-        <span class="kw">if</span> (resultaat.<span class="mt">getString</span>(<span class="st">"COLUMN_NAME"</span>).<span class="mt">equalsIgnoreCase</span>(kolom)) {
-            <span class="kw">return</span>(<span class="kw">true</span>);
+      <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">static</span> <span class="kw">boolean</span> <span class="mt">bestaatKolom</span>(<span class="cl">Connection</span> connectie, <span class="cl">String</span> tabel, <span class="cl">String</span> kolom) {
+    <span class="cl">ResultSet</span> resultaat = <span class="kw">null</span>;
+    <span class="kw">try</span> {
+        resultaat = connectie.<span class="mt">getMetaData</span>().<span class="mt">getColumns</span>(<span class="kw">null</span>, <span class="kw">null</span>, tabel, <span class="kw">null</span>);
+        <span class="kw">while</span> (resultaat.<span class="mt">next</span>()) {
+            <span class="kw">if</span> (resultaat.<span class="mt">getString</span>(<span class="st">"COLUMN_NAME"</span>).<span class="mt">equalsIgnoreCase</span>(kolom)) {
+                <span class="kw">return</span> (<span class="kw">true</span>);
+            }
+        }
+        <span class="kw">return</span> (<span class="kw">false</span>);
+    } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+        exceptie.<span class="mt">printStackTrace</span>();
+    } <span class="kw">finally</span> {
+        <span class="kw">try</span> {
+            resultaat.<span class="mt">close</span>();
+        } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+            exceptie.<span class="mt">printStackTrace</span>();
         }
     }
-    <span class="kw">return</span>(<span class="kw">false</span>);
+    <span class="kw">return</span> (<span class="kw">false</span>);
 }</code></pre>
     </div>
 
     <!-- ===================== RESULTSET METADATA ===================== -->
     <div class="tab-content" id="tab-rsmeta">
       <h1>JDBC: ResultSet-metadata</h1>
-      <div class="chapter-meta"></div>
+      <div class="chapter-meta">&nbsp;·&nbsp; ResultSetMetaData</div>
 
-      <h2>Wat?</h2>
-      <p>Informatie opvragen over de <strong>kolommen</strong> in het resultaat van een SQL-query.</p>
+      <p>Via <code>ResultSetMetaData</code> vraag je informatie op over de kolommen in het resultaat van een query. Je haalt het op met <code>resultaat.getMetaData()</code> en je itereert over de kolommen (one-based, dus vanaf 1).</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.sql.*;
 
-      <h2>ResultSetMetaData ophalen</h2>
-      <pre data-lang="java"><code><span class="cl">ResultSet</span> resultaat = statement.<span class="mt">executeQuery</span>(<span class="st">"SELECT id, last_name FROM employees"</span>);
-<span class="cl">ResultSetMetaData</span> meta = resultaat.<span class="mt">getMetaData</span>();</code></pre>
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="cl">Connection</span> connectie = <span class="kw">null</span>;
+        <span class="cl">Statement</span> statement = <span class="kw">null</span>;
+        <span class="cl">ResultSet</span> resultaat = <span class="kw">null</span>;
 
-      <h2>Informatie over kolommen</h2>
-      <pre data-lang="java"><code>meta.<span class="mt">getColumnCount</span>()           <span class="cm">// aantal kolommen</span>
-meta.<span class="mt">getColumnName</span>(teller)      <span class="cm">// naam van kolom nr. teller</span>
-meta.<span class="mt">getColumnTypeName</span>(teller)  <span class="cm">// type (bv. "VARCHAR", "INT")</span>
-meta.<span class="mt">isAutoIncrement</span>(teller)    <span class="cm">// auto-increment? true/false</span></code></pre>
-
-      <h2>Itereren over kolommen</h2>
-      <pre data-lang="java"><code><span class="cm">// Kolomnummering is ONE-BASED (start bij 1!)</span>
-<span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt;= meta.<span class="mt">getColumnCount</span>(); i++) {
-    <span class="cl">System</span>.out.<span class="mt">println</span>(meta.<span class="mt">getColumnName</span>(i));
+        <span class="kw">try</span> {
+            connectie = <span class="cl">DriverManager</span>.getConnection
+                    (<span class="st">"jdbc:mysql://localhost/demo"</span>,
+                            <span class="st">"root"</span>, <span class="st">""</span>);
+            statement = connectie.<span class="mt">createStatement</span>();
+            resultaat = statement.executeQuery
+                    (<span class="st">"SELECT id, last_name, first_name FROM employees"</span>);
+            <span class="cl">ResultSetMetaData</span> metaData = resultaat.<span class="mt">getMetaData</span>();
+            <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Aantal kolommen: "</span> + metaData.<span class="mt">getColumnCount</span>());
+            <span class="kw">for</span> (<span class="kw">int</span> teller = 1; teller &lt;= metaData.<span class="mt">getColumnCount</span>(); teller++) {
+                <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Naam kolom "</span> + teller + <span class="st">": "</span> +
+                        metaData.<span class="mt">getColumnName</span>(teller));
+                <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Type kolom "</span> + teller + <span class="st">": "</span> +
+                        metaData.<span class="mt">getColumnTypeName</span>(teller));
+                <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Auto-increment kolom "</span> + teller + <span class="st">": "</span> +
+                        metaData.<span class="mt">isAutoIncrement</span>(teller));
+            }
+        } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+            exceptie.<span class="mt">printStackTrace</span>();
+        } <span class="kw">finally</span> {
+            <span class="kw">try</span> {
+                resultaat.<span class="mt">close</span>();
+                statement.<span class="mt">close</span>();
+                connectie.<span class="mt">close</span>();
+            } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+                exceptie.<span class="mt">printStackTrace</span>();
+            }
+        }
+    }
 }</code></pre>
 
-      <div class="info-box warn"><span class="icon">⚠️</span>Kolomnummering begint bij <strong>1</strong>, niet bij 0!</div>
+      <div class="info-box warn"><span class="icon">⚠️</span>De kolomnummering start bij <strong>1</strong>, niet bij 0.</div>
     </div>
 
     <!-- ===================== BLOBS ===================== -->
     <div class="tab-content" id="tab-blob">
-      <h1>JDBC: BLOB's</h1>
-      <div class="chapter-meta"></div>
+      <h1>JDBC: BLOB’s</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Binary Large Object</div>
 
-      <h2>Wat is een BLOB?</h2>
-      <p><strong>Binary Large Object</strong> — binaire data zoals afbeeldingen of muziek.</p>
-
+      <p>Een BLOB (Binary Large Object) is binaire data zonder tekencodering, bijvoorbeeld een afbeelding of muziek. Je bewaart ze in een kolom van het juiste type.</p>
       <table>
         <tr><th>Type</th><th>Max grootte</th></tr>
         <tr><td><code>TINYBLOB</code></td><td>255 bytes</td></tr>
@@ -1753,59 +1996,126 @@ meta.<span class="mt">isAutoIncrement</span>(teller)    <span class="cm">// auto
 
       <h2>Kolom toevoegen als die nog niet bestaat</h2>
       <p>Bestaat de kolom nog niet, voeg ze dan eerst toe met <code>ALTER TABLE</code> (zie <em>bestaatKolom</em> bij Databank-metadata).</p>
-      <pre data-lang="java"><code><span class="kw">if</span> (!<span class="mt">bestaatKolom</span>(connectie, <span class="st">"tbl_boek"</span>, <span class="st">"cover"</span>)) {
-    statement.<span class="mt">executeUpdate</span>(<span class="st">"ALTER TABLE tbl_boek ADD cover LONGBLOB"</span>);
+      <pre data-lang="java"><code><span class="kw">if</span> (!<span class="mt">bestaatKolom</span>(connectie, <span class="st">"employees"</span>, <span class="st">"resume"</span>)) {
+    statement.<span class="mt">executeUpdate</span>(<span class="st">"ALTER TABLE employees ADD resume LONGBLOB"</span>);
 }</code></pre>
 
       <h2>BLOB opslaan</h2>
-      <pre data-lang="java"><code><span class="kw">1.</span> PreparedStatement aanmaken met <span class="st">"?"</span> als placeholder:
-<span class="cl">PreparedStatement</span> ps = connectie.<span class="mt">prepareStatement</span>(
-    <span class="st">"UPDATE employees SET resume=? WHERE email='john@foo.com'"</span>
-);
+      <p>Zet een <code>?</code> als placeholder, stel de parameter in met <code>setBinaryStream</code> (een <code>FileInputStream</code>) en voer uit met <code>executeUpdate()</code>.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.io.<span class="cl">File</span>;
+<span class="kw">import</span> java.io.<span class="cl">FileInputStream</span>;
+<span class="kw">import</span> java.sql.<span class="cl">Connection</span>;
+<span class="kw">import</span> java.sql.<span class="cl">DriverManager</span>;
+<span class="kw">import</span> java.sql.<span class="cl">PreparedStatement</span>;
 
-<span class="kw">2.</span> BLOB-parameter instellen via FileInputStream:
-<span class="cl">File</span> bestand = <span class="kw">new</span> <span class="cl">File</span>(<span class="st">"afbeelding.jpg"</span>);
-<span class="cl">FileInputStream</span> invoer = <span class="kw">new</span> <span class="cl">FileInputStream</span>(bestand);
-ps.<span class="mt">setBinaryStream</span>(1, invoer); <span class="cm">// 1 = eerste ?</span>
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="cl">Connection</span> connectie = <span class="kw">null</span>;
+        <span class="cl">PreparedStatement</span> preparedStatement = <span class="kw">null</span>;
 
-<span class="kw">3.</span> Uitvoeren:
-ps.<span class="mt">executeUpdate</span>();</code></pre>
+        <span class="kw">try</span> {
+            connectie = <span class="cl">DriverManager</span>.getConnection
+                    (<span class="st">"jdbc:mysql://localhost/demo"</span>,
+                            <span class="st">"root"</span>, <span class="st">""</span>);
+            preparedStatement = connectie.prepareStatement
+                    (<span class="st">"UPDATE employees SET resume=? "</span> +
+                            <span class="st">"WHERE email='john.doe@foo.com'"</span>);
+            <span class="cl">File</span> bestand = <span class="kw">new</span> <span class="cl">File</span>(<span class="st">"afbeelding.jpg"</span>);
+            <span class="cl">FileInputStream</span> invoer = <span class="kw">new</span> <span class="cl">FileInputStream</span>(bestand);
+            preparedStatement.<span class="mt">setBinaryStream</span>(1, invoer);
+            preparedStatement.<span class="mt">executeUpdate</span>();
+        } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+            exceptie.<span class="mt">printStackTrace</span>();
+        } <span class="kw">finally</span> {
+            <span class="kw">try</span> {
+                preparedStatement.<span class="mt">close</span>();
+                connectie.<span class="mt">close</span>();
+            } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+                exceptie.<span class="mt">printStackTrace</span>();
+            }
+        }
+    }
+}</code></pre>
+
+      <h2>BLOB uitlezen en wegschrijven naar een bestand</h2>
+      <p>Lees de BLOB uit met <code>getBinaryStream(...)</code> en schrijf de bytes naar een bestand (imports: <code>java.io.InputStream</code>, <code>java.io.FileOutputStream</code>).</p>
+      <pre data-lang="java"><code>resultaat = preparedStatement.<span class="mt">executeQuery</span>();
+<span class="kw">if</span> (resultaat.<span class="mt">next</span>()) {
+    <span class="cl">InputStream</span> invoer = resultaat.<span class="mt">getBinaryStream</span>(<span class="st">"resume"</span>);
+    <span class="cl">FileOutputStream</span> uitvoer = <span class="kw">new</span> <span class="cl">FileOutputStream</span>(<span class="st">"uitvoer.jpg"</span>);
+    <span class="kw">int</span> byteWaarde;
+    <span class="kw">while</span> ((byteWaarde = invoer.<span class="mt">read</span>()) != -1) {
+        uitvoer.<span class="mt">write</span>(byteWaarde);
+    }
+    uitvoer.<span class="mt">close</span>();
+}</code></pre>
     </div>
 
     <!-- ===================== CLOBS ===================== -->
     <div class="tab-content" id="tab-clob">
-      <h1>JDBC: CLOB's</h1>
-      <div class="chapter-meta"></div>
+      <h1>JDBC: CLOB’s</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; Character Large Object</div>
 
-      <h2>Wat is een CLOB?</h2>
-      <p><strong>Character Large Object</strong> — grote tekstbestanden in de databank. In MySQL: <code>LONGTEXT</code> kolom.</p>
+      <p>Een CLOB (Character Large Object) is een groot tekstueel gegeven, typisch een tekstbestand. In MySQL bewaar je een CLOB in een kolom van het type <code>LONGTEXT</code>.</p>
 
       <h2>Kolom toevoegen als die nog niet bestaat</h2>
-      <pre data-lang="java"><code><span class="kw">if</span> (!<span class="mt">bestaatKolom</span>(connectie, <span class="st">"tbl_boek"</span>, <span class="st">"tekstje"</span>)) {
-    statement.<span class="mt">executeUpdate</span>(<span class="st">"ALTER TABLE tbl_boek ADD tekstje LONGTEXT"</span>);
+      <pre data-lang="java"><code><span class="kw">if</span> (!<span class="mt">bestaatKolom</span>(connectie, <span class="st">"employees"</span>, <span class="st">"resume"</span>)) {
+    statement.<span class="mt">executeUpdate</span>(<span class="st">"ALTER TABLE employees ADD resume LONGTEXT"</span>);
 }</code></pre>
 
       <h2>CLOB opslaan</h2>
-      <pre data-lang="java"><code><span class="kw">1.</span> PreparedStatement aanmaken:
-<span class="cl">PreparedStatement</span> ps = connectie.<span class="mt">prepareStatement</span>(
-    <span class="st">"UPDATE employees SET resume=? WHERE email='john@foo.com'"</span>
-);
+      <p>Zet een <code>?</code> als placeholder, stel de parameter in met <code>setCharacterStream</code> (een <code>FileReader</code>) en voer uit met <code>executeUpdate()</code>.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.io.<span class="cl">File</span>;
+<span class="kw">import</span> java.io.<span class="cl">FileReader</span>;
+<span class="kw">import</span> java.sql.<span class="cl">Connection</span>;
+<span class="kw">import</span> java.sql.<span class="cl">DriverManager</span>;
+<span class="kw">import</span> java.sql.<span class="cl">PreparedStatement</span>;
 
-<span class="kw">2.</span> CLOB-parameter instellen via FileReader:
-<span class="cl">File</span> tekstbestand = <span class="kw">new</span> <span class="cl">File</span>(<span class="st">"tekst.txt"</span>);
-<span class="cl">FileReader</span> invoer = <span class="kw">new</span> <span class="cl">FileReader</span>(tekstbestand);
-ps.<span class="mt">setCharacterStream</span>(1, invoer); <span class="cm">// let op: CharacterStream!</span>
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="cl">Connection</span> connectie = <span class="kw">null</span>;
+        <span class="cl">PreparedStatement</span> preparedStatement = <span class="kw">null</span>;
 
-<span class="kw">3.</span> Uitvoeren:
-ps.<span class="mt">executeUpdate</span>();</code></pre>
+        <span class="kw">try</span> {
+            connectie = <span class="cl">DriverManager</span>.getConnection
+                    (<span class="st">"jdbc:mysql://localhost/demo"</span>,
+                            <span class="st">"root"</span>, <span class="st">""</span>);
+            preparedStatement = connectie.prepareStatement
+                    (<span class="st">"UPDATE employees SET resume=? "</span> +
+                            <span class="st">"WHERE email='john.doe@foo.com'"</span>);
+            <span class="cl">File</span> tekstbestand = <span class="kw">new</span> <span class="cl">File</span>(<span class="st">"tekst.txt"</span>);
+            <span class="cl">FileReader</span> invoer = <span class="kw">new</span> <span class="cl">FileReader</span>(tekstbestand);
+            preparedStatement.<span class="mt">setCharacterStream</span>(1, invoer);
+            preparedStatement.<span class="mt">executeUpdate</span>();
+        } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+            exceptie.<span class="mt">printStackTrace</span>();
+        } <span class="kw">finally</span> {
+            <span class="kw">try</span> {
+                preparedStatement.<span class="mt">close</span>();
+                connectie.<span class="mt">close</span>();
+            } <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+                exceptie.<span class="mt">printStackTrace</span>();
+            }
+        }
+    }
+}</code></pre>
+
+      <h2>CLOB uitlezen</h2>
+      <p>Tekst lees je gewoon uit met <code>getString(...)</code>.</p>
+      <pre data-lang="java"><code>resultaat = preparedStatement.<span class="mt">executeQuery</span>();
+<span class="kw">if</span> (resultaat.<span class="mt">next</span>()) {
+    <span class="cl">String</span> tekst = resultaat.<span class="mt">getString</span>(<span class="st">"resume"</span>);
+    <span class="cl">System</span>.out.<span class="mt">println</span>(tekst);
+}</code></pre>
 
       <table>
         <tr><th></th><th>BLOB</th><th>CLOB</th></tr>
         <tr><td>Staat voor</td><td>Binary Large Object</td><td>Character Large Object</td></tr>
         <tr><td>Soort data</td><td>Binair (afbeelding, muziek)</td><td>Tekst</td></tr>
         <tr><td>MySQL type</td><td>BLOB, MEDIUMBLOB, ...</td><td>LONGTEXT</td></tr>
-        <tr><td>Methode</td><td><code>setBinaryStream()</code></td><td><code>setCharacterStream()</code></td></tr>
-        <tr><td>Java klasse</td><td><code>FileInputStream</code></td><td><code>FileReader</code></td></tr>
+        <tr><td>Instellen</td><td><code>setBinaryStream()</code></td><td><code>setCharacterStream()</code></td></tr>
+        <tr><td>Java-klasse</td><td><code>FileInputStream</code></td><td><code>FileReader</code></td></tr>
+        <tr><td>Uitlezen</td><td><code>getBinaryStream()</code></td><td><code>getString()</code></td></tr>
       </table>
     </div>
 
@@ -2338,6 +2648,137 @@ label.<span class="mt">setWrapText</span>(<span class="kw">true</span>);  <span 
       </table>
 
       <div class="info-box note"><span class="icon">📌</span><code>setBackground()</code> en <code>setBorder()</code> werken op <strong>Panes</strong> (VBox, HBox, GridPane…). Voor tekstkleur op een Label of Button gebruik je <code>setTextFill()</code>. Voor een TextField heb je geen <code>setTextFill()</code> — gebruik daar <code>setStyle("-fx-text-fill: ...")</code>.</div>
+    </div>
+
+    <!-- ===================== EXCEPTIONS ===================== -->
+    <div class="tab-content" id="tab-exceptions">
+      <h1>Exceptions (try / catch / finally)</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; fouten opvangen zonder dat het programma crasht</div>
+
+      <p>Code die kan mislukken (een berekening, een bestand, een databank) zet je in een <code>try</code>. Loopt het mis, dan springt Java naar het <code>catch</code>-blok. Het <code>finally</code>-blok loopt altijd, ook bij een fout, en gebruik je om op te kuisen (bijvoorbeeld <code>.close()</code>).</p>
+      <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="kw">int</span> deler = 0;
+
+        <span class="kw">try</span> {
+            <span class="kw">int</span> resultaat = 10 / deler;          <span class="cm">// kan een fout geven</span>
+            <span class="cl">System</span>.out.<span class="mt">println</span>(resultaat);
+        } <span class="kw">catch</span> (<span class="cl">ArithmeticException</span> exceptie) {  <span class="cm">// specifieke fout opvangen</span>
+            <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Delen door nul!"</span>);
+            exceptie.<span class="mt">printStackTrace</span>();
+        } <span class="kw">finally</span> {
+            <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Dit blok loopt ALTIJD."</span>);
+        }
+    }
+}</code></pre>
+
+      <h2>Meerdere fouten opvangen</h2>
+      <p>Je kunt meerdere <code>catch</code>-blokken na elkaar zetten. <code>Exception</code> vangt elke fout op, dus zet die als laatste.</p>
+      <pre data-lang="java"><code><span class="kw">try</span> {
+    <span class="cm">// ...</span>
+} <span class="kw">catch</span> (<span class="cl">NumberFormatException</span> exceptie) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Geen geldig getal."</span>);
+} <span class="kw">catch</span> (<span class="cl">Exception</span> exceptie) {
+    <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Er ging iets anders mis."</span>);
+}</code></pre>
+      <div class="info-box tip"><span class="icon">✅</span>In JDBC zet je de databankcode in <code>try</code> en sluit je <code>resultaat</code>, <code>statement</code> en <code>connectie</code> in het <code>finally</code>-blok. Zo blijven er nooit verbindingen open staan.</div>
+    </div>
+
+    <!-- ===================== SCANNER ===================== -->
+    <div class="tab-content" id="tab-scanner">
+      <h1>Invoer met Scanner</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; java.util.Scanner — lezen van het toetsenbord</div>
+
+      <p>Met een <code>Scanner</code> op <code>System.in</code> lees je wat de gebruiker typt.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.util.<span class="cl">Scanner</span>;
+
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="mt">main</span>(<span class="cl">String</span>[] args) {
+        <span class="cl">Scanner</span> invoer = <span class="kw">new</span> <span class="cl">Scanner</span>(<span class="cl">System</span>.in);
+
+        <span class="cl">System</span>.out.<span class="mt">print</span>(<span class="st">"Naam: "</span>);
+        <span class="cl">String</span> naam = invoer.<span class="mt">nextLine</span>();
+
+        <span class="cl">System</span>.out.<span class="mt">print</span>(<span class="st">"Leeftijd: "</span>);
+        <span class="kw">int</span> leeftijd = invoer.<span class="mt">nextInt</span>();
+
+        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Hallo "</span> + naam + <span class="st">" ("</span> + leeftijd + <span class="st">")"</span>);
+    }
+}</code></pre>
+
+      <table>
+        <tr><th>Methode</th><th>Leest</th></tr>
+        <tr><td><code>nextLine()</code></td><td>een volledige regel tekst</td></tr>
+        <tr><td><code>next()</code></td><td>één woord</td></tr>
+        <tr><td><code>nextInt()</code></td><td>een geheel getal</td></tr>
+        <tr><td><code>nextDouble()</code></td><td>een decimaal getal</td></tr>
+        <tr><td><code>nextBoolean()</code></td><td>true / false</td></tr>
+      </table>
+      <div class="info-box warn"><span class="icon">⚠️</span>Na <code>nextInt()</code> of <code>nextDouble()</code> blijft er een enter staan. Roep een extra <code>nextLine()</code> op voor je opnieuw een regel tekst leest.</div>
+    </div>
+
+    <!-- ===================== STRINGS ===================== -->
+    <div class="tab-content" id="tab-strings">
+      <h1>String-methodes</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; veelgebruikte bewerkingen op tekst</div>
+      <pre data-lang="java"><code><span class="cl">String</span> tekst = <span class="st">"Hallo wereld"</span>;
+
+tekst.<span class="mt">length</span>()                        <span class="cm">// 11</span>
+tekst.<span class="mt">toUpperCase</span>()                   <span class="cm">// "HALLO WERELD"</span>
+tekst.<span class="mt">toLowerCase</span>()                   <span class="cm">// "hallo wereld"</span>
+tekst.<span class="mt">charAt</span>(0)                       <span class="cm">// 'H'</span>
+tekst.<span class="mt">substring</span>(0, 5)                 <span class="cm">// "Hallo"</span>
+tekst.<span class="mt">indexOf</span>(<span class="st">"wereld"</span>)               <span class="cm">// 6  (-1 als niet gevonden)</span>
+tekst.<span class="mt">contains</span>(<span class="st">"wereld"</span>)              <span class="cm">// true</span>
+tekst.<span class="mt">replace</span>(<span class="st">"wereld"</span>, <span class="st">"Java"</span>)       <span class="cm">// "Hallo Java"</span>
+tekst.<span class="mt">trim</span>()                          <span class="cm">// spaties links/rechts weg</span>
+tekst.<span class="mt">split</span>(<span class="st">" "</span>)                      <span class="cm">// {"Hallo", "wereld"}</span>
+tekst.<span class="mt">isEmpty</span>()                       <span class="cm">// false</span>
+tekst.<span class="mt">equals</span>(<span class="st">"Hallo"</span>)                 <span class="cm">// false</span>
+tekst.<span class="mt">equalsIgnoreCase</span>(<span class="st">"HALLO WERELD"</span>)<span class="cm">// true</span></code></pre>
+      <div class="info-box warn"><span class="icon">⚠️</span>Vergelijk tekst altijd met <code>.equals(...)</code> of <code>.equalsIgnoreCase(...)</code>, nooit met <code>==</code>. Met <code>==</code> vergelijk je geheugenadressen, niet de inhoud.</div>
+    </div>
+
+    <!-- ===================== PARSEN & CASTEN ===================== -->
+    <div class="tab-content" id="tab-parsen">
+      <h1>Parsen &amp; casten</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; omzetten tussen tekst en getallen, en tussen getaltypes</div>
+
+      <h2>Tekst &harr; getal</h2>
+      <pre data-lang="java"><code><span class="cm">// String -&gt; getal</span>
+<span class="kw">int</span> getal = <span class="cl">Integer</span>.<span class="mt">parseInt</span>(<span class="st">"42"</span>);
+<span class="kw">double</span> komma = <span class="cl">Double</span>.<span class="mt">parseDouble</span>(<span class="st">"3.14"</span>);
+
+<span class="cm">// getal -&gt; String</span>
+<span class="cl">String</span> tekst = <span class="cl">String</span>.<span class="mt">valueOf</span>(42);
+<span class="cl">String</span> tekst2 = <span class="st">""</span> + 42;          <span class="cm">// korte manier</span></code></pre>
+
+      <h2>Casten tussen getaltypes</h2>
+      <pre data-lang="java"><code><span class="kw">double</span> d = 9.99;
+<span class="kw">int</span> afgekapt = (<span class="kw">int</span>) d;           <span class="cm">// 9  (kapt af, rondt NIET af)</span>
+
+<span class="kw">int</span> i = 5;
+<span class="kw">double</span> naarDouble = i;            <span class="cm">// automatisch, geen cast nodig</span></code></pre>
+      <div class="info-box tip"><span class="icon">✅</span>Wil je afronden in plaats van afkappen, gebruik dan <code>Math.round(...)</code>.</div>
+    </div>
+
+    <!-- ===================== MATH ===================== -->
+    <div class="tab-content" id="tab-math">
+      <h1>Math &amp; getallen</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; java.lang.Math</div>
+      <pre data-lang="java"><code><span class="cl">Math</span>.<span class="mt">abs</span>(-7)            <span class="cm">// 7</span>
+<span class="cl">Math</span>.<span class="mt">max</span>(3, 9)          <span class="cm">// 9</span>
+<span class="cl">Math</span>.<span class="mt">min</span>(3, 9)          <span class="cm">// 3</span>
+<span class="cl">Math</span>.<span class="mt">pow</span>(2, 10)         <span class="cm">// 1024.0</span>
+<span class="cl">Math</span>.<span class="mt">sqrt</span>(144)          <span class="cm">// 12.0</span>
+<span class="cl">Math</span>.<span class="mt">round</span>(4.6)         <span class="cm">// 5</span>
+<span class="cl">Math</span>.<span class="mt">floor</span>(4.9)         <span class="cm">// 4.0</span>
+<span class="cl">Math</span>.<span class="mt">ceil</span>(4.1)          <span class="cm">// 5.0</span>
+<span class="cl">Math</span>.<span class="mt">random</span>()           <span class="cm">// 0.0 tot (net niet) 1.0</span></code></pre>
+
+      <h2>Willekeurig geheel getal</h2>
+      <pre data-lang="java"><code><span class="cm">// een worp met een dobbelsteen: 1 tot en met 6</span>
+<span class="kw">int</span> worp = (<span class="kw">int</span>) (<span class="cl">Math</span>.<span class="mt">random</span>() * 6) + 1;</code></pre>
     </div>
 
   </main>
