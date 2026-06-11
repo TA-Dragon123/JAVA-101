@@ -406,9 +406,8 @@
 
     <div class="nav-section">OOP & Klassen</div>
     <div class="nav-item" onclick="showTab('oop')" data-tab="oop"><span class="icon">🧩</span>OOP & Klassen</div>
-    <div class="nav-item" onclick="showTab('abstract')" data-tab="abstract"><span class="icon">🔷</span>Abstracte Klassen</div>
+    <div class="nav-item" onclick="showTab('abstract')" data-tab="abstract"><span class="icon">🔷</span>Abstract &amp; Overerving</div>
     <div class="nav-item" onclick="showTab('relatie')" data-tab="relatie"><span class="icon">🔗</span>Heeft-een Relatie</div>
-    <div class="nav-item" onclick="showTab('klaslokaal')" data-tab="klaslokaal"><span class="icon">🏫</span>Klaslokaal & Tafel</div>
 
     <div class="nav-section">JavaFX</div>
     <div class="nav-item" onclick="showTab('fx-basis')" data-tab="fx-basis"><span class="icon">🚀</span>JavaFX Basis</div>
@@ -929,55 +928,118 @@ namen[0] = <span class="st">"Jan"</span>;</code></pre>
 
     <!-- ===================== ABSTRACTE KLASSEN ===================== -->
     <div class="tab-content" id="tab-abstract">
-      <h1>Abstracte Klassen & Methodes</h1>
-      <div class="chapter-meta"></div>
+      <h1>Abstracte Klassen &amp; Overerving</h1>
+      <div class="chapter-meta">&nbsp;·&nbsp; abstract · extends · super · @Override</div>
 
       <h2>Wat is een abstracte klasse?</h2>
-      <p>Een abstracte klasse is een klasse waarvan je <strong>geen objecten kunt aanmaken</strong>. Ze dient als basis voor subklassen.</p>
-
-      <pre data-lang="java"><code><span class="kw">public abstract class</span> <span class="cl">Klassenaam</span> {
+      <p>Een abstracte klasse is een klasse waarvan je <strong>geen objecten kunt aanmaken</strong>. Ze dient als basis (superklasse) voor subklassen.</p>
+      <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> <span class="cl">Klassenaam</span> {
     <span class="cm">// ... inhoud</span>
 }</code></pre>
-
-      <div class="info-box warn"><span class="icon">⚠️</span><code>new Klassenaam()</code> is NIET mogelijk bij abstracte klassen!</div>
+      <div class="info-box warn"><span class="icon">⚠️</span><code>new Klassenaam()</code> is NIET mogelijk bij een abstracte klasse.</div>
 
       <h2>Abstracte methode</h2>
-      <p>Een abstracte methode heeft <strong>geen implementatie</strong> — subklassen zijn verplicht deze te implementeren.</p>
+      <p>Een abstracte methode heeft <strong>geen implementatie</strong>. Elke subklasse is verplicht ze in te vullen.</p>
+      <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">abstract</span> returntype <span class="mt">methodenaam</span>(parameterlijst);</code></pre>
 
-      <pre data-lang="java"><code><span class="kw">public abstract</span> returntype <span class="mt">methodenaam</span>(parameterlijst);</code></pre>
+      <h2>Superklasse met protected attributen</h2>
+      <p><code>protected</code> attributen zijn zichtbaar in de klasse zelf <strong>en</strong> in elke subklasse, zodat een subklasse rechtstreeks aan de geërfde velden kan. Een abstracte methode mag een <code>enum</code> teruggeven.</p>
+      <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">enum</span> <span class="cl">Brandstof</span> {
+    BENZINE,
+    DIESEL,
+    ELEKTRISCH
+}</code></pre>
+      <pre data-lang="java"><code><span class="kw">import</span> java.math.<span class="cl">BigDecimal</span>;
+
+<span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> <span class="cl">Voertuig</span> {
+    <span class="kw">protected</span> <span class="cl">String</span> merk;            <span class="cm">// protected: ook zichtbaar in subklassen</span>
+    <span class="kw">protected</span> <span class="cl">BigDecimal</span> prijs;
+    <span class="kw">protected</span> <span class="kw">double</span> gewichtInKg;
+
+    <span class="kw">public</span> <span class="cl">Voertuig</span>(<span class="cl">String</span> merk, <span class="cl">BigDecimal</span> prijs, <span class="kw">double</span> gewichtInKg) {
+        <span class="kw">this</span>.merk = merk;
+        <span class="kw">this</span>.prijs = prijs;
+        <span class="kw">this</span>.gewichtInKg = gewichtInKg;
+    }
+
+    <span class="kw">public</span> <span class="cl">String</span> <span class="mt">getMerk</span>() {
+        <span class="kw">return</span> merk;
+    }
+
+    <span class="kw">public</span> <span class="cl">BigDecimal</span> <span class="mt">getPrijs</span>() {
+        <span class="kw">return</span> prijs;
+    }
+
+    <span class="cm">// Abstracte methodes: elke subklasse MOET deze invullen</span>
+    <span class="kw">public</span> <span class="kw">abstract</span> <span class="cl">Brandstof</span> <span class="mt">geefBrandstof</span>();
+
+    <span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">double</span> <span class="mt">berekenVerbruik</span>();
+
+    <span class="kw">@Override</span>
+    <span class="kw">public</span> <span class="cl">String</span> <span class="mt">toString</span>() {
+        <span class="kw">return</span> <span class="st">"Voertuig{"</span> +
+                <span class="st">"merk="</span> + merk +
+                <span class="st">", prijs="</span> + prijs +
+                <span class="st">", gewichtInKg="</span> + gewichtInKg +
+                <span class="st">'}'</span>;
+    }
+}</code></pre>
+
+      <h2>Subklasse: extends + super(...)</h2>
+      <p>Een subklasse erft alles van de superklasse via <code>extends</code>. In de constructor roep je als <strong>eerste lijn</strong> <code>super(...)</code> op om de geërfde attributen te vullen. Daarna vul je de abstracte methodes in.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.math.<span class="cl">BigDecimal</span>;
+
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Auto</span> <span class="kw">extends</span> <span class="cl">Voertuig</span> {
+    <span class="kw">private</span> <span class="kw">int</span> aantalDeuren;
+
+    <span class="kw">public</span> <span class="cl">Auto</span>(<span class="cl">String</span> merk, <span class="cl">BigDecimal</span> prijs, <span class="kw">double</span> gewichtInKg, <span class="kw">int</span> aantalDeuren) {
+        <span class="kw">super</span>(merk, prijs, gewichtInKg);   <span class="cm">// eerst de constructor van Voertuig</span>
+        <span class="kw">this</span>.aantalDeuren = aantalDeuren;
+    }
+
+    <span class="kw">public</span> <span class="kw">int</span> <span class="mt">getAantalDeuren</span>() {
+        <span class="kw">return</span> aantalDeuren;
+    }
+
+    <span class="kw">@Override</span>
+    <span class="kw">public</span> <span class="cl">Brandstof</span> <span class="mt">geefBrandstof</span>() {     <span class="cm">// abstracte methode invullen</span>
+        <span class="kw">return</span> <span class="cl">Brandstof</span>.BENZINE;
+    }
+
+    <span class="kw">@Override</span>
+    <span class="kw">public</span> <span class="kw">double</span> <span class="mt">berekenVerbruik</span>() {
+        <span class="kw">return</span> gewichtInKg * 0.006;        <span class="cm">// protected veld van superklasse</span>
+    }
+
+    <span class="kw">@Override</span>
+    <span class="kw">public</span> <span class="cl">String</span> <span class="mt">toString</span>() {
+        <span class="kw">return</span> <span class="st">"Auto{"</span> +
+                <span class="kw">super</span>.<span class="mt">toString</span>() +          <span class="cm">// tekst van superklasse hergebruiken</span>
+                <span class="st">", aantalDeuren="</span> + aantalDeuren +
+                <span class="st">'}'</span>;
+    }
+}</code></pre>
 
       <h2>Regels</h2>
       <table>
         <tr><th>Regel</th><th>Uitleg</th></tr>
-        <tr><td>Alleen abstracte klassen mogen abstracte methodes bevatten</td><td>Een gewone klasse kan geen abstracte methode hebben</td></tr>
-        <tr><td>Subklassen moeten alle abstracte methodes implementeren</td><td>Anders is de subklasse ook abstract</td></tr>
-        <tr><td>In UML: cursief weergegeven</td><td>Abstracte namen worden schuin gedrukt in UML-schema's</td></tr>
+        <tr><td>Enkel abstracte klassen mogen abstracte methodes bevatten</td><td>Een gewone klasse kan geen abstracte methode hebben</td></tr>
+        <tr><td>Subklassen moeten alle abstracte methodes invullen</td><td>Anders is de subklasse zelf ook abstract</td></tr>
+        <tr><td><code>super(...)</code> staat als eerste lijn in de constructor</td><td>Vult de geërfde attributen van de superklasse</td></tr>
+        <tr><td><code>protected</code> is zichtbaar in subklassen</td><td><code>private</code> niet, <code>protected</code> wel</td></tr>
+        <tr><td>In UML: cursief = abstract</td><td>Let op schuine druk in het UML-diagram</td></tr>
       </table>
 
-      <h2>Voorbeeld</h2>
-      <pre data-lang="java"><code><span class="kw">public abstract class</span> <span class="cl">Dier</span> {
-    <span class="kw">private</span> <span class="cl">String</span> naam;
-
-    <span class="kw">public abstract void</span> <span class="mt">maakGeluid</span>(); <span class="cm">// verplicht te implementeren</span>
-    
-    <span class="kw">public</span> <span class="cl">String</span> <span class="mt">getNaam</span>() { <span class="kw">return</span> naam; }
-}
-
-<span class="kw">public class</span> <span class="cl">Hond</span> <span class="kw">extends</span> <span class="cl">Dier</span> {
-    <span class="kw">@Override</span>
-    <span class="kw">public void</span> <span class="mt">maakGeluid</span>() {
-        <span class="cl">System</span>.out.<span class="mt">println</span>(<span class="st">"Woef!"</span>);
-    }
-}</code></pre>
+      <div class="info-box note"><span class="icon">📌</span><code>super.toString()</code> hergebruikt de tekst van de superklasse, zodat je die niet hoeft te herhalen in de subklasse.</div>
     </div>
 
     <!-- ===================== HEEFT-EEN RELATIE ===================== -->
     <div class="tab-content" id="tab-relatie">
-      <h1>'Heeft-een' Relatie</h1>
-      <div class="chapter-meta"> &nbsp;·&nbsp; Object als attribuut</div>
+      <h1>'Heeft-een' Relatie (object als attribuut)</h1>
+      <div class="chapter-meta"> &nbsp;·&nbsp; compositie · ArrayList van objecten · overzichten · totalen</div>
 
       <h2>Concept</h2>
-      <p>Een "heeft-een" relatie betekent dat een klasse (parent) een object van een andere klasse (child) als attribuut heeft.</p>
+      <p>Een "heeft-een" relatie betekent dat een klasse een object (of een lijst objecten) van een andere klasse als attribuut heeft.</p>
 
       <h2>UML-regels</h2>
       <table>
@@ -987,86 +1049,138 @@ namen[0] = <span class="st">"Jan"</span>;</code></pre>
         <tr><td>Relatienaam</td><td>Naam van de childklasse met kleine letter, voorafgegaan door <code>-</code></td></tr>
       </table>
 
-      <h2>Multipliciteit 0..1 of 1..1 (één child)</h2>
-      <pre data-lang="java"><code><span class="kw">public class</span> <span class="cl">Auto</span> {
-    <span class="kw">private</span> <span class="cl">Motor</span> motor; <span class="cm">// child object als attribuut</span>
+      <h2>Eén child (multipliciteit 0..1 of 1..1)</h2>
+      <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">class</span> <span class="cl">Auto</span> {
+    <span class="kw">private</span> <span class="cl">Motor</span> motor;   <span class="cm">// child-object als attribuut</span>
 
-    <span class="kw">public</span> <span class="cl">Motor</span> <span class="mt">getMotor</span>() { <span class="kw">return</span> motor; }
-    <span class="kw">public void</span> <span class="mt">setMotor</span>(<span class="cl">Motor</span> motor) {
-        <span class="kw">if</span> (motor != <span class="kw">null</span>) <span class="cm">// check bij 1..1</span>
+    <span class="kw">public</span> <span class="cl">Motor</span> <span class="mt">getMotor</span>() {
+        <span class="kw">return</span> motor;
+    }
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="mt">setMotor</span>(<span class="cl">Motor</span> motor) {
+        <span class="kw">if</span> (motor != <span class="kw">null</span>) {   <span class="cm">// controle bij 1..1</span>
             <span class="kw">this</span>.motor = motor;
+        }
     }
 
     <span class="kw">@Override</span>
     <span class="kw">public</span> <span class="cl">String</span> <span class="mt">toString</span>() {
-        <span class="kw">return</span> motor.<span class="mt">toString</span>(); <span class="cm">// toString van child oproepen!</span>
+        <span class="kw">return</span> motor.<span class="mt">toString</span>();   <span class="cm">// toString van child oproepen</span>
     }
 }</code></pre>
 
-      <h2>Multipliciteit 0..* of meer (lijst van children)</h2>
-      <pre data-lang="java"><code><span class="kw">public class</span> <span class="cl">Klaslokaal</span> {
-    <span class="kw">private</span> <span class="cl">ArrayList</span>&lt;<span class="cl">Tafel</span>&gt; tafelLijst;
+      <h2>Onveranderlijke code (id)</h2>
+      <p>Een <code>code</code> die je bij het aanmaken meegeeft en daarna niet meer mag wijzigen, krijgt enkel een getter en <strong>geen setter</strong>. Je stelt ze in via de constructor.</p>
+      <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">class</span> <span class="cl">Speler</span> {
+    <span class="kw">private</span> <span class="cl">String</span> code;       <span class="cm">// id: enkel via constructor, niet wijzigbaar</span>
+    <span class="kw">private</span> <span class="cl">String</span> naam;
 
-    <span class="kw">public</span> <span class="cl">Klaslokaal</span>() {
-        tafelLijst = <span class="kw">new</span> <span class="cl">ArrayList</span>&lt;<span class="cl">Tafel</span>&gt;(); <span class="cm">// instantiëren in constructor!</span>
+    <span class="kw">public</span> <span class="cl">Speler</span>(<span class="cl">String</span> code, <span class="cl">String</span> naam) {
+        <span class="kw">this</span>.code = code;
+        <span class="kw">this</span>.naam = naam;
     }
-    <span class="kw">public void</span> <span class="mt">voegTafelToe</span>(<span class="cl">Tafel</span> tafel) { tafelLijst.<span class="mt">add</span>(tafel); }
-    <span class="kw">public boolean</span> <span class="mt">schrapTafel</span>(<span class="cl">String</span> code) { <span class="cm">/* zoek en verwijder */</span> }
-    <span class="kw">public</span> <span class="cl">Tafel</span> <span class="mt">vraagTafelOp</span>(<span class="cl">String</span> code) { <span class="cm">/* zoek en geef terug */</span> }
-    <span class="kw">public int</span> <span class="mt">geefAantalTafels</span>() { <span class="kw">return</span> tafelLijst.<span class="mt">size</span>(); }
+
+    <span class="kw">public</span> <span class="cl">String</span> <span class="mt">getCode</span>() {  <span class="cm">// enkel een getter, GEEN setter voor code</span>
+        <span class="kw">return</span> code;
+    }
+
+    <span class="kw">public</span> <span class="cl">String</span> <span class="mt">getNaam</span>() {
+        <span class="kw">return</span> naam;
+    }
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="mt">setNaam</span>(<span class="cl">String</span> naam) {
+        <span class="kw">this</span>.naam = naam;
+    }
+
+    <span class="kw">@Override</span>
+    <span class="kw">public</span> <span class="cl">String</span> <span class="mt">toString</span>() {
+        <span class="cl">String</span> tekst = <span class="st">""</span>;
+        tekst += <span class="st">"Speler "</span> + code + <span class="st">": "</span> + naam + <span class="st">"\n"</span>;
+        <span class="kw">return</span>(tekst);
+    }
 }</code></pre>
 
-      <div class="info-box note"><span class="icon">📌</span>De <code>toString()</code> van de parentklasse moet de <code>toString()</code> van alle children oproepen via een lus!</div>
-    </div>
+      <h2>Lijst van children (multipliciteit 0..*)</h2>
+      <p>Instantieer de <code>ArrayList</code> in de constructor. Voorzie methodes om toe te voegen, te schrappen, het aantal op te vragen en een overzicht te maken.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.util.<span class="cl">ArrayList</span>;
 
-    <!-- ===================== KLASLOKAAL & TAFEL ===================== -->
-    <div class="tab-content" id="tab-klaslokaal">
-      <h1>Klaslokaal heeft Tafel</h1>
-      <div class="chapter-meta"> &nbsp;·&nbsp; Concreet voorbeeld van heeft-een relatie</div>
+<span class="kw">public</span> <span class="kw">class</span> <span class="cl">Team</span> {
+    <span class="kw">private</span> <span class="cl">String</span> naam;
+    <span class="kw">private</span> <span class="cl">ArrayList</span>&lt;<span class="cl">Speler</span>&gt; spelerLijst;
 
-      <h2>Klasse Tafel</h2>
-      <pre data-lang="java"><code><span class="kw">public class</span> <span class="cl">Tafel</span> {
-    <span class="kw">private</span> <span class="cl">String</span> code;
-    <span class="kw">private int</span> hoogteInCm;
+    <span class="kw">public</span> <span class="cl">Team</span>(<span class="cl">String</span> naam) {
+        <span class="kw">this</span>.naam = naam;
+        spelerLijst = <span class="kw">new</span> <span class="cl">ArrayList</span>&lt;<span class="cl">Speler</span>&gt;();   <span class="cm">// instantieren in de constructor!</span>
+    }
 
-    <span class="kw">public</span> <span class="cl">Tafel</span>(<span class="cl">String</span> code) { <span class="kw">this</span>.code = code; }
+    <span class="kw">public</span> <span class="kw">void</span> <span class="mt">voegSpelerToe</span>(<span class="cl">Speler</span> speler) {
+        spelerLijst.<span class="mt">add</span>(speler);
+    }
 
-    <span class="kw">public</span> <span class="cl">String</span> <span class="mt">getCode</span>() { <span class="kw">return</span> code; }
-    <span class="kw">public int</span> <span class="mt">getHoogteInCm</span>() { <span class="kw">return</span> hoogteInCm; }
-    <span class="kw">public void</span> <span class="mt">setHoogteInCm</span>(<span class="kw">int</span> hoogte) { <span class="kw">this</span>.hoogteInCm = hoogte; }
-}</code></pre>
-
-      <h2>Klaslokaal – sleutelmethodes</h2>
-      <pre data-lang="java"><code><span class="cm">// Tafel toevoegen</span>
-<span class="kw">public void</span> <span class="mt">voegTafelToe</span>(<span class="cl">Tafel</span> tafel) {
-    tafelLijst.<span class="mt">add</span>(tafel);
-}
-
-<span class="cm">// Tafel opvragen op code</span>
-<span class="kw">public</span> <span class="cl">Tafel</span> <span class="mt">vraagTafelOp</span>(<span class="cl">String</span> code) {
-    <span class="kw">for</span> (<span class="kw">int</span> i = 0; i &lt; tafelLijst.<span class="mt">size</span>(); i++) {
-        <span class="kw">if</span> (tafelLijst.<span class="mt">get</span>(i).<span class="mt">getCode</span>().<span class="mt">equals</span>(code)) {
-            <span class="kw">return</span> tafelLijst.<span class="mt">get</span>(i);
+    <span class="kw">public</span> <span class="kw">void</span> <span class="mt">schrapSpeler</span>(<span class="cl">String</span> code) {
+        <span class="kw">for</span> (<span class="kw">int</span> teller = 0; teller &lt; spelerLijst.<span class="mt">size</span>(); teller++) {
+            <span class="kw">if</span> (spelerLijst.<span class="mt">get</span>(teller).<span class="mt">getCode</span>().<span class="mt">equals</span>(code)) {
+                spelerLijst.<span class="mt">remove</span>(teller);
+            }
         }
     }
-    <span class="kw">return null</span>; <span class="cm">// niet gevonden</span>
-}
 
-<span class="cm">// Tafel schrappen</span>
-<span class="kw">public boolean</span> <span class="mt">schrapTafel</span>(<span class="cl">String</span> code) {
-    <span class="kw">for</span> (<span class="kw">int</span> i = 0; i &lt; tafelLijst.<span class="mt">size</span>(); i++) {
-        <span class="kw">if</span> (tafelLijst.<span class="mt">get</span>(i).<span class="mt">getCode</span>().<span class="mt">equals</span>(code)) {
-            tafelLijst.<span class="mt">remove</span>(i);
-            <span class="kw">return true</span>;
+    <span class="kw">public</span> <span class="kw">int</span> <span class="mt">geefAantalSpelers</span>() {
+        <span class="kw">return</span>(spelerLijst.<span class="mt">size</span>());
+    }
+
+    <span class="kw">public</span> <span class="cl">String</span> <span class="mt">geefOverzichtSpelers</span>() {
+        <span class="cl">String</span> tekst = <span class="st">""</span>;
+        tekst += <span class="st">"Team "</span> + naam + <span class="st">"\n"</span>;
+        <span class="kw">for</span> (<span class="kw">int</span> teller = 0; teller &lt; spelerLijst.<span class="mt">size</span>(); teller++) {
+            tekst += spelerLijst.<span class="mt">get</span>(teller).<span class="mt">toString</span>();
+        }
+        <span class="kw">return</span>(tekst);
+    }
+
+    <span class="kw">@Override</span>
+    <span class="kw">public</span> <span class="cl">String</span> <span class="mt">toString</span>() {
+        <span class="kw">return</span>(<span class="mt">geefOverzichtSpelers</span>());
+    }
+}</code></pre>
+      <div class="info-box note"><span class="icon">📌</span>Een overzichtsmethode loopt over de lijst en roept de <code>toString()</code> van elk child op. De <code>toString()</code> van de parent kan gewoon het overzicht teruggeven.</div>
+
+      <h2>Overzicht binnen een periode (datumfilter)</h2>
+      <p>Wil je enkel children binnen een periode tellen of tonen, dan vergelijk je per element de datum met de grenzen via <code>isEqual</code>, <code>isAfter</code> en <code>isBefore</code>.</p>
+      <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">int</span> <span class="mt">geefAantalInPeriode</span>(<span class="cl">LocalDate</span> datumVanaf, <span class="cl">LocalDate</span> datumTot) {
+    <span class="kw">int</span> aantal = 0;
+    <span class="cl">LocalDate</span> datum;
+
+    <span class="kw">for</span> (<span class="kw">int</span> teller = 0; teller &lt; wedstrijdLijst.<span class="mt">size</span>(); teller++) {
+        datum = wedstrijdLijst.<span class="mt">get</span>(teller).<span class="mt">getDatum</span>();
+        <span class="kw">if</span> (datum.<span class="mt">isEqual</span>(datumVanaf) || datum.<span class="mt">isAfter</span>(datumVanaf)) {
+            <span class="kw">if</span> (datum.<span class="mt">isEqual</span>(datumTot) || datum.<span class="mt">isBefore</span>(datumTot)) {
+                aantal++;
+            }
         }
     }
-    <span class="kw">return false</span>;
+    <span class="kw">return</span>(aantal);
+}</code></pre>
+
+      <h2>Totaal en gemiddelde over meerdere lijsten</h2>
+      <p>Een klasse die zelf een lijst van zulke objecten heeft (bv. een <code>Competitie</code> heeft <code>Team</code>'s), telt op door over de lijst te lopen. Het gemiddelde deel je door het aantal, met een controle op nul.</p>
+      <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">int</span> <span class="mt">berekenTotaalAantalSpelers</span>() {
+    <span class="kw">int</span> totaal = 0;
+
+    <span class="kw">for</span> (<span class="kw">int</span> teller = 0; teller &lt; teamLijst.<span class="mt">size</span>(); teller++) {
+        totaal += teamLijst.<span class="mt">get</span>(teller).<span class="mt">geefAantalSpelers</span>();
+    }
+    <span class="kw">return</span>(totaal);
 }
 
-<span class="cm">// Aantal tafels</span>
-<span class="kw">public int</span> <span class="mt">geefAantalTafels</span>() { <span class="kw">return</span> tafelLijst.<span class="mt">size</span>(); }</code></pre>
-
-      <div class="info-box warn"><span class="icon">⚠️</span>Controleer altijd op <code>null</code> na <code>vraagTafelOp()</code> — als de tafel niet bestaat geeft de methode <code>null</code> terug!</div>
+<span class="kw">public</span> <span class="kw">int</span> <span class="mt">berekenGemiddeldAantalSpelers</span>() {
+    <span class="kw">if</span> (teamLijst.<span class="mt">size</span>() == 0) {
+        <span class="kw">return</span>(0);
+    } <span class="kw">else</span> {
+        <span class="kw">return</span>(<span class="mt">berekenTotaalAantalSpelers</span>() / teamLijst.<span class="mt">size</span>());
+    }
+}</code></pre>
+      <div class="info-box warn"><span class="icon">⚠️</span>Deel nooit door <code>0</code>. Controleer eerst of de lijst niet leeg is, anders krijg je een fout.</div>
     </div>
 
     <!-- ===================== MEERDERE SCHERMEN ===================== -->
@@ -1184,11 +1298,18 @@ datum.<span class="mt">format</span>(<span class="cl">DateTimeFormatter</span>.<
 );</code></pre>
 
       <h2>6. Datums vergelijken</h2>
-      <pre data-lang="java"><code>datum1.<span class="mt">isBefore</span>(datum2)  <span class="cm">// datum1 vroeger dan datum2?</span>
-datum1.<span class="mt">isAfter</span>(datum2)   <span class="cm">// datum1 later?</span>
-<span class="cm">// enum teruggeven: VOOR, NA, GELIJK</span></code></pre>
+      <pre data-lang="java"><code>datum1.<span class="mt">isBefore</span>(datum2)   <span class="cm">// datum1 vroeger dan datum2?</span>
+datum1.<span class="mt">isAfter</span>(datum2)    <span class="cm">// datum1 later dan datum2?</span>
+datum1.<span class="mt">isEqual</span>(datum2)    <span class="cm">// exact dezelfde datum?</span></code></pre>
 
-      <h2>7. Volgende/vorige weekdag</h2>
+      <h2>7. Datum binnen een periode?</h2>
+      <pre data-lang="java"><code><span class="cm">// valt datum binnen [datumVanaf, datumTot]?</span>
+<span class="kw">if</span> ((datum.<span class="mt">isEqual</span>(datumVanaf) || datum.<span class="mt">isAfter</span>(datumVanaf))
+        &amp;&amp; (datum.<span class="mt">isEqual</span>(datumTot) || datum.<span class="mt">isBefore</span>(datumTot))) {
+    <span class="cm">// datum valt binnen de periode</span>
+}</code></pre>
+
+      <h2>8. Volgende/vorige weekdag</h2>
       <pre data-lang="java"><code>datum.<span class="mt">with</span>(<span class="cl">TemporalAdjusters</span>.<span class="mt">next</span>(<span class="cl">DayOfWeek</span>.SUNDAY))          <span class="cm">// eerstvolgende zondag</span>
 datum.<span class="mt">with</span>(<span class="cl">TemporalAdjusters</span>.<span class="mt">previous</span>(<span class="cl">DayOfWeek</span>.SUNDAY))      <span class="cm">// vorige zondag</span>
 datum.<span class="mt">with</span>(<span class="cl">TemporalAdjusters</span>.<span class="mt">nextOrSame</span>(<span class="cl">DayOfWeek</span>.SUNDAY))     <span class="cm">// zondag (vandaag of volgende)</span>
@@ -1439,6 +1560,16 @@ tableView.<span class="mt">getSelectionModel</span>().<span class="mt">select</s
 );
 <span class="cm">// executeUpdate geeft aantal gewijzigde rijen terug</span></code></pre>
 
+      <h2>Stap 3c: Tabel aanmaken (CREATE TABLE)</h2>
+      <pre data-lang="java"><code><span class="cl">Statement</span> statement = connectie.<span class="mt">createStatement</span>();
+statement.<span class="mt">executeUpdate</span>(
+    <span class="st">"CREATE TABLE IF NOT EXISTS tbl_boek ("</span> +
+        <span class="st">"titel VARCHAR(64),"</span> +
+        <span class="st">"auteur VARCHAR(64),"</span> +
+        <span class="st">"isbn VARCHAR(17) PRIMARY KEY,"</span> +
+        <span class="st">"gereserveerd BOOL)"</span>);</code></pre>
+      <div class="info-box tip"><span class="icon">✅</span><code>IF NOT EXISTS</code> voorkomt een fout als de tabel al bestaat. Een <code>CREATE</code> voer je uit met <code>executeUpdate</code>.</div>
+
       <h2>Altijd afsluiten in finally-blok!</h2>
       <pre data-lang="java"><code><span class="kw">finally</span> {
     <span class="kw">try</span> {
@@ -1489,9 +1620,18 @@ ps.<span class="mt">setString</span>(2, <span class="st">"Legal"</span>);      <
         <tr><td><code>setString(nr, waarde)</code></td><td>String</td></tr>
         <tr><td><code>setInt(nr, waarde)</code></td><td>int</td></tr>
         <tr><td><code>setDouble(nr, waarde)</code></td><td>double</td></tr>
+        <tr><td><code>setDate(nr, waarde)</code></td><td>java.sql.Date</td></tr>
         <tr><td><code>setBinaryStream(nr, stream)</code></td><td>BLOB</td></tr>
         <tr><td><code>setCharacterStream(nr, reader)</code></td><td>CLOB</td></tr>
       </table>
+
+      <h2>Een datum doorgeven (LocalDate → java.sql.Date)</h2>
+      <p>JDBC werkt met <code>java.sql.Date</code>. Een <code>LocalDate</code> zet je om met <code>Date.valueOf(...)</code>.</p>
+      <pre data-lang="java"><code><span class="kw">import</span> java.sql.<span class="cl">Date</span>;
+<span class="kw">import</span> java.time.<span class="cl">LocalDate</span>;
+
+<span class="cl">LocalDate</span> datum = <span class="cl">LocalDate</span>.<span class="mt">now</span>();
+ps.<span class="mt">setDate</span>(1, <span class="cl">Date</span>.<span class="mt">valueOf</span>(datum));   <span class="cm">// LocalDate -&gt; java.sql.Date</span></code></pre>
     </div>
 
     <!-- ===================== TRANSACTIES ===================== -->
@@ -1554,6 +1694,18 @@ meta.<span class="mt">getDriverVersion</span>()           <span class="cm">// ve
 <span class="kw">while</span> (kolommen.<span class="mt">next</span>()) {
     <span class="cl">System</span>.out.<span class="mt">println</span>(kolommen.<span class="mt">getString</span>(<span class="st">"COLUMN_NAME"</span>));
 }</code></pre>
+
+      <h2>Bestaat een kolom al?</h2>
+      <p>Handig voor je een kolom toevoegt: loop over de kolommen en vergelijk de naam met <code>equalsIgnoreCase</code>.</p>
+      <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">boolean</span> <span class="mt">bestaatKolom</span>(<span class="cl">Connection</span> connectie, <span class="cl">String</span> tabel, <span class="cl">String</span> kolom) {
+    <span class="cl">ResultSet</span> resultaat = connectie.<span class="mt">getMetaData</span>().<span class="mt">getColumns</span>(<span class="kw">null</span>, <span class="kw">null</span>, tabel, <span class="kw">null</span>);
+    <span class="kw">while</span> (resultaat.<span class="mt">next</span>()) {
+        <span class="kw">if</span> (resultaat.<span class="mt">getString</span>(<span class="st">"COLUMN_NAME"</span>).<span class="mt">equalsIgnoreCase</span>(kolom)) {
+            <span class="kw">return</span>(<span class="kw">true</span>);
+        }
+    }
+    <span class="kw">return</span>(<span class="kw">false</span>);
+}</code></pre>
     </div>
 
     <!-- ===================== RESULTSET METADATA ===================== -->
@@ -1599,6 +1751,12 @@ meta.<span class="mt">isAutoIncrement</span>(teller)    <span class="cm">// auto
         <tr><td><code>LONGBLOB</code></td><td>4 GB</td></tr>
       </table>
 
+      <h2>Kolom toevoegen als die nog niet bestaat</h2>
+      <p>Bestaat de kolom nog niet, voeg ze dan eerst toe met <code>ALTER TABLE</code> (zie <em>bestaatKolom</em> bij Databank-metadata).</p>
+      <pre data-lang="java"><code><span class="kw">if</span> (!<span class="mt">bestaatKolom</span>(connectie, <span class="st">"tbl_boek"</span>, <span class="st">"cover"</span>)) {
+    statement.<span class="mt">executeUpdate</span>(<span class="st">"ALTER TABLE tbl_boek ADD cover LONGBLOB"</span>);
+}</code></pre>
+
       <h2>BLOB opslaan</h2>
       <pre data-lang="java"><code><span class="kw">1.</span> PreparedStatement aanmaken met <span class="st">"?"</span> als placeholder:
 <span class="cl">PreparedStatement</span> ps = connectie.<span class="mt">prepareStatement</span>(
@@ -1621,6 +1779,11 @@ ps.<span class="mt">executeUpdate</span>();</code></pre>
 
       <h2>Wat is een CLOB?</h2>
       <p><strong>Character Large Object</strong> — grote tekstbestanden in de databank. In MySQL: <code>LONGTEXT</code> kolom.</p>
+
+      <h2>Kolom toevoegen als die nog niet bestaat</h2>
+      <pre data-lang="java"><code><span class="kw">if</span> (!<span class="mt">bestaatKolom</span>(connectie, <span class="st">"tbl_boek"</span>, <span class="st">"tekstje"</span>)) {
+    statement.<span class="mt">executeUpdate</span>(<span class="st">"ALTER TABLE tbl_boek ADD tekstje LONGTEXT"</span>);
+}</code></pre>
 
       <h2>CLOB opslaan</h2>
       <pre data-lang="java"><code><span class="kw">1.</span> PreparedStatement aanmaken:
