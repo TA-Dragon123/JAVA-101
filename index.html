@@ -374,6 +374,17 @@
   .code-copy-btn.copied { color: var(--green); border-color: var(--green); }
   .code-modal-pre { margin: 0; }
 
+
+  .lead {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: var(--text);
+    background: rgba(124,109,250,0.06);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 14px 0 22px;
+  }
 </style>
 </head>
 <body>
@@ -381,7 +392,7 @@
 <header>
   <div>
     <div class="logo">Java 101</div>
-    <div class="sub">TechPort &nbsp;·&nbsp; Software Development &nbsp;·&nbsp; Java Naslagwerk</div>
+    <div class="sub">TechPort &nbsp;·&nbsp; Berre Jopens &nbsp;·&nbsp; Java </div>
   </div>
   <div class="code-menu">
     <button class="kebab" id="kebabBtn" aria-label="Voorbeeldcode bekijken" title="Volledige voorbeeldcode">&#8942;</button>
@@ -449,6 +460,8 @@
     <div class="tab-content active" id="tab-basis-types">
       <h1>Types & Variabelen</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; De bouwstenen van Java</div>
+      <p class="lead">Een variabele is een benoemde plek in het geheugen waar je een waarde bewaart. In Java geef je elke variabele een vast type, zodat de compiler weet hoeveel ruimte er nodig is en welke bewerkingen mogen. Je hebt primitieve types zoals int, double en boolean, en objecttypes zoals String. Het type kies je eenmaal bij het declareren en daarna mag de variabele enkel waarden van dat type krijgen. Zo vang je veel fouten al op tijdens het compileren in plaats van pas bij het uitvoeren.</p>
+      <p>Een variabele is een plek in het geheugen met een naam waar je een waarde in bewaart. Voor je ze gebruikt geef je aan welk type ze heeft, want dat bepaalt wat erin mag. Java kent primitieve types zoals <code>int</code> voor gehele getallen, <code>double</code> voor kommagetallen en <code>boolean</code> voor waar of niet waar. Daarnaast bestaan objecttypes zoals <code>String</code> voor tekst. Je declareert een variabele met haar type en geeft ze daarna een waarde met <code>=</code>.</p>
 
       <h2>Primitieve types</h2>
       <table>
@@ -497,6 +510,8 @@
     <div class="tab-content" id="tab-basis-if">
       <h1>If / Else</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Beslissingen in Java</div>
+      <p class="lead">Met een if-structuur laat je je programma keuzes maken. Java evalueert de voorwaarde tussen de haakjes tot true of false en voert enkel het bijbehorende blok uit. Met else vang je het geval op waarin de voorwaarde niet klopt, en met else if keten je meerdere voorwaarden na elkaar. De voorwaarden worden van boven naar beneden gecontroleerd en bij de eerste die klopt stopt de keten. Zo stuur je de uitvoering afhankelijk van de toestand van je gegevens.</p>
+      <p>Met een if-structuur laat je je programma kiezen. Je zet een voorwaarde tussen haakjes, en alleen als die waar is loopt het blok eronder. Met <code>else</code> vang je het tegenovergestelde geval op, en met <code>else if</code> test je meerdere mogelijkheden na elkaar. Voorwaarden bouw je met vergelijkingen zoals groter dan of gelijk aan. Je combineert ze met en (<code>&amp;&amp;</code>) en of (<code>||</code>), zodat je code zelf bepaalt welke weg hij neemt.</p>
 
       <h2>Vergelijkingsoperatoren</h2>
       <table>
@@ -558,6 +573,8 @@
     <div class="tab-content" id="tab-basis-switch">
       <h1>Switch</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Meerdere keuzes overzichtelijk</div>
+      <p class="lead">Een switch kiest één tak op basis van de waarde van één variabele. Het is een overzichtelijk alternatief voor een lange reeks if-else als je veel vaste mogelijkheden vergelijkt. Java springt naar de case die overeenkomt en voert die uit tot het een break tegenkomt. Vergeet je de break, dan loopt de uitvoering door naar de volgende case. Met default vang je alle waarden op die in geen enkele case voorkomen.</p>
+      <p>Een switch is een nettere manier om één waarde met veel vaste mogelijkheden te vergelijken. Je geeft de variabele mee, en elke <code>case</code> beschrijft één waarde waarop je reageert. Na de code van een case zet je <code>break</code>, anders valt de uitvoering door naar de volgende case. Het <code>default</code>-blok vangt alles op wat bij geen enkele case past. Voor een lange reeks gelijkheidstests leest een switch vaak duidelijker dan een hele rij if-else.</p>
 
       <h2>Wanneer gebruiken?</h2>
       <p>Een <code>switch</code> is handig als je één variabele vergelijkt met meerdere vaste waarden. Overzichtelijker dan een lange if/else-if keten.</p>
@@ -622,6 +639,8 @@
     <div class="tab-content" id="tab-basis-while">
       <h1>While-lus</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Herhalen zolang een voorwaarde geldt</div>
+      <p class="lead">Een while-lus herhaalt een blok code zolang een voorwaarde waar blijft. Java controleert die voorwaarde telkens vóór een nieuwe ronde, dus als ze meteen false is loopt de lus nul keer. Binnen de lus moet je iets veranderen dat de voorwaarde ooit false maakt, anders blijf je oneindig draaien. Je gebruikt while vooral als je vooraf niet weet hoeveel herhalingen er nodig zijn. Een typisch voorbeeld is invoer blijven vragen tot de gebruiker een geldig antwoord geeft.</p>
+      <p>Een while-lus herhaalt een blok zolang een voorwaarde waar blijft. Java test die voorwaarde eerst, dus het kan dat de lus nul keer loopt. Bij een do-while draai je het om, daar loopt het blok altijd minstens één keer omdat de test pas achteraan komt. Zorg dat er telkens iets in de lus verandert, anders blijf je oneindig herhalen. While gebruik je vooral als je niet op voorhand weet hoe vaak je moet herhalen.</p>
 
       <h2>While</h2>
       <p>De lus wordt uitgevoerd <strong>zolang</strong> de voorwaarde <code>true</code> is. Als de voorwaarde al meteen <code>false</code> is, wordt de lus nooit uitgevoerd.</p>
@@ -658,6 +677,8 @@
     <div class="tab-content" id="tab-basis-for">
       <h1>For-lus</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Herhalen met een teller</div>
+      <p class="lead">Een for-lus is ideaal als je op voorhand weet hoe vaak je iets wil herhalen. In één regel zet je de teller op, geef je de stopvoorwaarde en bepaal je de stap die na elke ronde gebeurt. Java voert die drie delen in een vaste volgorde uit, zodat de teller netjes meeloopt. Je gebruikt een for-lus vaak om via een index over een reeks of array te lopen. Het houdt de luslogica compact en op één plaats.</p>
+      <p>Een for-lus gebruik je als je wel weet hoe vaak je iets moet herhalen. In de kop staan drie delen, namelijk de startwaarde van de teller, de voorwaarde om door te gaan, en de stap die na elke ronde gebeurt. Zolang de voorwaarde klopt voert Java de inhoud uit en past daarna de teller aan. Zo loop je bijvoorbeeld netjes van 0 tot een bepaald getal. Voor het overlopen van een array of lijst is dit de standaardkeuze.</p>
 
       <h2>Standaard for-lus</h2>
       <p>Bestaat uit drie delen: <strong>start</strong>, <strong>voorwaarde</strong> en <strong>stap</strong>.</p>
@@ -700,6 +721,8 @@
     <div class="tab-content" id="tab-basis-methoden">
       <h1>Methoden</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Herbruikbare blokken code</div>
+      <p class="lead">Een methode is een stuk code met een naam dat je apart kan oproepen, zodat je het niet hoeft te herhalen. Je geeft eventueel parameters mee als invoer, en met return geef je een resultaat terug. Het returntype vooraan bepaalt wat er terugkomt, of void als er niets teruggegeven wordt. Door taken in methoden op te splitsen wordt je code leesbaarder en makkelijker te testen. Je roept een methode op met haar naam, gevolgd door de argumenten tussen haakjes.</p>
+      <p>Een methode is een stukje code met een naam dat je apart zet en opnieuw kunt oproepen. Zo vermijd je dat je dezelfde code blijft herhalen. Tussen de haakjes geef je parameters mee, dat zijn de waarden waarmee de methode werkt. Het returntype zegt wat de methode teruggeeft, en met <code>void</code> geef je aan dat ze niets teruggeeft. Door je programma in methoden te knippen blijft alles overzichtelijk en makkelijk te testen.</p>
 
       <h2>Opbouw van een methode</h2>
       <pre data-lang="java"><code><span class="cm">// toegang  returntype  naam       (parameters)</span>
@@ -751,6 +774,8 @@
     <div class="tab-content" id="tab-basis-enum">
       <h1>Enumeratie (enum)</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Vaste lijst van waarden</div>
+      <p class="lead">Een enum is een eigen type met een vaste, beperkte lijst van mogelijke waarden, zoals de dagen van de week of een status. Je gebruikt het wanneer een variabele maar een handvol geldige opties mag hebben. De compiler controleert dan dat je enkel bestaande waarden gebruikt, wat typfouten met losse strings voorkomt. Elke enumwaarde is een vast object dat je via de typenaam aanspreekt, bijvoorbeeld Dag.MAANDAG. Je kan een enum ook als attribuut van een klasse of als returntype van een methode gebruiken.</p>
+      <p>Een enum is een eigen type met een vaste, beperkte lijst van mogelijke waarden. Denk aan de dagen van de week of de seizoenen, waar maar een handvol opties bestaan. Je schrijft de waarden meestal in hoofdletters en gebruikt ze via de naam van de enum. Het voordeel is dat de compiler fouten tegenhoudt, want een verkeerde waarde bestaat gewoon niet. Zo wordt je code leesbaarder en veiliger dan met losse tekst of getallen.</p>
 
       <h2>Wat is een enum?</h2>
       <p>Een <code>enum</code> is een speciaal type dat een <strong>vaste reeks benoemde waarden</strong> bevat. Ideaal voor categorieën zoals kleuren, seizoenen, statussen, enz.</p>
@@ -815,6 +840,8 @@
     <div class="tab-content" id="tab-basis-arrays">
       <h1>Arrays</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Geordende reeks van waarden</div>
+      <p class="lead">Een array bewaart meerdere waarden van hetzelfde type in één variabele, netjes achter elkaar in het geheugen. De lengte leg je vast bij het aanmaken en die kan daarna niet meer veranderen. Je bereikt elk element via zijn index, die start bij 0 en loopt tot de lengte min 1. Met een for-lus loop je vlot over alle elementen. Arrays zijn snel, maar gebruik een ArrayList als het aantal elementen moet kunnen groeien of krimpen.</p>
+      <p>Een array is een rij vakjes van hetzelfde type met een vaste lengte. Je maakt ze aan met een grootte, en daarna bereik je elk vakje via zijn index. Let op, het tellen begint bij 0, dus het eerste element zit op index 0 en het laatste op de lengte min 1. Met de eigenschap <code>length</code> vraag je op hoeveel plaatsen er zijn. Een array is snel, maar de grootte ligt vast zodra je hem hebt aangemaakt.</p>
 
       <h2>Array aanmaken</h2>
       <pre data-lang="java"><code><span class="cm">// Methode 1: direct initialiseren</span>
@@ -872,6 +899,8 @@ namen[0] = <span class="st">"Bram"</span>;</code></pre>
     <div class="tab-content" id="tab-oop">
       <h1>OOP & Klassen</h1>
       <div class="chapter-meta"> &nbsp;·&nbsp; Basis van objectgeoriënteerd programmeren</div>
+      <p class="lead">Objectgeoriënteerd programmeren draait rond klassen en objecten. Een klasse is de blauwdruk die beschrijft welke gegevens (attributen) en welk gedrag (methoden) iets heeft; een object is een concrete invulling daarvan. Attributen maak je meestal private en je stelt ze in of vraagt ze op via getters en setters, wat we encapsulatie noemen. De constructor vult een nieuw object met beginwaarden, en toString geeft er een leesbare voorstelling van. Zo bundel je samenhorende gegevens en logica in één geheel.</p>
+      <p>Objectgericht programmeren draait rond klassen en objecten. Een klasse is de blauwdruk die beschrijft welke gegevens iets heeft en wat het kan doen. Een object is een concreet exemplaar dat je van die klasse maakt met <code>new</code>. De gegevens noem je attributen, en je houdt ze meestal <code>private</code> zodat ze enkel via methoden bereikbaar zijn. Met getters en setters lees of wijzig je die waarden gecontroleerd, en met een <code>toString</code> geef je een leesbare voorstelling van het object.</p>
 
       <h2>Wat is een klasse?</h2>
       <p>Een klasse is een sjabloon/blauwdruk voor objecten. Ze bevat <strong>attributen</strong> (eigenschappen) en <strong>methodes</strong> (gedrag).</p>
@@ -937,6 +966,8 @@ namen[0] = <span class="st">"Bram"</span>;</code></pre>
     <div class="tab-content" id="tab-abstract">
       <h1>Abstracte Klassen &amp; Overerving</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; abstract · extends · super · @Override</div>
+      <p class="lead">Met overerving laat je een subklasse de attributen en methoden van een superklasse hergebruiken via extends. Een abstracte klasse dient enkel als basis: je kan er geen objecten van maken, maar wel gemeenschappelijke code in plaatsen. Een abstracte methode legt enkel de vorm vast en moet door elke subklasse worden ingevuld. In de constructor van de subklasse roep je eerst super(...) op om de geërfde velden te vullen. Met @Override herschrijf je een methode, en met super.toString() hergebruik je de versie van de superklasse.</p>
+      <p>Overerving laat een klasse voortbouwen op een andere. De subklasse erft alle attributen en methoden van de superklasse en voegt er eigen dingen aan toe. Een abstracte klasse is een superklasse waarvan je zelf geen objecten maakt, ze dient enkel als basis. Daarin kun je abstracte methoden zetten zonder inhoud, die elke subklasse dan verplicht invult. Met <code>super</code> roep je de constructor of een methode van de superklasse op, zodat je geërfde code hergebruikt in plaats van te herhalen.</p>
 
       <h2>Wat is een abstracte klasse?</h2>
       <p>Een abstracte klasse is een klasse waarvan je <strong>geen objecten kunt aanmaken</strong>. Ze dient als basis (superklasse) voor subklassen.</p>
@@ -1044,6 +1075,8 @@ namen[0] = <span class="st">"Bram"</span>;</code></pre>
     <div class="tab-content" id="tab-relatie">
       <h1>'Heeft-een' Relatie (object als attribuut)</h1>
       <div class="chapter-meta"> &nbsp;·&nbsp; compositie · ArrayList van objecten · overzichten · totalen</div>
+      <p class="lead">Een heeft-een relatie betekent dat een object een ander object, of een lijst objecten, als attribuut bevat, zoals een team dat spelers heeft. De lijst maak je aan in de constructor en je voorziet methoden om elementen toe te voegen, te schrappen en op te vragen. Een overzicht bouw je op door over de lijst te lopen en van elk element de toString op te roepen. Voor een totaal tel je tijdens het lopen waarden op, en voor een gemiddelde deel je door het aantal met een controle op nul. Zo modelleer je samengestelde gegevens uit kleinere bouwstenen.</p>
+      <p>Een heeft-een relatie betekent dat een object een ander object als attribuut bevat. Een auto heeft bijvoorbeeld een motor, en een team heeft een lijst van spelers. Voor zo'n lijst gebruik je een <code>ArrayList</code> die je in de constructor aanmaakt. Je voorziet dan methoden om elementen toe te voegen, te schrappen en op te tellen, plus een overzicht dat over de lijst loopt. Zo bouw je grotere structuren op uit kleinere, herbruikbare klassen.</p>
 
       <h2>Concept</h2>
       <p>Een "heeft-een" relatie betekent dat een klasse een object (of een lijst objecten) van een andere klasse als attribuut heeft.</p>
@@ -1194,6 +1227,8 @@ namen[0] = <span class="st">"Bram"</span>;</code></pre>
     <div class="tab-content" id="tab-meerdere">
       <h1>JavaFX met Meerdere Schermen</h1>
       <div class="chapter-meta"></div>
+      <p class="lead">Veel toepassingen tonen meer dan één scherm, bijvoorbeeld een aanmeldscherm gevolgd door een hoofdscherm. In JavaFX bouw je per scherm een eigen Scene en wissel je die op hetzelfde Stage door de scene te vervangen. Zo blijft het venster open terwijl de inhoud verandert. Gegevens geef je mee tussen schermen door ze aan het volgende scherm of zijn controller door te geven. Houd elk scherm in een eigen methode of klasse om het overzicht te bewaren.</p>
+      <p>In een echte toepassing toon je niet alles op één scherm. Met meerdere Scenes maak je losse schermen die je in hetzelfde venster, de Stage, wisselt. Je bouwt elk scherm apart op en zet bij een knop de juiste Scene op de Stage. Zo navigeert de gebruiker bijvoorbeeld van een menu naar een detailscherm en terug. Het venster blijft hetzelfde, alleen de inhoud verandert.</p>
 
       <h2>Concept</h2>
       <p>In JavaFX kan je meerdere <code>Stage</code>-objecten aanmaken. Elk scherm is een aparte <code>Stage</code>.</p>
@@ -1237,6 +1272,8 @@ namen[0] = <span class="st">"Bram"</span>;</code></pre>
     <div class="tab-content" id="tab-arrays">
       <h1>Arrays in JavaFX</h1>
       <div class="chapter-meta"></div>
+      <p class="lead">Hier gebruik je gewone Java-arrays om visuele elementen of gegevens in een JavaFX-toepassing te beheren. Je bewaart bijvoorbeeld een reeks knoppen of labels in een array en loopt er met een lus over om ze in één keer op te maken of toe te voegen. Dat vermijdt veel herhaalde code als je veel gelijkaardige elementen hebt. De index koppelt elk element aan een vaste plaats, zodat je gericht één item kan aanpassen. Combineer dit met een layout-pane om alles netjes te schikken.</p>
+      <p>Hier combineer je arrays met een JavaFX-interface. Je houdt je gegevens bij in een array of lijst en toont ze op het scherm. Vaak loop je over de array en maak je voor elk element een visueel onderdeel zoals een label of een rij. Wijzigt de data, dan werk je de weergave bij. Zo koppel je de gegevens in het geheugen aan wat de gebruiker ziet.</p>
 
       <h2>String splitsen naar array</h2>
       <pre data-lang="java"><code><span class="cl">String</span> invoer = invulveld.<span class="mt">getText</span>(); <span class="cm">// bv. "Bram,Stijn,An"</span>
@@ -1271,6 +1308,8 @@ namenLijst[i].<span class="mt">length</span>()
     <div class="tab-content" id="tab-datums">
       <h1>LocalDate</h1>
       <div class="chapter-meta"> &nbsp;·&nbsp; java.time.LocalDate</div>
+      <p class="lead">LocalDate stelt een kalenderdatum voor zonder uur, dus enkel jaar, maand en dag. Je maakt een datum met LocalDate.now() voor vandaag of met LocalDate.of(jaar, maand, dag) voor een vaste datum. De klasse is onveranderlijk: een bewerking zoals plusDays geeft een nieuwe datum terug in plaats van de bestaande te wijzigen. Datums vergelijk je met isBefore, isAfter en isEqual, bijvoorbeeld om te checken of iets binnen een periode valt. Voor JDBC zet je een LocalDate om naar java.sql.Date met Date.valueOf.</p>
+      <p>LocalDate stelt een datum voor zonder tijd, dus enkel jaar, maand en dag. Je maakt er een met <code>now</code> voor vandaag of met <code>of</code> voor een specifieke datum. Je kunt er dagen, maanden of jaren bij optellen of aftrekken, en het resultaat is telkens een nieuwe datum. Vergelijken doe je met <code>isBefore</code>, <code>isAfter</code> en <code>isEqual</code> in plaats van met groter of kleiner dan. Zo reken je veilig met datums zonder zelf met schrikkeljaren te moeten knoeien.</p>
 
       <h2>1. Datum aanmaken</h2>
       <pre data-lang="java"><code><span class="cl">LocalDate</span>.<span class="mt">now</span>()                        <span class="cm">// vandaag</span>
@@ -1336,6 +1375,8 @@ datum.<span class="mt">with</span>(<span class="cl">TemporalAdjusters</span>.<sp
     <div class="tab-content" id="tab-tijdstippen">
       <h1>LocalTime</h1>
       <div class="chapter-meta"> &nbsp;·&nbsp; java.time.LocalTime</div>
+      <p class="lead">LocalTime stelt een tijdstip op de dag voor, met uren, minuten en seconden, maar zonder datum. Je maakt het met LocalTime.now() of met LocalTime.of(uur, minuut). Net als LocalDate is het onveranderlijk, dus een methode zoals plusHours geeft een nieuw tijdstip terug. Je vergelijkt tijdstippen met isBefore en isAfter, bijvoorbeeld om te zien of een afspraak voor of na een grens valt. Wil je datum en tijd samen, dan gebruik je LocalDateTime.</p>
+      <p>LocalTime werkt zoals LocalDate, maar dan voor een tijdstip op de dag zonder datum. Het houdt uren, minuten en seconden bij. Je maakt er een met <code>now</code> of <code>of</code>, en je telt er uren of minuten bij op. Net als bij datums vergelijk je twee tijdstippen met <code>isBefore</code>, <code>isAfter</code> en <code>isEqual</code>. Wil je datum en tijd samen, dan bestaat daarvoor <code>LocalDateTime</code>.</p>
 
       <h2>1. Tijdstip aanmaken</h2>
       <pre data-lang="java"><code><span class="cl">LocalTime</span>.<span class="mt">now</span>()                    <span class="cm">// huidig tijdstip</span>
@@ -1380,6 +1421,8 @@ tijdstip1.<span class="mt">isAfter</span>(tijdstip2)
     <div class="tab-content" id="tab-bedragen">
       <h1>BigDecimal</h1>
       <div class="chapter-meta"> &nbsp;·&nbsp; java.math.BigDecimal</div>
+      <p class="lead">BigDecimal gebruik je voor geldbedragen en andere getallen waar afrondingsfouten niet mogen, want double rekent niet exact met kommagetallen. Maak een bedrag altijd aan vanuit een String, bijvoorbeeld new BigDecimal("1.50"), zodat de waarde exact klopt. Reken met de methoden add, subtract, multiply en divide in plaats van de gewone plus, min, maal en deel. Met setScale bepaal je het aantal decimalen en de manier van afronden. Vergelijken doe je met compareTo en niet met equals, omdat equals ook de schaal meetelt.</p>
+      <p>Voor geld gebruik je <code>BigDecimal</code> in plaats van <code>double</code>. Een double rekent binair en geeft bij geldbedragen kleine afrondingsfouten, wat je echt niet wil bij prijzen. BigDecimal rekent exact met een vast aantal cijfers na de komma. Je maakt er een aan vanuit tekst zoals <code>"1.50"</code> zodat de waarde precies klopt. Optellen en vermenigvuldigen doe je met methoden zoals <code>add</code> en <code>multiply</code>, en met <code>setScale</code> leg je het aantal decimalen vast.</p>
 
       <h2>Waarom BigDecimal?</h2>
       <p><code>double</code> geeft afrondingsfouten bij geld. <code>BigDecimal</code> is nauwkeurig.</p>
@@ -1407,6 +1450,8 @@ bedrag1.<span class="mt">divide</span>(bedrag2, 2, <span class="cl">RoundingMode
     <div class="tab-content" id="tab-tableview">
       <h1>TableView Basis</h1>
       <div class="chapter-meta"></div>
+      <p class="lead">Een TableView toont een lijst van objecten in een tabel met kolommen, een beetje als een spreadsheet. Je vult de tabel met een ObservableList, zodat de weergave automatisch meeverandert als de lijst wijzigt. Elke kolom is een TableColumn die je via een cell value factory koppelt aan een eigenschap van je object. De rijen komen overeen met de objecten in je lijst en de kolommen met hun attributen. Zo geef je gestructureerde gegevens overzichtelijk weer.</p>
+      <p>Een TableView toont een lijst van objecten als een tabel met kolommen. Elke rij is één object, en elke kolom toont één attribuut daarvan. Je vult de tabel met een <code>ObservableList</code>, een lijst die de tabel automatisch laat meeveranderen. Per kolom zeg je met een <code>cellValueFactory</code> welk attribuut erin komt. Zo zet je gegevens uit je klassen netjes op het scherm.</p>
 
       <h2>1. Model-klasse met Properties</h2>
       <pre data-lang="java"><code><span class="kw">public class</span> <span class="cl">Persoon</span> {
@@ -1450,6 +1495,8 @@ tableView.<span class="mt">setItems</span>(lijst);</code></pre>
     <div class="tab-content" id="tab-simpleprop">
       <h1>TableView met SimpleObjectProperty</h1>
       <div class="chapter-meta"></div>
+      <p class="lead">Om een kolom een attribuut van je object te laten tonen, verpak je dat attribuut in een property zoals SimpleStringProperty of SimpleObjectProperty. De TableView leest die property uit om de cel te vullen en kan ze ook volgen voor wijzigingen. Voor types die geen kant-en-klare property hebben, gebruik je SimpleObjectProperty met het juiste type ertussen. In de cell value factory geef je terug welke property bij die kolom hoort. Zo blijven je gegevens en de tabel met elkaar in sync.</p>
+      <p>Om een kolom te vullen werkt JavaFX het vlotst met properties. Een <code>SimpleStringProperty</code> of <code>SimpleObjectProperty</code> verpakt een gewone waarde zodat de tabel weet wanneer die verandert. In je klasse geef je dan een methode die zo'n property teruggeeft. De kolom haalt daar zijn inhoud uit en blijft automatisch in sync met je object. Voor objecten en getallen gebruik je <code>SimpleObjectProperty</code>, voor tekst de variant op String.</p>
 
       <h2>Wanneer gebruiken?</h2>
       <p>Voor complexere types zoals <code>LocalDate</code>, <code>LocalTime</code>, <code>BigDecimal</code> gebruik je <code>SimpleObjectProperty</code>.</p>
@@ -1478,6 +1525,8 @@ tableView.<span class="mt">setItems</span>(lijst);</code></pre>
     <div class="tab-content" id="tab-knoppen">
       <h1>TableView met Knoppen</h1>
       <div class="chapter-meta"></div>
+      <p class="lead">Soms wil je per rij een knop, bijvoorbeeld om te bewerken of te verwijderen. Dat doe je met een eigen cell factory die in elke cel een knop tekent in plaats van tekst. In de actie van de knop haal je het object van die rij op en voer je de bewerking erop uit. Zo koppel je een actie rechtstreeks aan het juiste gegeven uit de tabel. Met dit patroon bouw je interactieve tabellen zonder aparte invoervelden.</p>
+      <p>Soms wil je in een tabel een knop per rij, bijvoorbeeld om een item te verwijderen of te bewerken. Daarvoor pas je met een <code>cellFactory</code> aan hoe een cel getekend wordt. In die cel maak je een knop en koppel je er een actie aan die op het object van die rij werkt. Zo combineer je gegevens en bediening in dezelfde tabel. Dat is handig voor kleine beheerschermen.</p>
 
       <h2>Geselecteerd item ophalen</h2>
       <pre data-lang="java"><code><span class="cm">// Geselecteerd object</span>
@@ -1510,6 +1559,8 @@ tableView.<span class="mt">getSelectionModel</span>().<span class="mt">select</s
     <div class="tab-content" id="tab-relaties">
       <h1>TableViews met Relatie</h1>
       <div class="chapter-meta"> &nbsp;·&nbsp; Twee gekoppelde tabellen</div>
+      <p class="lead">Hier toon je gegevens die met elkaar verbonden zijn, bijvoorbeeld een hoofdtabel en een detailtabel. Wanneer je in de ene tabel een rij selecteert, toon je in de andere de bijbehorende gegevens. Je luistert daarvoor naar de selectie van de eerste TableView en vult de tweede lijst met de gekoppelde objecten. Zo navigeer je van een geheel naar zijn onderdelen, zoals een afdeling en haar leden. Dit weerspiegelt de heeft-een relaties uit je objectmodel in de interface.</p>
+      <p>Hier toon je gegevens die met elkaar verbonden zijn in tabellen. Denk aan een afdeling met haar leden, of een team met zijn spelers. Vaak gebruik je twee tabellen, waarbij je selectie in de ene de inhoud van de andere bepaalt. Je luistert naar de selectie en vult de tweede tabel met de bijbehorende objecten. Zo navigeert de gebruiker van het geheel naar de details.</p>
 
       <h2>Concept</h2>
       <p>Een <code>Vereniging</code> heeft een <code>ObservableList&lt;Persoon&gt;</code> als attribuut. Klikken op een vereniging toont de bijbehorende leden.</p>
@@ -1542,8 +1593,8 @@ tableView.<span class="mt">getSelectionModel</span>().<span class="mt">select</s
     <div class="tab-content" id="tab-jdbc">
       <h1>JDBC: SQL-instructies vanuit Java</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Connection · Statement · ResultSet</div>
-
-      <p>JDBC laat je vanuit een Java-programma connectie maken met een MySQL-databank en tabellen aanmaken, wijzigen of verwijderen, zowel qua structuur als qua inhoud.</p>
+      <p class="lead">JDBC is de standaardmanier om vanuit Java met een databank te praten. Je opent een verbinding met DriverManager.getConnection en maakt daarna een Statement om SQL uit te voeren. Een SELECT voer je uit met executeQuery, wat een ResultSet teruggeeft die je rij per rij overloopt met next. Voor INSERT, UPDATE, DELETE en CREATE gebruik je executeUpdate, dat het aantal gewijzigde rijen teruggeeft. Alles staat in een try, en je sluit ResultSet, Statement en Connection netjes af in een finally.</p>
+      <p>JDBC (Java Database Connectivity) is de standaardmanier om vanuit Java met een databank te praten. Je maakt eerst een connectie met de MySQL-databank, en daarna stuur je SQL-instructies door om gegevens op te vragen of te wijzigen. Een <code>SELECT</code> haalt rijen op in een <code>ResultSet</code> die je rij per rij overloopt, terwijl <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> en <code>CREATE</code> de inhoud of structuur aanpassen. Je zet alle databankcode in een <code>try</code> en sluit de verbindingen netjes af in een <code>finally</code>. Zo blijft je programma stabiel, ook als er onderweg iets misloopt.</p>
 
       <h2>1. Basispatroon: connectie + statement</h2>
       <p>Je maakt een <code>Connection</code> via <code>DriverManager.getConnection</code> (drie argumenten: connectiestring, gebruiker, wachtwoord) en daarna een <code>Statement</code> via <code>createStatement</code>. Alles staat in een <code>try</code>, en je sluit af in een <code>finally</code>.</p>
@@ -1691,6 +1742,7 @@ resultaat.<span class="mt">getDate</span>(<span class="st">"geboortedatum"</span
     <div class="tab-content" id="tab-prepared">
       <h1>JDBC: Prepared Statements</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; geprecompileerde SQL met ? als placeholder</div>
+      <p class="lead">Een prepared statement is een SQL-instructie waarin je waarden vervangt door een vraagteken als placeholder. Je maakt het met prepareStatement en vult daarna elke placeholder in met setString, setInt, setDouble enzovoort, geteld vanaf 1. De databank compileert de instructie één keer, wat herhaald gebruik sneller maakt. Omdat de waarden los van de SQL worden meegegeven, beschermt dit ook tegen SQL-injectie. Uitvoeren doe je met executeQuery voor een SELECT of executeUpdate voor een wijziging.</p>
 
       <p>Een prepared statement is een geprecompileerde SQL-instructie. Voordelen: makkelijk te parametriseren en sneller door de precompilatie. Je zet een <code>?</code> als placeholder voor elke parameter.</p>
 
@@ -1799,6 +1851,7 @@ preparedStatement.<span class="mt">setDate</span>(1, <span class="cl">Date</span
     <div class="tab-content" id="tab-transacties">
       <h1>JDBC: Transacties</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; commit · rollback · autocommit</div>
+      <p class="lead">Een transactie groepeert meerdere SQL-instructies die samen moeten slagen of samen moeten falen. Je zet setAutoCommit op false, zodat jij beslist wanneer er bevestigd wordt. Lukt alles, dan maak je de wijzigingen definitief met commit; loopt er iets mis, dan draai je alles terug met rollback. Zolang er geen commit is gebeurd, zien andere gebruikers de wijzigingen niet. Zo houd je de databank in een consistente toestand, ook bij een fout halverwege.</p>
 
       <p>Een transactie is een reeks SQL-instructies die in zijn geheel moet lukken. Mislukt er één, dan doe je een <strong>rollback</strong> en sta je terug in de begintoestand. Lukt alles, dan doe je een <strong>commit</strong> en wordt de wijziging zichtbaar voor alle gebruikers.</p>
       <table>
@@ -1856,8 +1909,8 @@ preparedStatement.<span class="mt">setDate</span>(1, <span class="cl">Date</span
     <div class="tab-content" id="tab-dbmeta">
       <h1>JDBC: Databank-metadata</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; DatabaseMetaData</div>
-
-      <p>Via de klasse <code>DatabaseMetaData</code> krijg je informatie over het DBMS, de JDBC-driver, de tabellen en de kolommen. Je haalt het object op met <code>connectie.getMetaData()</code>.</p>
+      <p class="lead">Met DatabaseMetaData vraag je informatie op over de databank zelf in plaats van over de gegevens. Je haalt het object op via connectie.getMetaData en kan zo de naam en versie van het DBMS en de driver opvragen. Je kan ook de lijst van tabellen of de kolommen van een tabel overlopen. Dat is handig om dynamisch te controleren of een tabel of kolom bestaat voor je iets aanpast. De resultaten komen terug als een ResultSet die je net als gewone query-resultaten overloopt.</p>
+      <p>Soms wil je niet de gegevens zelf, maar informatie over de databank, en dat noemen we metadata. Met de klasse <code>DatabaseMetaData</code> vraag je bijvoorbeeld op welk DBMS en welke driver je gebruikt, welke tabellen bestaan en welke kolommen een tabel heeft. Je haalt het object op met <code>connectie.getMetaData()</code>. De antwoorden komen vaak terug als een <code>ResultSet</code> die je net als bij een gewone query overloopt. Dit is handig om te controleren hoe de databank eruitziet voor je er iets mee doet.</p>
 
       <h2>Info over DBMS en driver</h2>
       <pre data-lang="java"><code><span class="kw">import</span> java.sql.<span class="cl">Connection</span>;
@@ -1937,8 +1990,8 @@ resultaat = databaseMetaData.<span class="mt">getColumns</span>(<span class="kw"
     <div class="tab-content" id="tab-rsmeta">
       <h1>JDBC: ResultSet-metadata</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; ResultSetMetaData</div>
-
-      <p>Via <code>ResultSetMetaData</code> vraag je informatie op over de kolommen in het resultaat van een query. Je haalt het op met <code>resultaat.getMetaData()</code> en je itereert over de kolommen (one-based, dus vanaf 1).</p>
+      <p class="lead">ResultSetMetaData beschrijft de kolommen van het resultaat van een query, niet de waarden zelf. Je haalt het op met resultaat.getMetaData en vraagt met getColumnCount hoeveel kolommen er zijn. Daarna loop je over de kolommen, geteld vanaf 1, en vraag je per kolom de naam, het type en of die automatisch oploopt. Zo kan je een resultaat verwerken zonder vooraf de structuur te kennen. Dit is vooral nuttig voor algemene tools die met om het even welke tabel moeten werken.</p>
+      <p>Waar <code>DatabaseMetaData</code> over de hele databank gaat, beschrijft <code>ResultSetMetaData</code> net het resultaat van één query. Je vraagt het op met <code>resultaat.getMetaData()</code> en komt zo te weten hoeveel kolommen er zijn en hoe ze heten. Per kolom kun je ook het type opvragen of nakijken of ze automatisch oploopt. Je loopt over de kolommen met een lus die telt vanaf 1, want de nummering is one-based. Zo schrijf je code die met elk resultaat overweg kan, zonder de kolommen op voorhand te kennen.</p>
       <pre data-lang="java"><code><span class="kw">import</span> java.sql.*;
 
 <span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
@@ -1985,8 +2038,8 @@ resultaat = databaseMetaData.<span class="mt">getColumns</span>(<span class="kw"
     <div class="tab-content" id="tab-blob">
       <h1>JDBC: BLOB’s</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Binary Large Object</div>
-
-      <p>Een BLOB (Binary Large Object) is binaire data zonder tekencodering, bijvoorbeeld een afbeelding of muziek. Je bewaart ze in een kolom van het juiste type.</p>
+      <p class="lead">Een BLOB, voluit Binary Large Object, bewaart binaire data zoals een afbeelding of een geluidsfragment in de databank. Je kiest een kolomtype zoals BLOB of LONGBLOB afhankelijk van de grootte. Opslaan doe je met een prepared statement waarin je de parameter invult met setBinaryStream vanuit een FileInputStream. Uitlezen gebeurt omgekeerd met getBinaryStream, waarna je de bytes naar een bestand wegschrijft. Zo bewaar je volledige bestanden rechtstreeks in een kolom.</p>
+      <p>Een BLOB staat voor Binary Large Object en bewaart ruwe binaire data in de databank, denk aan een afbeelding, een pdf of muziek. Omdat dit geen tekst is, kies je een kolomtype dat groot genoeg is, van <code>TINYBLOB</code> tot <code>LONGBLOB</code>. Om er een te bewaren gebruik je een prepared statement met een <code>?</code> en geef je het bestand mee via <code>setBinaryStream</code>. Uitlezen doe je omgekeerd met <code>getBinaryStream</code>, waarna je de bytes naar een bestand schrijft. Zo sla je hele bestanden op zonder ze in stukjes te moeten opsplitsen.</p>
       <table>
         <tr><th>Type</th><th>Max grootte</th></tr>
         <tr><td><code>TINYBLOB</code></td><td>255 bytes</td></tr>
@@ -2056,8 +2109,8 @@ resultaat = databaseMetaData.<span class="mt">getColumns</span>(<span class="kw"
     <div class="tab-content" id="tab-clob">
       <h1>JDBC: CLOB’s</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Character Large Object</div>
-
-      <p>Een CLOB (Character Large Object) is een groot tekstueel gegeven, typisch een tekstbestand. In MySQL bewaar je een CLOB in een kolom van het type <code>LONGTEXT</code>.</p>
+      <p class="lead">Een CLOB, voluit Character Large Object, bewaart grote stukken tekst, zoals de inhoud van een tekstbestand, in de databank. In MySQL gebruik je daarvoor een kolom van het type LONGTEXT. Opslaan doe je met een prepared statement en setCharacterStream vanuit een FileReader. Uitlezen is eenvoudig: je haalt de tekst gewoon op met getString. Het verschil met een BLOB is dus dat een CLOB tekst bevat en een BLOB binaire data.</p>
+      <p>Een CLOB staat voor Character Large Object en bewaart een grote hoeveelheid tekst, bijvoorbeeld de inhoud van een tekstbestand. In MySQL gebruik je daarvoor een kolom van het type <code>LONGTEXT</code>. Opslaan gaat met een prepared statement waarbij je de tekst meegeeft via <code>setCharacterStream</code> met een <code>FileReader</code>. Uitlezen is eenvoudig, want tekst haal je gewoon op met <code>getString</code>. Het grote verschil met een BLOB is dus dat een CLOB met leesbare tekst werkt en een BLOB met ruwe bytes.</p>
 
       <h2>Kolom toevoegen als die nog niet bestaat</h2>
       <pre data-lang="java"><code><span class="kw">if</span> (!<span class="mt">bestaatKolom</span>(connectie, <span class="st">"employees"</span>, <span class="st">"resume"</span>)) {
@@ -2124,6 +2177,8 @@ resultaat = databaseMetaData.<span class="mt">getColumns</span>(<span class="kw"
     <div class="tab-content" id="tab-basis-arraylist">
       <h1>ArrayList</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; java.util.ArrayList — dynamische lijst</div>
+      <p class="lead">Een ArrayList is een lijst die kan groeien en krimpen, in tegenstelling tot een gewone array met vaste lengte. Je voegt elementen toe met add, haalt ze op met get via hun index en verwijdert ze met remove. Met size vraag je hoeveel elementen er zijn, wat je gebruikt als grens in een lus. Je bewaart er objecten van een opgegeven type in, bijvoorbeeld ArrayList&lt;String&gt;. Gebruik een ArrayList wanneer het aantal elementen op voorhand niet vastligt.</p>
+      <p>Een ArrayList is een lijst die vanzelf groeit en krimpt, anders dan een gewone array met vaste lengte. Je voegt elementen toe met <code>add</code>, haalt ze op met <code>get</code> en verwijdert ze met <code>remove</code>. Met <code>size</code> vraag je op hoeveel elementen erin zitten. Tussen de punthaken zet je het type dat de lijst bevat, bijvoorbeeld <code>String</code> of een eigen klasse. Voor lijsten die in grootte veranderen is dit bijna altijd de beste keuze.</p>
 
       <h2>Array vs ArrayList</h2>
       <table>
@@ -2199,6 +2254,8 @@ personen.<span class="mt">add</span>(<span class="kw">new</span> <span class="cl
     <div class="tab-content" id="tab-basis-matrix">
       <h1>Matrix (2D-array)</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Tabel van rijen en kolommen</div>
+      <p class="lead">Een matrix is een array van arrays, waarmee je gegevens in rijen en kolommen bewaart, zoals een rooster of een tabel. Je spreekt een element aan met twee indexen: de eerste voor de rij en de tweede voor de kolom. Om alles te overlopen gebruik je meestal een for-lus binnen een for-lus. De buitenste lus gaat over de rijen, de binnenste over de kolommen van die rij. Zo verwerk je tweedimensionale gegevens op een gestructureerde manier.</p>
+      <p>Een matrix is een array van arrays, dus een tabel met rijen en kolommen. Je bereikt een vakje met twee indexen, eerst de rij en dan de kolom. Om alles te overlopen gebruik je een lus in een lus, de buitenste voor de rijen en de binnenste voor de kolommen. Zo werk je met roosters, speelborden of tabellen van getallen. Net als bij gewone arrays begint het tellen bij 0.</p>
 
       <h2>Wat is een matrix?</h2>
       <p>Een 2D-array is een array van arrays — een tabel met rijen en kolommen. Denk aan een rooster, schaakbord of rekentabel.</p>
@@ -2267,6 +2324,8 @@ m[0][1] = 99; <span class="cm">// waarde aanpassen</span></code></pre>
     <div class="tab-content" id="tab-fx-basis">
       <h1>JavaFX Basis</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Structuur van een JavaFX-applicatie</div>
+      <p class="lead">JavaFX is de bibliotheek waarmee je grafische toepassingen met vensters en knoppen bouwt. Je hoofdklasse erft van Application en de opstartcode schrijf je in de start-methode. Daar krijg je een Stage, het venster, waarin je een Scene plaatst met de inhoud. Die inhoud is zelf een boom van knopen met bovenaan een root-pane. Met launch start je de toepassing op vanuit main.</p>
+      <p>JavaFX is de bibliotheek waarmee je vensters en knoppen bouwt in Java. Alles vertrekt vanuit drie lagen, namelijk de Stage als venster, de Scene als inhoud daarvan, en de onderdelen daarin zoals knoppen en labels. Je start in de methode <code>start</code>, waar je de Scene op de Stage zet en het venster toont. De onderdelen plaats je in een layout zodat ze ordelijk verschijnen. Vanaf hier bouw je elke grafische toepassing op.</p>
 
       <h2>De drie kernbegrippen</h2>
       <table>
@@ -2343,6 +2402,8 @@ resultaat.<span class="mt">setText</span>(<span class="st">"Hallo "</span> + inv
     <div class="tab-content" id="tab-fx-panes">
       <h1>Panes & Layouts</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Hoe positioneer je elementen?</div>
+      <p class="lead">Een pane, ofwel layout, bepaalt hoe de elementen in je venster geschikt worden. Een VBox plaatst alles onder elkaar, een HBox naast elkaar, en een BorderPane verdeelt het scherm in boven, onder, links, rechts en midden. Je voegt elementen toe aan de children van de pane, waarna de layout zelf hun positie berekent. Door panes in elkaar te nesten bouw je complexere schermen op. Zo hoef je posities niet met de hand te berekenen.</p>
+      <p>Een pane is een houder die bepaalt waar je onderdelen op het scherm komen. Een <code>VBox</code> stapelt alles onder elkaar, een <code>HBox</code> naast elkaar, en een <code>BorderPane</code> verdeelt het scherm in boven, onder, links, rechts en midden. Je kiest een pane die past bij de indeling die je wil. Met opvulling en tussenruimte geef je de boel wat lucht. Door panes in elkaar te steken bouw je ook ingewikkelde schermen netjes op.</p>
 
       <h2>Overzicht van panes</h2>
       <table>
@@ -2411,6 +2472,8 @@ root.<span class="mt">getChildren</span>().<span class="mt">addAll</span>(naamVe
     <div class="tab-content" id="tab-fx-controls">
       <h1>Controls & Events</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Knoppen, invoervelden en event handlers</div>
+      <p class="lead">Controls zijn de bedienbare elementen zoals knoppen, tekstvelden en labels waarmee de gebruiker werkt. Een event is een gebeurtenis, bijvoorbeeld een klik, waarop je programma kan reageren. Je koppelt aan een control een event handler, een stukje code dat uitgevoerd wordt wanneer de gebeurtenis plaatsvindt. Bij een knop doe je dat met setOnAction. Zo maak je je interface interactief en laat je ze reageren op de gebruiker.</p>
+      <p>Controls zijn de onderdelen waarmee de gebruiker werkt, zoals knoppen, tekstvelden en keuzelijsten. Een event is iets wat gebeurt, bijvoorbeeld een klik op een knop. Je koppelt aan een control een stukje code dat draait zodra dat event optreedt. Bij een knop doe je dat met <code>setOnAction</code>. Zo reageert je programma op wat de gebruiker doet.</p>
 
       <h2>Button event handler</h2>
       <pre data-lang="java"><code><span class="cl">Button</span> knop = <span class="kw">new</span> <span class="cl">Button</span>(<span class="st">"Bereken"</span>);
@@ -2478,6 +2541,8 @@ picker.<span class="mt">setValue</span>(<span class="cl">LocalDate</span>.<span 
     <div class="tab-content" id="tab-fx-styling">
       <h1>Styling & CSS</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; Uiterlijk van UI-elementen aanpassen</div>
+      <p class="lead">Met styling bepaal je hoe je JavaFX-toepassing eruitziet, los van wat ze doet. Je stelt kleuren, lettertypes en randen in, ofwel rechtstreeks in code met methoden zoals setStyle, ofwel via een apart CSS-bestand. CSS in JavaFX lijkt op CSS voor websites, maar gebruikt eigen eigenschappen die met -fx- beginnen. Je koppelt een stijl aan een element via zijn type, een klasse of een id. Zo scheid je vormgeving van logica en houd je je code overzichtelijk.</p>
+      <p>Met styling bepaal je hoe je interface eruitziet, dus kleuren, randen, lettertypes en afstanden. Je kunt dit rechtstreeks in Java instellen op een onderdeel, of via een apart CSS-bestand zoals op een website. CSS houdt het uitzicht gescheiden van de logica, wat overzichtelijker blijft. Je geeft onderdelen een stijlklasse en beschrijft die klasse één keer in je CSS. Zo geef je heel je toepassing in één keer een consistente look.</p>
 
       <h2>Inline stijl via setStyle()</h2>
       <pre data-lang="java"><code><span class="cm">// Tekst en achtergrond</span>
@@ -2655,6 +2720,7 @@ label.<span class="mt">setWrapText</span>(<span class="kw">true</span>);  <span 
     <div class="tab-content" id="tab-exceptions">
       <h1>Exceptions (try / catch / finally)</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; fouten opvangen zonder dat het programma crasht</div>
+      <p class="lead">Een exception is een fout die optreedt tijdens het uitvoeren, bijvoorbeeld delen door nul of een bestand dat niet bestaat. Code die kan mislukken zet je in een try-blok; bij een fout springt Java naar het bijbehorende catch-blok in plaats van te crashen. In catch vang je een specifiek fouttype op en bepaal je wat er dan moet gebeuren. Het finally-blok loopt altijd, ook na een fout, en gebruik je om op te kuisen, zoals verbindingen sluiten. Zo houd je je programma onder controle wanneer er iets misgaat.</p>
 
       <p>Code die kan mislukken (een berekening, een bestand, een databank) zet je in een <code>try</code>. Loopt het mis, dan springt Java naar het <code>catch</code>-blok. Het <code>finally</code>-blok loopt altijd, ook bij een fout, en gebruik je om op te kuisen (bijvoorbeeld <code>.close()</code>).</p>
       <pre data-lang="java"><code><span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
@@ -2689,8 +2755,8 @@ label.<span class="mt">setWrapText</span>(<span class="kw">true</span>);  <span 
     <div class="tab-content" id="tab-scanner">
       <h1>Invoer met Scanner</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; java.util.Scanner — lezen van het toetsenbord</div>
-
-      <p>Met een <code>Scanner</code> op <code>System.in</code> lees je wat de gebruiker typt.</p>
+      <p class="lead">Met een Scanner lees je in wat de gebruiker via het toetsenbord typt. Je maakt er één aan op System.in en leest dan waarden in met methoden zoals nextLine voor een regel tekst of nextInt voor een geheel getal. Elke methode wacht tot de gebruiker iets invoert en bevestigt met enter. Let op dat na nextInt nog een enter blijft staan, dus roep een extra nextLine op voor je opnieuw tekst leest. Zo maak je programma's die met invoer van de gebruiker werken.</p>
+      <p>Met een Scanner lees je invoer die de gebruiker via het toetsenbord typt. Je maakt er een aan op <code>System.in</code>, de standaardinvoer. Daarna kies je per stuk invoer de juiste methode, bijvoorbeeld <code>nextLine</code> voor een hele regel of <code>nextInt</code> voor een geheel getal. De Scanner wacht telkens tot de gebruiker iets intikt en op enter drukt. Zo maak je programma's die met de gebruiker in dialoog gaan.</p>
       <pre data-lang="java"><code><span class="kw">import</span> java.util.<span class="cl">Scanner</span>;
 
 <span class="kw">public</span> <span class="kw">class</span> <span class="cl">Main</span> {
@@ -2722,6 +2788,8 @@ label.<span class="mt">setWrapText</span>(<span class="kw">true</span>);  <span 
     <div class="tab-content" id="tab-strings">
       <h1>String-methodes</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; veelgebruikte bewerkingen op tekst</div>
+      <p class="lead">Een String is een stuk tekst, en de klasse biedt veel methoden om die tekst te bewerken of te onderzoeken. Je vraagt de lengte op met length, wijzigt de hoofdletters met toUpperCase of toLowerCase en haalt een deel eruit met substring. Met contains en indexOf zoek je of en waar iets voorkomt, en met replace vervang je stukken. Tekst vergelijk je altijd met equals of equalsIgnoreCase, nooit met de operator ==, want die vergelijkt geheugenadressen in plaats van inhoud. Veel methoden geven een nieuwe String terug en laten het origineel ongewijzigd.</p>
+      <p>Een String is een stuk tekst, en Java geeft je een hoop kant-en-klare methoden om ermee te werken. Je vraagt de lengte op, haalt er stukken uit, zoekt erin of vervangt delen. Een String verandert nooit zelf, elke methode geeft een nieuwe tekst terug. Tekst vergelijk je altijd met <code>equals</code> of <code>equalsIgnoreCase</code>, nooit met <code>==</code>. Hieronder staan de methoden die je het vaakst nodig hebt.</p>
       <pre data-lang="java"><code><span class="cl">String</span> tekst = <span class="st">"Hallo wereld"</span>;
 
 tekst.<span class="mt">length</span>()                        <span class="cm">// 11</span>
@@ -2744,6 +2812,8 @@ tekst.<span class="mt">equalsIgnoreCase</span>(<span class="st">"HALLO WERELD"</
     <div class="tab-content" id="tab-parsen">
       <h1>Parsen &amp; casten</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; omzetten tussen tekst en getallen, en tussen getaltypes</div>
+      <p class="lead">Parsen is het omzetten van tekst naar een getal, bijvoorbeeld met Integer.parseInt of Double.parseDouble, wat je vaak nodig hebt bij invoer. De omgekeerde weg, een getal naar tekst, doe je met String.valueOf of door er een lege String bij op te tellen. Casten is het omzetten tussen getaltypes, bijvoorbeeld een double naar een int door (int) ervoor te zetten. Let op: casten naar int kapt de cijfers na de komma gewoon af en rondt niet af. Wil je afronden, gebruik dan Math.round.</p>
+      <p>Parsen en casten gaan allebei over het omzetten van het ene type naar het andere. Parsen zet tekst om naar een getal, bijvoorbeeld <code>"42"</code> naar het getal 42, en dat heb je nodig bij invoer van de gebruiker. Casten zet één getaltype om naar een ander, bijvoorbeeld een <code>double</code> naar een <code>int</code>. Let op, casten naar <code>int</code> kapt de cijfers na de komma gewoon af en rondt niet af. Wil je netjes afronden, gebruik dan <code>Math.round</code>.</p>
 
       <h2>Tekst &harr; getal</h2>
       <pre data-lang="java"><code><span class="cm">// String -&gt; getal</span>
@@ -2767,6 +2837,8 @@ tekst.<span class="mt">equalsIgnoreCase</span>(<span class="st">"HALLO WERELD"</
     <div class="tab-content" id="tab-math">
       <h1>Math &amp; getallen</h1>
       <div class="chapter-meta">&nbsp;·&nbsp; java.lang.Math</div>
+      <p class="lead">De klasse Math bundelt veelgebruikte wiskundige bewerkingen die je rechtstreeks kan oproepen. Je vindt er onder andere abs voor de absolute waarde, max en min, pow voor machten en sqrt voor de vierkantswortel. Met round, floor en ceil rond je af naar het dichtstbijzijnde, naar beneden of naar boven. Math.random geeft een willekeurig kommagetal tussen 0 en net niet 1, dat je kan omrekenen naar een bereik. Alle methoden zijn static, dus je gebruikt ze via Math gevolgd door de naam, zonder een object te maken.</p>
+      <p>De klasse <code>Math</code> bundelt veelgebruikte rekenfuncties die altijd beschikbaar zijn. Je vindt er onder andere de absolute waarde, de grootste of kleinste van twee getallen, machten en wortels. Voor afronden heb je <code>round</code>, <code>floor</code> en <code>ceil</code>, die elk anders met de komma omgaan. Met <code>Math.random</code> krijg je een willekeurig kommagetal tussen 0 en net niet 1. Door dat te schalen en te casten maak je er een willekeurig geheel getal van, bijvoorbeeld voor een dobbelsteen.</p>
       <pre data-lang="java"><code><span class="cl">Math</span>.<span class="mt">abs</span>(-7)            <span class="cm">// 7</span>
 <span class="cl">Math</span>.<span class="mt">max</span>(3, 9)          <span class="cm">// 9</span>
 <span class="cl">Math</span>.<span class="mt">min</span>(3, 9)          <span class="cm">// 3</span>
